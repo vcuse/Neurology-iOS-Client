@@ -11,7 +11,7 @@ import SwiftUI
 struct Neurology_iOS_Client_AppApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
         }
     }
 }
