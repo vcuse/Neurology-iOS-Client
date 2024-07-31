@@ -12,9 +12,9 @@
 		08FBF1DA2C59B78600F4AE9A /* WebSocketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBF1D02C59B78600F4AE9A /* WebSocketProvider.swift */; };
 		08FBF1DB2C59B78600F4AE9A /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBF1D22C59B78600F4AE9A /* API.swift */; };
 		08FBF1DC2C59B78600F4AE9A /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBF1D32C59B78600F4AE9A /* Message.swift */; };
-		08FBF1DD2C59B78600F4AE9A /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBF1D42C59B78600F4AE9A /* Peer.swift */; };
 		08FBF1DE2C59B78600F4AE9A /* SignalingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBF1D52C59B78600F4AE9A /* SignalingClient.swift */; };
 		08FBF1DF2C59B78600F4AE9A /* WebRTCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBF1D62C59B78600F4AE9A /* WebRTCClient.swift */; };
+		08FBF1E22C59B83500F4AE9A /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 08FBF1E12C59B83500F4AE9A /* WebRTC */; };
 		60E860F52C5192DE0097826E /* Neurology_iOS_Client_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E860F42C5192DE0097826E /* Neurology_iOS_Client_AppApp.swift */; };
 		60E860F72C5192DE0097826E /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E860F62C5192DE0097826E /* HomeView.swift */; };
 		60E860F92C5192DE0097826E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60E860F82C5192DE0097826E /* Assets.xcassets */; };
@@ -44,7 +44,6 @@
 		08FBF1D02C59B78600F4AE9A /* WebSocketProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketProvider.swift; sourceTree = "<group>"; };
 		08FBF1D22C59B78600F4AE9A /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		08FBF1D32C59B78600F4AE9A /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
-		08FBF1D42C59B78600F4AE9A /* Peer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
 		08FBF1D52C59B78600F4AE9A /* SignalingClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignalingClient.swift; sourceTree = "<group>"; };
 		08FBF1D62C59B78600F4AE9A /* WebRTCClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebRTCClient.swift; sourceTree = "<group>"; };
 		60E860F12C5192DE0097826E /* Neurology-iOS-Client-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Neurology-iOS-Client-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08FBF1E22C59B83500F4AE9A /* WebRTC in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,7 +97,6 @@
 				08FBF1D12C59B78600F4AE9A /* WebSocketProvider */,
 				08FBF1D22C59B78600F4AE9A /* API.swift */,
 				08FBF1D32C59B78600F4AE9A /* Message.swift */,
-				08FBF1D42C59B78600F4AE9A /* Peer.swift */,
 				08FBF1D52C59B78600F4AE9A /* SignalingClient.swift */,
 				08FBF1D62C59B78600F4AE9A /* WebRTCClient.swift */,
 			);
@@ -191,6 +190,9 @@
 			dependencies = (
 			);
 			name = "Neurology-iOS-Client-App";
+			packageProductDependencies = (
+				08FBF1E12C59B83500F4AE9A /* WebRTC */,
+			);
 			productName = "Neurology-iOS-Client-App";
 			productReference = 60E860F12C5192DE0097826E /* Neurology-iOS-Client-App.app */;
 			productType = "com.apple.product-type.application";
@@ -263,6 +265,9 @@
 				Base,
 			);
 			mainGroup = 60E860E82C5192DE0097826E;
+			packageReferences = (
+				08FBF1E02C59B83500F4AE9A /* XCRemoteSwiftPackageReference "WebRTC" */,
+			);
 			productRefGroup = 60E860F22C5192DE0097826E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -308,7 +313,6 @@
 				08FBF1DA2C59B78600F4AE9A /* WebSocketProvider.swift in Sources */,
 				08FBF1DF2C59B78600F4AE9A /* WebRTCClient.swift in Sources */,
 				08FBF1DE2C59B78600F4AE9A /* SignalingClient.swift in Sources */,
-				08FBF1DD2C59B78600F4AE9A /* Peer.swift in Sources */,
 				08FBF1D82C59B78600F4AE9A /* NativeWebSocket.swift in Sources */,
 				60E860F72C5192DE0097826E /* HomeView.swift in Sources */,
 				60E860F52C5192DE0097826E /* Neurology_iOS_Client_AppApp.swift in Sources */,
@@ -641,6 +645,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		08FBF1E02C59B83500F4AE9A /* XCRemoteSwiftPackageReference "WebRTC" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stasel/WebRTC.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 126.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		08FBF1E12C59B83500F4AE9A /* WebRTC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 08FBF1E02C59B83500F4AE9A /* XCRemoteSwiftPackageReference "WebRTC" */;
+			productName = WebRTC;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 60E860E92C5192DE0097826E /* Project object */;
 }
