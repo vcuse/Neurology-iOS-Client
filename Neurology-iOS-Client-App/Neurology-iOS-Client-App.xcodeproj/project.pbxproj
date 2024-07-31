@@ -19,6 +19,7 @@
 		60E860F72C5192DE0097826E /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E860F62C5192DE0097826E /* HomeView.swift */; };
 		60E860F92C5192DE0097826E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60E860F82C5192DE0097826E /* Assets.xcassets */; };
 		60E860FC2C5192DE0097826E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60E860FB2C5192DE0097826E /* Preview Assets.xcassets */; };
+		60F68C262C5ABB3D00933EE3 /* CallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F68C252C5ABB3D00933EE3 /* CallView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,8 @@
 		60E860FB2C5192DE0097826E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		60E861012C5192DF0097826E /* Neurology-iOS-Client-AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Neurology-iOS-Client-AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		60E8610B2C5192DF0097826E /* Neurology-iOS-Client-AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Neurology-iOS-Client-AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		60E861262C5A858E0097826E /* StarscreamProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StarscreamProvider.swift; path = "Neurology-iOS-Client-App/Services/WebSocketProvider/StarscreamProvider.swift"; sourceTree = "<group>"; };
+		60F68C252C5ABB3D00933EE3 /* CallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,8 +110,10 @@
 		60E860E82C5192DE0097826E = {
 			isa = PBXGroup;
 			children = (
+				60E861262C5A858E0097826E /* StarscreamProvider.swift */,
 				60E860F32C5192DE0097826E /* Neurology-iOS-Client-App */,
 				60E860F22C5192DE0097826E /* Products */,
+				60E861222C5A84E00097826E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -127,7 +132,6 @@
 			children = (
 				08FBF1D72C59B78600F4AE9A /* Services */,
 				60E861212C52CCCD0097826E /* Other */,
-				60E861202C52CCC40097826E /* Models */,
 				60E8611F2C52CCAD0097826E /* ViewModels */,
 				60E8611E2C52CCA30097826E /* Views */,
 				60E860FA2C5192DE0097826E /* Preview Content */,
@@ -147,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				60E860F62C5192DE0097826E /* HomeView.swift */,
+				60F68C252C5ABB3D00933EE3 /* CallView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -158,13 +163,6 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		60E861202C52CCC40097826E /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		60E861212C52CCCD0097826E /* Other */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +170,13 @@
 				60E860F82C5192DE0097826E /* Assets.xcassets */,
 			);
 			path = Other;
+			sourceTree = "<group>";
+		};
+		60E861222C5A84E00097826E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -318,6 +323,7 @@
 				60E860F52C5192DE0097826E /* Neurology_iOS_Client_AppApp.swift in Sources */,
 				08FBF1DB2C59B78600F4AE9A /* API.swift in Sources */,
 				08FBF1D92C59B78600F4AE9A /* StarscreamProvider.swift in Sources */,
+				60F68C262C5ABB3D00933EE3 /* CallView.swift in Sources */,
 				08FBF1DC2C59B78600F4AE9A /* Message.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

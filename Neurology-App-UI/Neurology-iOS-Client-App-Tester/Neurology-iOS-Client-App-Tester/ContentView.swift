@@ -1,13 +1,13 @@
 //
-//  HomeView.swift
-//  Neurology-iOS-Client-App
+//  ContentView.swift
+//  Neurology-iOS-Client-App-Tester
 //
 //  Created by Lauren Viado on 7/31/24.
 //
 
 import SwiftUI
 
-struct HomeView: View {
+struct ContentView: View {
     var onlineUsers = ["34680986443", "7492082646", "8827649022"]
     
     var body: some View {
@@ -77,5 +77,5 @@ struct OnlineUserItemView: View {
 }
 
 #Preview {
-    HomeView()
+    ContentView()
 }
