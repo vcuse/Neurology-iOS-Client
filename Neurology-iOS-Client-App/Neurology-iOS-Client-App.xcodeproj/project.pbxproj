@@ -3,85 +3,112 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		08EEC3222C5AD5E30086C228 /* PeerJSOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EEC3212C5AD5E30086C228 /* PeerJSOption.swift */; };
-		08FBF1D82C59B78600F4AE9A /* NativeWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBF1CE2C59B78600F4AE9A /* NativeWebSocket.swift */; };
-		08FBF1DA2C59B78600F4AE9A /* WebSocketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBF1D02C59B78600F4AE9A /* WebSocketProvider.swift */; };
-		08FBF1DB2C59B78600F4AE9A /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBF1D22C59B78600F4AE9A /* API.swift */; };
-		08FBF1DE2C59B78600F4AE9A /* SignalingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBF1D52C59B78600F4AE9A /* SignalingClient.swift */; };
-		08FBF1DF2C59B78600F4AE9A /* WebRTCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBF1D62C59B78600F4AE9A /* WebRTCClient.swift */; };
-		08FBF1E22C59B83500F4AE9A /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 08FBF1E12C59B83500F4AE9A /* WebRTC */; };
-		60E860F52C5192DE0097826E /* Neurology_iOS_Client_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E860F42C5192DE0097826E /* Neurology_iOS_Client_AppApp.swift */; };
-		60E860F72C5192DE0097826E /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E860F62C5192DE0097826E /* HomeView.swift */; };
-		60E860F92C5192DE0097826E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60E860F82C5192DE0097826E /* Assets.xcassets */; };
-		60E860FC2C5192DE0097826E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60E860FB2C5192DE0097826E /* Preview Assets.xcassets */; };
-		60F68C262C5ABB3D00933EE3 /* CallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F68C252C5ABB3D00933EE3 /* CallView.swift */; };
+		088B348E2C5C03A000094A02 /* Neuro_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088B348D2C5C03A000094A02 /* Neuro_AppApp.swift */; };
+		088B34902C5C03A000094A02 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088B348F2C5C03A000094A02 /* ContentView.swift */; };
+		088B34922C5C03A100094A02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 088B34912C5C03A100094A02 /* Assets.xcassets */; };
+		088B34952C5C03A100094A02 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 088B34942C5C03A100094A02 /* Preview Assets.xcassets */; };
+		088B349A2C5C03DA00094A02 /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 088B34992C5C03DA00094A02 /* WebRTC */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		60E861022C5192DF0097826E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 60E860E92C5192DE0097826E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 60E860F02C5192DE0097826E;
-			remoteInfo = "Neurology-iOS-Client-App";
-		};
-		60E8610C2C5192DF0097826E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 60E860E92C5192DE0097826E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 60E860F02C5192DE0097826E;
-			remoteInfo = "Neurology-iOS-Client-App";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
+		088B345D2C5C023F00094A02 /* Neuro_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neuro_AppApp.swift; sourceTree = "<group>"; };
+		088B345F2C5C023F00094A02 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		088B34612C5C024000094A02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		088B34642C5C024000094A02 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		088B346E2C5C024000094A02 /* Neuro_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neuro_AppTests.swift; sourceTree = "<group>"; };
+		088B34782C5C024000094A02 /* Neuro_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neuro_AppUITests.swift; sourceTree = "<group>"; };
+		088B347A2C5C024000094A02 /* Neuro_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neuro_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		088B348B2C5C03A000094A02 /* Neuro App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Neuro App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		088B348D2C5C03A000094A02 /* Neuro_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neuro_AppApp.swift; sourceTree = "<group>"; };
+		088B348F2C5C03A000094A02 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		088B34912C5C03A100094A02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		088B34942C5C03A100094A02 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		08EEC3212C5AD5E30086C228 /* PeerJSOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PeerJSOption.swift; path = "../../../../../Desktop/WebRTC-iOS/WebRTC-Demo-App/Sources/Extensions/PeerJSOption.swift"; sourceTree = "<group>"; };
+		08EEC3232C5BF9E70086C228 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		08FBF1CE2C59B78600F4AE9A /* NativeWebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeWebSocket.swift; sourceTree = "<group>"; };
 		08FBF1CF2C59B78600F4AE9A /* StarscreamProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarscreamProvider.swift; sourceTree = "<group>"; };
 		08FBF1D02C59B78600F4AE9A /* WebSocketProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketProvider.swift; sourceTree = "<group>"; };
 		08FBF1D22C59B78600F4AE9A /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		08FBF1D52C59B78600F4AE9A /* SignalingClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignalingClient.swift; sourceTree = "<group>"; };
 		08FBF1D62C59B78600F4AE9A /* WebRTCClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebRTCClient.swift; sourceTree = "<group>"; };
-		60E860F12C5192DE0097826E /* Neurology-iOS-Client-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Neurology-iOS-Client-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		60E860F42C5192DE0097826E /* Neurology_iOS_Client_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neurology_iOS_Client_AppApp.swift; sourceTree = "<group>"; };
 		60E860F62C5192DE0097826E /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		60E860F82C5192DE0097826E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		60E860FB2C5192DE0097826E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		60E861012C5192DF0097826E /* Neurology-iOS-Client-AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Neurology-iOS-Client-AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		60E8610B2C5192DF0097826E /* Neurology-iOS-Client-AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Neurology-iOS-Client-AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		60F68C252C5ABB3D00933EE3 /* CallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		60E860EE2C5192DE0097826E /* Frameworks */ = {
+		088B34882C5C03A000094A02 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08FBF1E22C59B83500F4AE9A /* WebRTC in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		60E860FE2C5192DF0097826E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		60E861082C5192DF0097826E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				088B349A2C5C03DA00094A02 /* WebRTC in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		088B345C2C5C023F00094A02 /* Neuro App */ = {
+			isa = PBXGroup;
+			children = (
+				088B345D2C5C023F00094A02 /* Neuro_AppApp.swift */,
+				088B345F2C5C023F00094A02 /* ContentView.swift */,
+				088B34612C5C024000094A02 /* Assets.xcassets */,
+				088B34632C5C024000094A02 /* Preview Content */,
+			);
+			path = "Neuro App";
+			sourceTree = "<group>";
+		};
+		088B34632C5C024000094A02 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				088B34642C5C024000094A02 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		088B346D2C5C024000094A02 /* Neuro AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				088B346E2C5C024000094A02 /* Neuro_AppTests.swift */,
+			);
+			path = "Neuro AppTests";
+			sourceTree = "<group>";
+		};
+		088B34772C5C024000094A02 /* Neuro AppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				088B34782C5C024000094A02 /* Neuro_AppUITests.swift */,
+				088B347A2C5C024000094A02 /* Neuro_AppUITestsLaunchTests.swift */,
+			);
+			path = "Neuro AppUITests";
+			sourceTree = "<group>";
+		};
+		088B348C2C5C03A000094A02 /* Neuro App */ = {
+			isa = PBXGroup;
+			children = (
+				088B348D2C5C03A000094A02 /* Neuro_AppApp.swift */,
+				088B348F2C5C03A000094A02 /* ContentView.swift */,
+				088B34912C5C03A100094A02 /* Assets.xcassets */,
+				088B34932C5C03A100094A02 /* Preview Content */,
+			);
+			path = "Neuro App";
+			sourceTree = "<group>";
+		};
+		088B34932C5C03A100094A02 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				088B34942C5C03A100094A02 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 		08FBF1D12C59B78600F4AE9A /* WebSocketProvider */ = {
 			isa = PBXGroup;
 			children = (
@@ -100,6 +127,7 @@
 				08FBF1D52C59B78600F4AE9A /* SignalingClient.swift */,
 				08FBF1D62C59B78600F4AE9A /* WebRTCClient.swift */,
 				08EEC3212C5AD5E30086C228 /* PeerJSOption.swift */,
+				08EEC3232C5BF9E70086C228 /* Config.swift */,
 			);
 			name = Services;
 			path = "Neurology-iOS-Client-App/Services";
@@ -109,19 +137,13 @@
 			isa = PBXGroup;
 			children = (
 				60E860F32C5192DE0097826E /* Neurology-iOS-Client-App */,
-				60E860F22C5192DE0097826E /* Products */,
+				088B345C2C5C023F00094A02 /* Neuro App */,
+				088B346D2C5C024000094A02 /* Neuro AppTests */,
+				088B34772C5C024000094A02 /* Neuro AppUITests */,
+				088B348C2C5C03A000094A02 /* Neuro App */,
 				60E861222C5A84E00097826E /* Frameworks */,
+				088B348B2C5C03A000094A02 /* Neuro App.app */,
 			);
-			sourceTree = "<group>";
-		};
-		60E860F22C5192DE0097826E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				60E860F12C5192DE0097826E /* Neurology-iOS-Client-App.app */,
-				60E861012C5192DF0097826E /* Neurology-iOS-Client-AppTests.xctest */,
-				60E8610B2C5192DF0097826E /* Neurology-iOS-Client-AppUITests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		60E860F32C5192DE0097826E /* Neurology-iOS-Client-App */ = {
@@ -179,61 +201,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		60E860F02C5192DE0097826E /* Neurology-iOS-Client-App */ = {
+		088B348A2C5C03A000094A02 /* Neuro App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 60E861152C5192DF0097826E /* Build configuration list for PBXNativeTarget "Neurology-iOS-Client-App" */;
+			buildConfigurationList = 088B34962C5C03A100094A02 /* Build configuration list for PBXNativeTarget "Neuro App" */;
 			buildPhases = (
-				60E860ED2C5192DE0097826E /* Sources */,
-				60E860EE2C5192DE0097826E /* Frameworks */,
-				60E860EF2C5192DE0097826E /* Resources */,
+				088B34872C5C03A000094A02 /* Sources */,
+				088B34882C5C03A000094A02 /* Frameworks */,
+				088B34892C5C03A000094A02 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "Neurology-iOS-Client-App";
+			name = "Neuro App";
 			packageProductDependencies = (
-				08FBF1E12C59B83500F4AE9A /* WebRTC */,
+				088B34992C5C03DA00094A02 /* WebRTC */,
 			);
-			productName = "Neurology-iOS-Client-App";
-			productReference = 60E860F12C5192DE0097826E /* Neurology-iOS-Client-App.app */;
+			productName = "Neuro App";
+			productReference = 088B348B2C5C03A000094A02 /* Neuro App.app */;
 			productType = "com.apple.product-type.application";
-		};
-		60E861002C5192DF0097826E /* Neurology-iOS-Client-AppTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 60E861182C5192DF0097826E /* Build configuration list for PBXNativeTarget "Neurology-iOS-Client-AppTests" */;
-			buildPhases = (
-				60E860FD2C5192DF0097826E /* Sources */,
-				60E860FE2C5192DF0097826E /* Frameworks */,
-				60E860FF2C5192DF0097826E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				60E861032C5192DF0097826E /* PBXTargetDependency */,
-			);
-			name = "Neurology-iOS-Client-AppTests";
-			productName = "Neurology-iOS-Client-AppTests";
-			productReference = 60E861012C5192DF0097826E /* Neurology-iOS-Client-AppTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		60E8610A2C5192DF0097826E /* Neurology-iOS-Client-AppUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 60E8611B2C5192DF0097826E /* Build configuration list for PBXNativeTarget "Neurology-iOS-Client-AppUITests" */;
-			buildPhases = (
-				60E861072C5192DF0097826E /* Sources */,
-				60E861082C5192DF0097826E /* Frameworks */,
-				60E861092C5192DF0097826E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				60E8610D2C5192DF0097826E /* PBXTargetDependency */,
-			);
-			name = "Neurology-iOS-Client-AppUITests";
-			productName = "Neurology-iOS-Client-AppUITests";
-			productReference = 60E8610B2C5192DF0097826E /* Neurology-iOS-Client-AppUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -241,25 +227,20 @@
 		60E860E92C5192DE0097826E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1540;
+				BuildIndependentTargetsInParallel = YES;
+				KnownAssetTags = (
+					New,
+				);
+				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1540;
 				TargetAttributes = {
-					60E860F02C5192DE0097826E = {
-						CreatedOnToolsVersion = 15.4;
-					};
-					60E861002C5192DF0097826E = {
-						CreatedOnToolsVersion = 15.4;
-						TestTargetID = 60E860F02C5192DE0097826E;
-					};
-					60E8610A2C5192DF0097826E = {
-						CreatedOnToolsVersion = 15.4;
-						TestTargetID = 60E860F02C5192DE0097826E;
+					088B348A2C5C03A000094A02 = {
+						CreatedOnToolsVersion = 15.3;
 					};
 				};
 			};
 			buildConfigurationList = 60E860EC2C5192DE0097826E /* Build configuration list for PBXProject "Neurology-iOS-Client-App" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 15.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -270,93 +251,102 @@
 			packageReferences = (
 				08FBF1E02C59B83500F4AE9A /* XCRemoteSwiftPackageReference "WebRTC" */,
 			);
-			productRefGroup = 60E860F22C5192DE0097826E /* Products */;
+			productRefGroup = 60E860E82C5192DE0097826E;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				60E860F02C5192DE0097826E /* Neurology-iOS-Client-App */,
-				60E861002C5192DF0097826E /* Neurology-iOS-Client-AppTests */,
-				60E8610A2C5192DF0097826E /* Neurology-iOS-Client-AppUITests */,
+				088B348A2C5C03A000094A02 /* Neuro App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		60E860EF2C5192DE0097826E /* Resources */ = {
+		088B34892C5C03A000094A02 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60E860FC2C5192DE0097826E /* Preview Assets.xcassets in Resources */,
-				60E860F92C5192DE0097826E /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		60E860FF2C5192DF0097826E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		60E861092C5192DF0097826E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				088B34952C5C03A100094A02 /* Preview Assets.xcassets in Resources */,
+				088B34922C5C03A100094A02 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		60E860ED2C5192DE0097826E /* Sources */ = {
+		088B34872C5C03A000094A02 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08FBF1DA2C59B78600F4AE9A /* WebSocketProvider.swift in Sources */,
-				08FBF1DF2C59B78600F4AE9A /* WebRTCClient.swift in Sources */,
-				08FBF1DE2C59B78600F4AE9A /* SignalingClient.swift in Sources */,
-				08FBF1D82C59B78600F4AE9A /* NativeWebSocket.swift in Sources */,
-				08EEC3222C5AD5E30086C228 /* PeerJSOption.swift in Sources */,
-				60E860F72C5192DE0097826E /* HomeView.swift in Sources */,
-				60E860F52C5192DE0097826E /* Neurology_iOS_Client_AppApp.swift in Sources */,
-				08FBF1DB2C59B78600F4AE9A /* API.swift in Sources */,
-				60F68C262C5ABB3D00933EE3 /* CallView.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		60E860FD2C5192DF0097826E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		60E861072C5192DF0097826E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				088B34902C5C03A000094A02 /* ContentView.swift in Sources */,
+				088B348E2C5C03A000094A02 /* Neuro_AppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		60E861032C5192DF0097826E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 60E860F02C5192DE0097826E /* Neurology-iOS-Client-App */;
-			targetProxy = 60E861022C5192DF0097826E /* PBXContainerItemProxy */;
-		};
-		60E8610D2C5192DF0097826E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 60E860F02C5192DE0097826E /* Neurology-iOS-Client-App */;
-			targetProxy = 60E8610C2C5192DF0097826E /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
+		088B34972C5C03A100094A02 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Neuro App/Preview Content\"";
+				DEVELOPMENT_TEAM = VL7R24L9ZQ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "vcuse.Neuro-App";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		088B34982C5C03A100094A02 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Neuro App/Preview Content\"";
+				DEVELOPMENT_TEAM = VL7R24L9ZQ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "vcuse.Neuro-App";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		60E861132C5192DF0097826E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -406,7 +396,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -420,6 +410,7 @@
 		60E861142C5192DF0097826E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -463,7 +454,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -473,143 +464,18 @@
 			};
 			name = Release;
 		};
-		60E861162C5192DF0097826E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Neurology-iOS-Client-App/Preview Content\"";
-				DEVELOPMENT_TEAM = VL7R24L9ZQ;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Com.Lauren.Neurology-iOS-Client-App";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		60E861172C5192DF0097826E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Neurology-iOS-Client-App/Preview Content\"";
-				DEVELOPMENT_TEAM = VL7R24L9ZQ;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Com.Lauren.Neurology-iOS-Client-App";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		60E861192C5192DF0097826E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8MSLQL5SWW;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Com.Lauren.Neurology-iOS-Client-AppTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Neurology-iOS-Client-App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Neurology-iOS-Client-App";
-			};
-			name = Debug;
-		};
-		60E8611A2C5192DF0097826E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8MSLQL5SWW;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Com.Lauren.Neurology-iOS-Client-AppTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Neurology-iOS-Client-App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Neurology-iOS-Client-App";
-			};
-			name = Release;
-		};
-		60E8611C2C5192DF0097826E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8MSLQL5SWW;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Com.Lauren.Neurology-iOS-Client-AppUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "Neurology-iOS-Client-App";
-			};
-			name = Debug;
-		};
-		60E8611D2C5192DF0097826E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8MSLQL5SWW;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Com.Lauren.Neurology-iOS-Client-AppUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "Neurology-iOS-Client-App";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		088B34962C5C03A100094A02 /* Build configuration list for PBXNativeTarget "Neuro App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				088B34972C5C03A100094A02 /* Debug */,
+				088B34982C5C03A100094A02 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		60E860EC2C5192DE0097826E /* Build configuration list for PBXProject "Neurology-iOS-Client-App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -617,34 +483,7 @@
 				60E861142C5192DF0097826E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		60E861152C5192DF0097826E /* Build configuration list for PBXNativeTarget "Neurology-iOS-Client-App" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				60E861162C5192DF0097826E /* Debug */,
-				60E861172C5192DF0097826E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		60E861182C5192DF0097826E /* Build configuration list for PBXNativeTarget "Neurology-iOS-Client-AppTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				60E861192C5192DF0097826E /* Debug */,
-				60E8611A2C5192DF0097826E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		60E8611B2C5192DF0097826E /* Build configuration list for PBXNativeTarget "Neurology-iOS-Client-AppUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				60E8611C2C5192DF0097826E /* Debug */,
-				60E8611D2C5192DF0097826E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 
@@ -660,7 +499,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		08FBF1E12C59B83500F4AE9A /* WebRTC */ = {
+		088B34992C5C03DA00094A02 /* WebRTC */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 08FBF1E02C59B83500F4AE9A /* XCRemoteSwiftPackageReference "WebRTC" */;
 			productName = WebRTC;

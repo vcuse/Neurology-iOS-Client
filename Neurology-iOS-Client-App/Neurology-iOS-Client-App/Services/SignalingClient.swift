@@ -152,28 +152,8 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate {
         self.webSocket.connect()
     }
     
-    func send(sdp rtcSdp: RTCSessionDescription) {
-        let message = Message.sdp(SessionDescription(from: rtcSdp))
-        do {
-            let dataMessage = try self.encoder.encode(message)
-            debugPrint("sent message ", message)
-            self.webSocket.send(data: dataMessage)
-        }
-        catch {
-            debugPrint("Warning: Could not encode sdp: \(error)")
-        }
-    }
+ 
     
-    func send(candidate rtcIceCandidate: RTCIceCandidate) {
-        let message = Message.candidate(IceCandidate(from: rtcIceCandidate))
-        do {
-            let dataMessage = try self.encoder.encode(message)
-            self.webSocket.send(data: dataMessage)
-        }
-        catch {
-            debugPrint("Warning: Could not encode candidate: \(error)")
-        }
-    }
 }
 
 
@@ -195,22 +175,8 @@ extension SignalingClient: WebSocketProviderDelegate {
     
     
     func webSocket(_ webSocket: WebSocketProvider, didReceiveData data: Data) {
-        let message: Message
-        do {
-            message = try self.decoder.decode(Message.self, from: data)
-            debugPrint("messager is ", message)
-        }
-        catch {
-            debugPrint("Warning: Could not decode incoming message: \(error)")
-            return
-        }
+      
         
-        switch message {
-        case .candidate(let iceCandidate):
-            self.delegate?.signalClient(self, didReceiveCandidate: iceCandidate.rtcIceCandidate)
-        case .sdp(let sessionDescription):
-            self.delegate?.signalClient(self, didReceiveRemoteSdp: sessionDescription.rtcSessionDescription)
-        }
         
     }
     
@@ -353,23 +319,16 @@ extension SignalingClient: WebSocketProviderDelegate {
                                         sdpMid: "1")
         
         //print("CANDIDATE SDP:", candidate)
-        setRTCIceCandidate(candidate: candidate)
+        //setRTCIceCandidate(candidate: candidate)
         
         
         
     }
     func setRTCIceCandidate(candidate rtcIceCandidate: RTCIceCandidate){
-        let message = Message.candidate(IceCandidate(from: rtcIceCandidate))
-        do{
-            
-            let dataMessage = try self.encoder.encode(message)
-            debugPrint("INFO: Sent Candiate Message:", message)
-            self.webSocket.send(data: dataMessage)
-        }
-        catch {
-            debugPrint("Warning: Could not encode candidate: \(error)")
-        }
+        
     }
+    
+    
     func processReceivedMessage(message: String) -> (String, [String: Any], String)? {
         // Print the received message
         print("Received message:", message)
