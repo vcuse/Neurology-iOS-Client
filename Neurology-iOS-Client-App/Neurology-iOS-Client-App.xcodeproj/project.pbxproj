@@ -7,11 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08EEC3222C5AD5E30086C228 /* PeerJSOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EEC3212C5AD5E30086C228 /* PeerJSOption.swift */; };
 		08FBF1D82C59B78600F4AE9A /* NativeWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBF1CE2C59B78600F4AE9A /* NativeWebSocket.swift */; };
-		08FBF1D92C59B78600F4AE9A /* StarscreamProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBF1CF2C59B78600F4AE9A /* StarscreamProvider.swift */; };
 		08FBF1DA2C59B78600F4AE9A /* WebSocketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBF1D02C59B78600F4AE9A /* WebSocketProvider.swift */; };
 		08FBF1DB2C59B78600F4AE9A /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBF1D22C59B78600F4AE9A /* API.swift */; };
-		08FBF1DC2C59B78600F4AE9A /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBF1D32C59B78600F4AE9A /* Message.swift */; };
 		08FBF1DE2C59B78600F4AE9A /* SignalingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBF1D52C59B78600F4AE9A /* SignalingClient.swift */; };
 		08FBF1DF2C59B78600F4AE9A /* WebRTCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBF1D62C59B78600F4AE9A /* WebRTCClient.swift */; };
 		08FBF1E22C59B83500F4AE9A /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 08FBF1E12C59B83500F4AE9A /* WebRTC */; };
@@ -40,11 +39,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		08EEC3212C5AD5E30086C228 /* PeerJSOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PeerJSOption.swift; path = "../../../../../Desktop/WebRTC-iOS/WebRTC-Demo-App/Sources/Extensions/PeerJSOption.swift"; sourceTree = "<group>"; };
 		08FBF1CE2C59B78600F4AE9A /* NativeWebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeWebSocket.swift; sourceTree = "<group>"; };
 		08FBF1CF2C59B78600F4AE9A /* StarscreamProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarscreamProvider.swift; sourceTree = "<group>"; };
 		08FBF1D02C59B78600F4AE9A /* WebSocketProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketProvider.swift; sourceTree = "<group>"; };
 		08FBF1D22C59B78600F4AE9A /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
-		08FBF1D32C59B78600F4AE9A /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		08FBF1D52C59B78600F4AE9A /* SignalingClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignalingClient.swift; sourceTree = "<group>"; };
 		08FBF1D62C59B78600F4AE9A /* WebRTCClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebRTCClient.swift; sourceTree = "<group>"; };
 		60E860F12C5192DE0097826E /* Neurology-iOS-Client-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Neurology-iOS-Client-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,7 +53,6 @@
 		60E860FB2C5192DE0097826E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		60E861012C5192DF0097826E /* Neurology-iOS-Client-AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Neurology-iOS-Client-AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		60E8610B2C5192DF0097826E /* Neurology-iOS-Client-AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Neurology-iOS-Client-AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		60E861262C5A858E0097826E /* StarscreamProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StarscreamProvider.swift; path = "Neurology-iOS-Client-App/Services/WebSocketProvider/StarscreamProvider.swift"; sourceTree = "<group>"; };
 		60F68C252C5ABB3D00933EE3 /* CallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,9 +97,9 @@
 			children = (
 				08FBF1D12C59B78600F4AE9A /* WebSocketProvider */,
 				08FBF1D22C59B78600F4AE9A /* API.swift */,
-				08FBF1D32C59B78600F4AE9A /* Message.swift */,
 				08FBF1D52C59B78600F4AE9A /* SignalingClient.swift */,
 				08FBF1D62C59B78600F4AE9A /* WebRTCClient.swift */,
+				08EEC3212C5AD5E30086C228 /* PeerJSOption.swift */,
 			);
 			name = Services;
 			path = "Neurology-iOS-Client-App/Services";
@@ -110,7 +108,6 @@
 		60E860E82C5192DE0097826E = {
 			isa = PBXGroup;
 			children = (
-				60E861262C5A858E0097826E /* StarscreamProvider.swift */,
 				60E860F32C5192DE0097826E /* Neurology-iOS-Client-App */,
 				60E860F22C5192DE0097826E /* Products */,
 				60E861222C5A84E00097826E /* Frameworks */,
@@ -319,12 +316,11 @@
 				08FBF1DF2C59B78600F4AE9A /* WebRTCClient.swift in Sources */,
 				08FBF1DE2C59B78600F4AE9A /* SignalingClient.swift in Sources */,
 				08FBF1D82C59B78600F4AE9A /* NativeWebSocket.swift in Sources */,
+				08EEC3222C5AD5E30086C228 /* PeerJSOption.swift in Sources */,
 				60E860F72C5192DE0097826E /* HomeView.swift in Sources */,
 				60E860F52C5192DE0097826E /* Neurology_iOS_Client_AppApp.swift in Sources */,
 				08FBF1DB2C59B78600F4AE9A /* API.swift in Sources */,
-				08FBF1D92C59B78600F4AE9A /* StarscreamProvider.swift in Sources */,
 				60F68C262C5ABB3D00933EE3 /* CallView.swift in Sources */,
-				08FBF1DC2C59B78600F4AE9A /* Message.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,7 +481,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Neurology-iOS-Client-App/Preview Content\"";
-				DEVELOPMENT_TEAM = 8MSLQL5SWW;
+				DEVELOPMENT_TEAM = VL7R24L9ZQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -514,7 +510,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Neurology-iOS-Client-App/Preview Content\"";
-				DEVELOPMENT_TEAM = 8MSLQL5SWW;
+				DEVELOPMENT_TEAM = VL7R24L9ZQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

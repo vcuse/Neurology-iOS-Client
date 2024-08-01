@@ -5,7 +5,7 @@ import Foundation
 class API {
     private let options: PeerJSOption
 
-    init(options: PeerJSOption, url: URL) {
+    init(options: PeerJSOption, url: URL) {	
         self.options = options
     }
 
