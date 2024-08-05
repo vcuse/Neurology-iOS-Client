@@ -8,6 +8,8 @@
 
 import Foundation
 import WebRTC
+import Combine
+
 private let config = Config.default
 protocol SignalClientDelegate: AnyObject {
     func signalClientDidConnect(_ signalClient: SignalingClient)
@@ -16,7 +18,7 @@ protocol SignalClientDelegate: AnyObject {
     func signalClient(_ signalClient: SignalingClient, didReceiveCandidate candidate: RTCIceCandidate)
 }
 
-final class SignalingClient: NSObject, RTCPeerConnectionDelegate {
+final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObject {
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange stateChanged: RTCSignalingState) {
         debugPrint("peerConnection new signaling state: \(stateChanged)")
     }
@@ -88,12 +90,13 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate {
     private var candidatesToHandle = [[String: Any]]()
     private var connectionId = ""
     private var theirPeerID = " "
+    @Published var ourPeerID = " "
     
     //Creating the websocket (connection to the signaling server)
     // this will almost always be a native web socket
-    init(url: URL, webRTCClient: WebRTCClient) {
+    init(url: URL) {
         
-        self.webRTCClient = webRTCClient
+        self.webRTCClient = WebRTCClient(iceServers: ["stun:stun.l.google.com:19302"])
         if #available(iOS 13.0, *) {
             self.webSocket = NativeWebSocket(url: url)
             
@@ -126,17 +129,21 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate {
         let api = API(options: options, url: url)
         print(api.self)
         Task {
-            await api.getAddress(url:url) { newUrl, error in
+            await api.getAddress(url:url) { newUrl, id, error in
                 if let error = error {
                     print("Error retrieving address: \(error)")
                     // Handle the error in your API (e.g., return an error response)
                 } else if let newUrl = newUrl {
                     // Use the new URL in your API logic
                     print("Received new URL from getAddress: \(newUrl)")
+                    DispatchQueue.main.async { // Ensure this runs on the main thread
+                        self.ourPeerID = id ?? "no PeerID"
+                                        }
+                    
                     guard let url = URL(string: newUrl) else { return }
                     self.webSocket = NativeWebSocket(url: url)
                     self.connect()
-                    
+                   
                     
                 }
             }
@@ -144,6 +151,10 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate {
         
         //print("Unique ID OUTSIDE OF CODE IS ", uniqueID)
         
+    }
+    
+    func getOurID() -> String{
+        return self.ourPeerID
     }
     
     

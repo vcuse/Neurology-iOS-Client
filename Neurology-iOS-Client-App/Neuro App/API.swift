@@ -55,7 +55,7 @@ class API {
     }
 
     @available(iOS 13.0, *)
-    func getAddress(url: URL, completion: @escaping (String?, Error?) -> ()) async {
+    func getAddress(url: URL, completion: @escaping (String?, String?, Error?) -> ()) async {
 
         var uniqueID = ""
         let options = PeerJSOption(host: "videochat-signaling-app.ue.r.appspot.com",
@@ -73,12 +73,12 @@ class API {
                 print("Retrieved ID:", uniqueID)
 
                 let newUrl = url.absoluteString + "/" + "peerjs?key=peerjs" + "&id=" + id + "&token=435345"
-                completion(newUrl, nil) // Pass newUrl to completion
+                completion(newUrl,id, nil) // Pass newUrl to completion
                 //debugPrint("we sent a newURL from API:", newUrl)
                 return
             case .failure(let error):
                 print("Error retrieving ID:", error)
-                completion(nil, error) // Pass error to completion
+                completion(nil, nil, error) // Pass error to completion
                 
             }
         }

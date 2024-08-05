@@ -8,10 +8,14 @@
 import SwiftUI
 
 @main
-struct Neuro_AppApp: App {
+struct Neuro_App: App {
+    
+    // Link the AppDelegate to your SwiftUI app
+        @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
         }
     }
 }

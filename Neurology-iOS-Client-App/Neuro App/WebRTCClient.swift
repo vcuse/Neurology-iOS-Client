@@ -10,11 +10,6 @@
 import Foundation
 import WebRTC
 
-struct Server2Message {
-    let type: ServerMessageType
-    let payload: String
-    let dst: String
-}
 
 
 protocol WebRTCClientDelegate: AnyObject {
@@ -23,7 +18,7 @@ protocol WebRTCClientDelegate: AnyObject {
     func webRTCClient(_ client: WebRTCClient, didReceiveData data: Data)
 }
 
-final class WebRTCClient: NSObject {
+final class WebRTCClient: NSObject, ObservableObject {
     
     // The `RTCPeerConnectionFactory` is in charge of creating new RTCPeerConnection instances.
     // A new RTCPeerConnection should be created every new call, but the factory is shared.
