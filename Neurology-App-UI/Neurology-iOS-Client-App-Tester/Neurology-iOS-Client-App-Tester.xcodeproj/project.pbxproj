@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		600574942C6282C100042FBF /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600574932C6282C100042FBF /* SignInView.swift */; };
 		60E861352C5A89950097826E /* Neurology_iOS_Client_App_TesterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E861342C5A89950097826E /* Neurology_iOS_Client_App_TesterApp.swift */; };
 		60E861372C5A89950097826E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E861362C5A89950097826E /* ContentView.swift */; };
 		60E861392C5A89960097826E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60E861382C5A89960097826E /* Assets.xcassets */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		600574932C6282C100042FBF /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		60E861312C5A89950097826E /* Neurology-iOS-Client-App-Tester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Neurology-iOS-Client-App-Tester.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		60E861342C5A89950097826E /* Neurology_iOS_Client_App_TesterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neurology_iOS_Client_App_TesterApp.swift; sourceTree = "<group>"; };
 		60E861362C5A89950097826E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 		60E861332C5A89950097826E /* Neurology-iOS-Client-App-Tester */ = {
 			isa = PBXGroup;
 			children = (
+				600574932C6282C100042FBF /* SignInView.swift */,
 				60F68C232C5A9FDD00933EE3 /* CallView.swift */,
 				60E861362C5A89950097826E /* ContentView.swift */,
 				60E861342C5A89950097826E /* Neurology_iOS_Client_App_TesterApp.swift */,
@@ -262,6 +265,7 @@
 			files = (
 				60F68C242C5A9FDD00933EE3 /* CallView.swift in Sources */,
 				60E861372C5A89950097826E /* ContentView.swift in Sources */,
+				600574942C6282C100042FBF /* SignInView.swift in Sources */,
 				60E861352C5A89950097826E /* Neurology_iOS_Client_App_TesterApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
