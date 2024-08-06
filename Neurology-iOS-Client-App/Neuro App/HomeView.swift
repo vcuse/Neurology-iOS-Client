@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct HomeView: View {
+    private let config = Config.default
+    
+    @StateObject private var signalingClient = SignalingClient(url: URL (string: "wss://videochat-signaling-app.ue.r.appspot.com:443")!)
+    
+    
     var onlineUsers = ["34680986443", "7492082646", "8827649022"]
     
     var body: some View {
@@ -16,7 +21,8 @@ struct HomeView: View {
                 .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                 .bold()
                 .padding(10)
-            Text("Your Peer ID: blah blah blah")
+        
+            Text("Your Peer ID: (\(signalingClient.ourPeerID)")
                 .bold()
             Text("Online Now:")
                 .font(.headline)
