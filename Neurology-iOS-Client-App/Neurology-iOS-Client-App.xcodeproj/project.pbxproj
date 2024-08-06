@@ -15,20 +15,19 @@
 		0813C0B62C6159A200CF5C70 /* SignalingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBF1D52C59B78600F4AE9A /* SignalingClient.swift */; };
 		0813C0B72C6159A200CF5C70 /* PeerJSOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0813C0B32C6159A200CF5C70 /* PeerJSOption.swift */; };
 		0813C0B82C6159A200CF5C70 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EEC3232C5BF9E70086C228 /* Config.swift */; };
-		0813C0BA2C615AA500CF5C70 /* WebSocketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0813C0B92C615AA500CF5C70 /* WebSocketProvider.swift */; };
-		0813C0BC2C615ABF00CF5C70 /* NativeWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0813C0BB2C615ABF00CF5C70 /* NativeWebSocket.swift */; };
 		088B348E2C5C03A000094A02 /* Neuro_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088B348D2C5C03A000094A02 /* Neuro_AppApp.swift */; };
 		088B34902C5C03A000094A02 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088B348F2C5C03A000094A02 /* ContentView.swift */; };
 		088B34922C5C03A100094A02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 088B34912C5C03A100094A02 /* Assets.xcassets */; };
 		088B34952C5C03A100094A02 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 088B34942C5C03A100094A02 /* Preview Assets.xcassets */; };
 		088B349A2C5C03DA00094A02 /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 088B34992C5C03DA00094A02 /* WebRTC */; };
+		08A99ED52C6297E20046D4A7 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A99ED42C6297E20046D4A7 /* SignInView.swift */; };
+		08A99ED82C6297FA0046D4A7 /* NativeWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A99ED62C6297FA0046D4A7 /* NativeWebSocket.swift */; };
+		08A99ED92C6297FA0046D4A7 /* WebSocketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A99ED72C6297FA0046D4A7 /* WebSocketProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0813C0B12C6155B200CF5C70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0813C0B32C6159A200CF5C70 /* PeerJSOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerJSOption.swift; sourceTree = "<group>"; };
-		0813C0B92C615AA500CF5C70 /* WebSocketProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebSocketProvider.swift; path = "../../../../Desktop/WebRTC-iOS/WebRTC-Demo-App/Sources/Services/WebSocketProvider/WebSocketProvider.swift"; sourceTree = "<group>"; };
-		0813C0BB2C615ABF00CF5C70 /* NativeWebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NativeWebSocket.swift; path = "../../../../Desktop/WebRTC-iOS/WebRTC-Demo-App/Sources/Services/WebSocketProvider/NativeWebSocket.swift"; sourceTree = "<group>"; };
 		088B345D2C5C023F00094A02 /* Neuro_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neuro_AppApp.swift; sourceTree = "<group>"; };
 		088B345F2C5C023F00094A02 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		088B34612C5C024000094A02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -41,6 +40,9 @@
 		088B348F2C5C03A000094A02 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		088B34912C5C03A100094A02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		088B34942C5C03A100094A02 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		08A99ED42C6297E20046D4A7 /* SignInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		08A99ED62C6297FA0046D4A7 /* NativeWebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeWebSocket.swift; sourceTree = "<group>"; };
+		08A99ED72C6297FA0046D4A7 /* WebSocketProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketProvider.swift; sourceTree = "<group>"; };
 		08EEC3212C5AD5E30086C228 /* PeerJSOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PeerJSOption.swift; path = "../../../../../Desktop/WebRTC-iOS/WebRTC-Demo-App/Sources/Extensions/PeerJSOption.swift"; sourceTree = "<group>"; };
 		08EEC3232C5BF9E70086C228 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		08FBF1CE2C59B78600F4AE9A /* NativeWebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeWebSocket.swift; sourceTree = "<group>"; };
@@ -49,10 +51,7 @@
 		08FBF1D22C59B78600F4AE9A /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		08FBF1D52C59B78600F4AE9A /* SignalingClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignalingClient.swift; sourceTree = "<group>"; };
 		08FBF1D62C59B78600F4AE9A /* WebRTCClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebRTCClient.swift; sourceTree = "<group>"; };
-		60E860F42C5192DE0097826E /* Neurology_iOS_Client_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neurology_iOS_Client_AppApp.swift; sourceTree = "<group>"; };
 		60E860F62C5192DE0097826E /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		60E860F82C5192DE0097826E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		60E860FB2C5192DE0097826E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		60F68C252C5ABB3D00933EE3 /* CallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,6 +70,22 @@
 		088B345C2C5C023F00094A02 /* Neuro App */ = {
 			isa = PBXGroup;
 			children = (
+				08A99ED72C6297FA0046D4A7 /* WebSocketProvider.swift */,
+				08FBF1D22C59B78600F4AE9A /* API.swift */,
+				08A99ED62C6297FA0046D4A7 /* NativeWebSocket.swift */,
+				08FBF1D52C59B78600F4AE9A /* SignalingClient.swift */,
+				08FBF1D62C59B78600F4AE9A /* WebRTCClient.swift */,
+				0813C0B32C6159A200CF5C70 /* PeerJSOption.swift */,
+				08FBF1D72C59B78600F4AE9A /* Services */,
+				088B348D2C5C03A000094A02 /* Neuro_AppApp.swift */,
+				60E860F62C5192DE0097826E /* HomeView.swift */,
+				08EEC3232C5BF9E70086C228 /* Config.swift */,
+				60F68C252C5ABB3D00933EE3 /* CallView.swift */,
+				088B348F2C5C03A000094A02 /* ContentView.swift */,
+				088B34912C5C03A100094A02 /* Assets.xcassets */,
+				088B34932C5C03A100094A02 /* Preview Content */,
+				0813C0B12C6155B200CF5C70 /* AppDelegate.swift */,
+				08A99ED42C6297E20046D4A7 /* SignInView.swift */,
 				088B345D2C5C023F00094A02 /* Neuro_AppApp.swift */,
 				088B345F2C5C023F00094A02 /* ContentView.swift */,
 				088B34612C5C024000094A02 /* Assets.xcassets */,
@@ -104,28 +119,6 @@
 			path = "Neuro AppUITests";
 			sourceTree = "<group>";
 		};
-		088B348C2C5C03A000094A02 /* Neuro App */ = {
-			isa = PBXGroup;
-			children = (
-				0813C0B92C615AA500CF5C70 /* WebSocketProvider.swift */,
-				08FBF1D22C59B78600F4AE9A /* API.swift */,
-				0813C0BB2C615ABF00CF5C70 /* NativeWebSocket.swift */,
-				08FBF1D52C59B78600F4AE9A /* SignalingClient.swift */,
-				08FBF1D62C59B78600F4AE9A /* WebRTCClient.swift */,
-				0813C0B32C6159A200CF5C70 /* PeerJSOption.swift */,
-				08FBF1D72C59B78600F4AE9A /* Services */,
-				088B348D2C5C03A000094A02 /* Neuro_AppApp.swift */,
-				60E860F62C5192DE0097826E /* HomeView.swift */,
-				08EEC3232C5BF9E70086C228 /* Config.swift */,
-				60F68C252C5ABB3D00933EE3 /* CallView.swift */,
-				088B348F2C5C03A000094A02 /* ContentView.swift */,
-				088B34912C5C03A100094A02 /* Assets.xcassets */,
-				088B34932C5C03A100094A02 /* Preview Content */,
-				0813C0B12C6155B200CF5C70 /* AppDelegate.swift */,
-			);
-			path = "Neuro App";
-			sourceTree = "<group>";
-		};
 		088B34932C5C03A100094A02 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,56 +150,12 @@
 		60E860E82C5192DE0097826E = {
 			isa = PBXGroup;
 			children = (
-				60E860F32C5192DE0097826E /* Neurology-iOS-Client-App */,
 				088B345C2C5C023F00094A02 /* Neuro App */,
 				088B346D2C5C024000094A02 /* Neuro AppTests */,
 				088B34772C5C024000094A02 /* Neuro AppUITests */,
-				088B348C2C5C03A000094A02 /* Neuro App */,
 				60E861222C5A84E00097826E /* Frameworks */,
 				088B348B2C5C03A000094A02 /* Neuro App.app */,
 			);
-			sourceTree = "<group>";
-		};
-		60E860F32C5192DE0097826E /* Neurology-iOS-Client-App */ = {
-			isa = PBXGroup;
-			children = (
-				60E861212C52CCCD0097826E /* Other */,
-				60E8611F2C52CCAD0097826E /* ViewModels */,
-				60E8611E2C52CCA30097826E /* Views */,
-				60E860FA2C5192DE0097826E /* Preview Content */,
-			);
-			path = "Neurology-iOS-Client-App";
-			sourceTree = "<group>";
-		};
-		60E860FA2C5192DE0097826E /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				60E860FB2C5192DE0097826E /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		60E8611E2C52CCA30097826E /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		60E8611F2C52CCAD0097826E /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		60E861212C52CCCD0097826E /* Other */ = {
-			isa = PBXGroup;
-			children = (
-				60E860F42C5192DE0097826E /* Neurology_iOS_Client_AppApp.swift */,
-				60E860F82C5192DE0097826E /* Assets.xcassets */,
-			);
-			path = Other;
 			sourceTree = "<group>";
 		};
 		60E861222C5A84E00097826E /* Frameworks */ = {
@@ -296,17 +245,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				0813C0AF2C61538700CF5C70 /* CallView.swift in Sources */,
-				0813C0BA2C615AA500CF5C70 /* WebSocketProvider.swift in Sources */,
 				0813C0B02C61539200CF5C70 /* HomeView.swift in Sources */,
 				088B34902C5C03A000094A02 /* ContentView.swift in Sources */,
 				0813C0B62C6159A200CF5C70 /* SignalingClient.swift in Sources */,
+				08A99ED92C6297FA0046D4A7 /* WebSocketProvider.swift in Sources */,
 				0813C0B72C6159A200CF5C70 /* PeerJSOption.swift in Sources */,
-				0813C0BC2C615ABF00CF5C70 /* NativeWebSocket.swift in Sources */,
 				0813C0B22C6155B200CF5C70 /* AppDelegate.swift in Sources */,
+				08A99ED82C6297FA0046D4A7 /* NativeWebSocket.swift in Sources */,
 				088B348E2C5C03A000094A02 /* Neuro_AppApp.swift in Sources */,
 				0813C0B82C6159A200CF5C70 /* Config.swift in Sources */,
 				0813C0B42C6159A200CF5C70 /* WebRTCClient.swift in Sources */,
 				0813C0B52C6159A200CF5C70 /* API.swift in Sources */,
+				08A99ED52C6297E20046D4A7 /* SignInView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
