@@ -13,8 +13,6 @@ struct HomeView: View {
     @StateObject private var signalingClient = SignalingClient(url: URL (string: "wss://videochat-signaling-app.ue.r.appspot.com:443")!)
     
     
-    var onlineUsers = ["34680986443", "7492082646", "8827649022"]
-    
     var body: some View {
         VStack {
             Text("Hello, user!")
@@ -24,12 +22,13 @@ struct HomeView: View {
         
             Text("Your Peer ID: (\(signalingClient.ourPeerID)")
                 .bold()
+                .multilineTextAlignment(.center)
+                .padding(.bottom, 25)
             Text("Online Now:")
                 .font(.headline)
-                .padding(10)
             
             VStack(alignment: .leading) {
-                if onlineUsers.isEmpty {
+                if signalingClient.onlineUsers.isEmpty {
                     Text("Hmm, nobody's here right now!")
                         .padding()
                         .background(Color.yellow)
@@ -37,7 +36,7 @@ struct HomeView: View {
                         .shadow(radius: 5)
                 } else {
                     VStack(alignment: .leading) {
-                        ForEach(onlineUsers, id: \.self) { user in
+                        ForEach(signalingClient.onlineUsers, id: \.self) { user in
                             OnlineUserItemView(uuid: user)
                         }
                     }
@@ -52,6 +51,9 @@ struct HomeView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .padding()
+        .onAppear() {
+            signalingClient.fetchOnlineUsers()
+        }
     }
 }
 

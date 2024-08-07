@@ -11,6 +11,8 @@ import WebRTC
 import Combine
 
 private let config = Config.default
+
+
 protocol SignalClientDelegate: AnyObject {
     func signalClientDidConnect(_ signalClient: SignalingClient)
     func signalClientDidDisconnect(_ signalClient: SignalingClient)
@@ -19,6 +21,7 @@ protocol SignalClientDelegate: AnyObject {
 }
 
 final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObject {
+
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange stateChanged: RTCSignalingState) {
         debugPrint("peerConnection new signaling state: \(stateChanged)")
     }
@@ -90,7 +93,11 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
     private var candidatesToHandle = [[String: Any]]()
     private var connectionId = ""
     private var theirPeerID = " "
+    private var fetchTimer: Timer?
     @Published var ourPeerID = " "
+    @Published var onlineUsers: [String] = []
+    
+
     
     //Creating the websocket (connection to the signaling server)
     // this will almost always be a native web socket
@@ -105,9 +112,9 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
         }
         super.init()
 
-                if #available(iOS 13.0, *) {
+        if #available(iOS 13.0, *) {
             self.getAddress(url: url)
-            
+            startFetchingOnlineUsers()
         } else {
             // Fallback on earlier versions
         }
@@ -115,6 +122,11 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
         //we are saying that the peerConnection messages will output to this class
         self.webRTCClient.peerConnection.delegate = self
     }
+    
+    deinit {
+        fetchTimer?.invalidate()
+    }
+    
     
     @available(iOS 13.0, *)
     func getAddress(url: URL) -> Void {
@@ -152,6 +164,46 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
         //print("Unique ID OUTSIDE OF CODE IS ", uniqueID)
         
     }
+    
+    func startFetchingOnlineUsers() {
+        fetchTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            self?.fetchOnlineUsers()
+        }
+    }
+    
+    func fetchOnlineUsers() {
+        guard let url = URL(string: "https://videochat-signaling-app.ue.r.appspot.com/key=peerjs/peers") else { return }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        let session = URLSession.shared
+        session.dataTask(with: request) { [weak self] data, response, error in
+            if let error = error {
+                print("Error fetching online users: \(error)")
+                return
+            }
+            
+            guard let data = data else {
+                print("No data recieved")
+                return
+            }
+            
+            do {
+                if let onlineUsers = try JSONSerialization.jsonObject(with: data, options: []) as? [String] {
+                    DispatchQueue.main.async {
+                        self?.onlineUsers = onlineUsers
+                    }
+                }
+            } catch {
+                print("Error parsing online users: \(error)")
+            }
+            
+        }.resume()
+        
+    }
+    
+    
     
     func getOurID() -> String{
         return self.ourPeerID
