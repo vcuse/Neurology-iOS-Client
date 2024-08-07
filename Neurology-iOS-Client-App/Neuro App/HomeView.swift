@@ -28,7 +28,10 @@ struct HomeView: View {
                 .font(.headline)
             
             VStack(alignment: .leading) {
-                if signalingClient.onlineUsers.isEmpty {
+                // filter out our own id
+                let filteredOnlineUsers = signalingClient.onlineUsers.filter { $0 != signalingClient.ourPeerID }
+                
+                if filteredOnlineUsers.isEmpty {
                     Text("Hmm, nobody's here right now!")
                         .padding()
                         .background(Color.yellow)
@@ -36,7 +39,7 @@ struct HomeView: View {
                         .shadow(radius: 5)
                 } else {
                     VStack(alignment: .leading) {
-                        ForEach(signalingClient.onlineUsers, id: \.self) { user in
+                        ForEach(filteredOnlineUsers, id: \.self) { user in
                             OnlineUserItemView(uuid: user)
                         }
                     }
@@ -49,6 +52,13 @@ struct HomeView: View {
             
             Spacer()
         }
+        .overlay(
+            Group {
+                if signalingClient.isRinging {
+                    RingingPopopView(signalingClient: signalingClient)
+                }
+            }
+        )
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .padding()
         .onAppear() {
@@ -81,6 +91,33 @@ struct OnlineUserItemView: View {
         .padding(5)
         .background(Color.yellow)
         .cornerRadius(10)
+    }
+}
+
+struct RingingPopopView: View {
+    @ObservedObject var signalingClient: SignalingClient
+    
+    var body: some View {
+        VStack {
+            Text("Ringing...")
+                .font(.title2)
+                .padding(.top, 20)
+                .foregroundColor(.white)
+            Button(action: {
+                signalingClient.cancelCall()
+            }) {
+                Text("Cancel")
+                    .foregroundColor(.red)
+                    .padding(5)
+                    .background(Color.white)
+                    .cornerRadius(10)
+            }
+            .padding(.bottom, 10)
+        }
+        .frame(width: 200, height: 100)
+        .background(Color.gray)
+        .cornerRadius(10)
+        .shadow(radius: 10)
     }
 }
 

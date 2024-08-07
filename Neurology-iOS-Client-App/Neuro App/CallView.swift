@@ -26,7 +26,7 @@ struct CallView: View {
                     VStack {
                         ScrollViewReader { proxy in
                             ScrollView {
-                                VStack(alignment: .leading){
+                                VStack(alignment: .leading) {
                                     ForEach(messageLog.indices, id: \.self) { index in
                                         Text("You: \(messageLog[index])")
                                             .padding(5)
@@ -36,16 +36,25 @@ struct CallView: View {
                                 }
                                 .padding(10)
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                                .onChange(of: messageLog.count) { _ in
-                                    // scroll to last message
-                                    if let lastIndex = messageLog.indices.last {
-                                        withAnimation{
-                                            proxy.scrollTo(lastIndex, anchor: .bottom)
-                                        }
+                            }
+                            .onAppear {
+                                // Scroll to the last message when the view appears
+                                if let lastIndex = messageLog.indices.last {
+                                    withAnimation {
+                                        proxy.scrollTo(lastIndex, anchor: .bottom)
+                                    }
+                                }
+                            }
+                            .onChange(of: messageLog.count) {
+                                // scroll to last message
+                                if let lastIndex = messageLog.indices.last {
+                                    withAnimation {
+                                        proxy.scrollTo(lastIndex, anchor: .bottom)
                                     }
                                 }
                             }
                         }
+
                         
                         HStack {
                             TextField("Type a message...", text: $messageText, onEditingChanged: { isEditing in
