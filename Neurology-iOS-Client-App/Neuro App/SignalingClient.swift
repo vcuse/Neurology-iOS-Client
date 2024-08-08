@@ -96,6 +96,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
     private var fetchTimer: Timer?
     @Published var ourPeerID = " "
     @Published var onlineUsers: [String] = []
+    @Published var isRinging = false
     
 
     
@@ -203,6 +204,23 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
         
     }
     
+    func callUser(id: String) {
+        // implement logic to call a user
+        print("Calling user with ID: \(id)")
+        isRinging = true
+    }
+    
+    func cancelCall() {
+        // implement logic
+        print("Cancelling the call")
+        isRinging = false
+    }
+    
+    func endCall() {
+        // implement logic
+        print("Ending the call")
+        isRinging = false
+    }
     
     
     func getOurID() -> String{
