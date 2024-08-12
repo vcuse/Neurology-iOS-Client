@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import UserNotifications
+import UIKit
 
 @available(iOS 13.0, *)
 class NativeWebSocket: NSObject, WebSocketProvider {
@@ -22,6 +24,9 @@ class NativeWebSocket: NSObject, WebSocketProvider {
         
         self.url = url
         super.init()
+        
+        
+    
     }
 
     func connect() {
