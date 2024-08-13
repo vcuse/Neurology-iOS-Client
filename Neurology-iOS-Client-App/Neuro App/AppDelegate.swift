@@ -8,10 +8,15 @@
 import UIKit
 import UserNotifications
 
+
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+    let pushNotificationManager = PushNotificationManager()
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        
+        
         // Custom initialization logic here
         print("App has launched")
         
@@ -53,4 +58,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         print("Notification tapped: \(response.notification.request.content.userInfo)")
         completionHandler()
     }
+    
+    
 }
