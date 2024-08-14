@@ -10,7 +10,7 @@ class API {
     }
 
     private func buildRequest(method: String) -> URLRequest? {
-        let protocolScheme = options.secure ? "https" : "http"
+        let protocolScheme = options.secure ? "http" : "http"
         let urlString = "\(protocolScheme)://\(options.host):\(options.port)\(options.path)\(options.key)/\(method)"
         guard let url = URL(string: urlString) else {
             return nil
@@ -58,11 +58,11 @@ class API {
     func getAddress(url: URL, completion: @escaping (String?, String?, Error?) -> ()) async {
 
         var uniqueID = ""
-        let options = PeerJSOption(host: "videochat-signaling-app.ue.r.appspot.com",
-                                   port: 443,
+        let options = PeerJSOption(host: "192.168.1.170",
+                                   port: 9000,
                                    path: "/",
                                    key: "your_key_here",
-                                   secure: true)
+                                   secure: false)
 
         let api = API(options: options, url: url)
 

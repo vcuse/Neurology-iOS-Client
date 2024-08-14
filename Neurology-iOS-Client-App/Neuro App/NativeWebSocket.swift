@@ -23,6 +23,8 @@ class NativeWebSocket: NSObject, WebSocketProvider {
         
         
         self.url = url
+        
+        
         super.init()
         
         
@@ -32,11 +34,17 @@ class NativeWebSocket: NSObject, WebSocketProvider {
     func connect() {
         
         
-        //debugPrint("WE ARE CONNECTING WITH URL", url)
+        debugPrint("WE ARE CONNECTING WITH URL", url)
         let socket = urlSession.webSocketTask(with: url)
+        
         socket.resume()
         self.socket = socket
+        
         self.readMessage()
+        
+        
+        
+        
     }
 
     func send(data: Data) {
