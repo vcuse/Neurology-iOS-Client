@@ -7,9 +7,29 @@
 
 import UIKit
 import UserNotifications
+import PushKit
 
 
-class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, PKPushRegistryDelegate {
+    var voipRegistry: PKPushRegistry!
+    
+    func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
+        if type == .voIP {
+                    let tokenString = pushCredentials.token.map { String(format: "%02x", $0) }.joined()
+                    print("VoIP Device Token: \(tokenString)")
+            UserDefaults.standard.setValue(tokenString, forKey: "deviceToken")
+                    // Save or send the VoIP token to your server if needed
+                }
+    }
+    
+    func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType) {
+            if type == .voIP {
+                // Handle the incoming VoIP push here
+                handleIncomingCall(payload: payload)
+            }
+        }
+    
+    
     let pushNotificationManager = PushNotificationManager()
     
     func application(_ application: UIApplication,
@@ -32,6 +52,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
         
+        registerForVoIPPushes()
+        
         return true
     }
     
@@ -40,10 +62,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let tokenString = deviceToken.map { String(format: "%02x", $0) }.joined()
         print("Device Token: \(tokenString)")
         
-        UserDefaults.standard.setValue(tokenString, forKey: "deviceToken")
+       
         
         // Send the token to your server if needed
     }
+    
+    func registerForVoIPPushes() {
+        self.voipRegistry = PKPushRegistry(queue: nil)
+        
+        self.voipRegistry.delegate = self
+        self.voipRegistry.desiredPushTypes = [PKPushType.voIP]
+    }
+
+    private func handleIncomingCall(payload: PKPushPayload) {
+            // Extract information from the payload
+            let callId = payload.dictionaryPayload["callId"] as? String ?? "unknown"
+            
+            
+        }
     
     // Handle registration failures
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {

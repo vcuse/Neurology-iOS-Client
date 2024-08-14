@@ -36,4 +36,7 @@ class PushNotificationManager: NSObject, PKPushRegistryDelegate {
     func pushRegistry(_ registry: PKPushRegistry, didInvalidatePushTokenFor type: PKPushType) {
         print("Push token invalidated for type: \(type)")
     }
+    
+    
+    
 }
