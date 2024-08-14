@@ -50,6 +50,7 @@
 		08CC42D92C6BCA61002C7AE4 /* CallProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CallProvider.swift; path = "../../../Neurology-iOS-Client/Neurology-iOS-Client-App/Neuro App/CallProvider.swift"; sourceTree = "<group>"; };
 		08EEC3212C5AD5E30086C228 /* PeerJSOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PeerJSOption.swift; path = "../../../../../Desktop/WebRTC-iOS/WebRTC-Demo-App/Sources/Extensions/PeerJSOption.swift"; sourceTree = "<group>"; };
 		08EEC3232C5BF9E70086C228 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		08F4A02B2C6D3C9000234934 /* Neuro-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Neuro-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		08FBF1CE2C59B78600F4AE9A /* NativeWebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeWebSocket.swift; sourceTree = "<group>"; };
 		08FBF1CF2C59B78600F4AE9A /* StarscreamProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarscreamProvider.swift; sourceTree = "<group>"; };
 		08FBF1D02C59B78600F4AE9A /* WebSocketProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketProvider.swift; sourceTree = "<group>"; };
@@ -75,6 +76,7 @@
 		088B345C2C5C023F00094A02 /* Neuro App */ = {
 			isa = PBXGroup;
 			children = (
+				08F4A02B2C6D3C9000234934 /* Neuro-App-Info.plist */,
 				080411D72C6A88EB0019364A /* Neuro App.entitlements */,
 				08A99ED72C6297FA0046D4A7 /* WebSocketProvider.swift */,
 				08FBF1D22C59B78600F4AE9A /* API.swift */,
@@ -285,6 +287,10 @@
 				DEVELOPMENT_TEAM = VL7R24L9ZQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Neuro-App-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Usage to video chat with selected users ";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Usage to video chat with selected users";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -315,6 +321,10 @@
 				DEVELOPMENT_TEAM = VL7R24L9ZQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Neuro-App-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Usage to video chat with selected users ";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Usage to video chat with selected users";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

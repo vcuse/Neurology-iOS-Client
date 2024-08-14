@@ -39,6 +39,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenString = deviceToken.map { String(format: "%02x", $0) }.joined()
         print("Device Token: \(tokenString)")
+        
+        UserDefaults.standard.setValue(tokenString, forKey: "deviceToken")
+        
         // Send the token to your server if needed
     }
     

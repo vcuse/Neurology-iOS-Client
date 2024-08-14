@@ -156,9 +156,9 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
                     guard let url = URL(string: newUrl) else { return }
                     self.webSocket = NativeWebSocket(url: url)
                     self.connect()
+                    let savedToken = UserDefaults.standard.string(forKey: "deviceToken")
                     
-                    
-                    let message: [String: Any] = ["type":"IOSCLIENT", "src": "134", "dst": "314", "payload": "test"]
+                    let message: [String: Any] = ["type":"IOSCLIENT", "src": self.ourPeerID, "dst": "314", "payload": savedToken as Any]
                     do{
                         let jsonData = try JSONSerialization.data( withJSONObject: message)
                         self.webSocket.send(data: jsonData)
