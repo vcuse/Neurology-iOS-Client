@@ -8,10 +8,14 @@
 import UIKit
 import UserNotifications
 import PushKit
+import CallKit
 
 
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, PKPushRegistryDelegate {
     var voipRegistry: PKPushRegistry!
+    var cxProvider = CallProvider()
+    
+    
     
     func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
         if type == .voIP {
@@ -20,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             UserDefaults.standard.setValue(tokenString, forKey: "deviceToken")
                     // Save or send the VoIP token to your server if needed
                 }
+    
     }
     
     func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType) {
@@ -78,7 +83,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             // Extract information from the payload
             let callId = payload.dictionaryPayload["callId"] as? String ?? "unknown"
             
-            
+            print("INCOMING CALL")
+        
+        let uuid = UUID()
+        let update = CXCallUpdate()
+        
+        cxProvider.provider.reportNewIncomingCall(with: uuid, update: update){ error in
+            // Add your implementation to report the call.
+            // ...
+        }
         }
     
     // Handle registration failures

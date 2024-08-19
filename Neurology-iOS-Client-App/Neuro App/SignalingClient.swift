@@ -133,11 +133,11 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
     func getAddress(url: URL) -> Void {
         
         //var uniqueID = ""
-        let options = PeerJSOption(host: "192.168.1.170",
-                                   port: 9000,
+        let options = PeerJSOption(host: "videochat-signaling-app.ue.r.appspot.com",
+                                   port: 443,
                                    path: "/",
                                    key: "your_key_here",
-                                   secure: false)
+                                   secure: true)
         
         let api = API(options: options, url: url)
         print(api.self)
@@ -182,7 +182,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
     }
     
     func fetchOnlineUsers() {
-        guard let url = URL(string: "http://192.168.1.170:9000/key=peerjs/peers") else { return }
+        guard let url = URL(string: "https://videochat-signaling-app.ue.r.appspot.com/key=peerjs/peers") else { return }
 
         var request = URLRequest(url: url)
         request.httpMethod = "GET"

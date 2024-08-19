@@ -14,7 +14,7 @@ class CallProvider: NSObject, CXProviderDelegate{
     }
     
     
-private let provider: CXProvider
+let provider: CXProvider
     
     override init() {
         // Create the provider configuration

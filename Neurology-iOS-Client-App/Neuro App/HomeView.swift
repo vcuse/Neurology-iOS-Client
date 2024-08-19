@@ -17,7 +17,7 @@ struct HomeView: View {
     
     private let config = Config.default
     
-    @StateObject private var signalingClient = SignalingClient(url: URL (string: "ws://192.168.1.170:9000")!)
+    @StateObject private var signalingClient = SignalingClient(url: URL (string: "wss://videochat-signaling-app.ue.r.appspot.com:443")!)
     
     
     var body: some View {

@@ -15,6 +15,8 @@ class NativeWebSocket: NSObject, WebSocketProvider {
     
     var delegate: WebSocketProviderDelegate?
     private let url: URL
+    private var heartbeatTimer: Timer?
+    private let pingTimer = 5000
     private var socket: URLSessionWebSocketTask?
     private lazy var urlSession: URLSession = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
 
@@ -27,18 +29,18 @@ class NativeWebSocket: NSObject, WebSocketProvider {
         
         super.init()
         
-        
-    
+        let socket = urlSession.webSocketTask(with: url)
+        self.socket = socket
     }
 
     func connect() {
         
         
         debugPrint("WE ARE CONNECTING WITH URL", url)
-        let socket = urlSession.webSocketTask(with: url)
         
-        socket.resume()
-        self.socket = socket
+        
+        self.socket?.resume()
+        
         
         self.readMessage()
         
@@ -46,7 +48,28 @@ class NativeWebSocket: NSObject, WebSocketProvider {
         
         
     }
-
+    
+    private func startHeartBeat(){
+        heartbeatTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
+        Task{
+            guard let self = self else { return }
+            debugPrint("sent heartbeat")
+            await self.sendHeartbeat()
+            }
+        }
+    }
+    
+    private func sendHeartbeat() async {
+        let payload: [String: Any] = ["type": "HEARTBEAT"]
+        do {
+            let jsonData = try JSONSerialization.data( withJSONObject: payload)
+            try await self.socket?.send(.data(jsonData))
+            
+        }
+        catch{
+            debugPrint("Error sending heartbeat")
+        }
+    }
     func send(data: Data) {
         self.socket?.send(.data(data)) { _ in }
         debugPrint("We sent data")
