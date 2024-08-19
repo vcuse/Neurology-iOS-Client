@@ -21,7 +21,7 @@ protocol SignalClientDelegate: AnyObject {
 }
 
 final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObject {
-
+    
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange stateChanged: RTCSignalingState) {
         debugPrint("peerConnection new signaling state: \(stateChanged)")
     }
@@ -98,7 +98,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
     @Published var onlineUsers: [String] = []
     @Published var isRinging = false
     
-
+    
     
     //Creating the websocket (connection to the signaling server)
     // this will almost always be a native web socket
@@ -112,7 +112,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
             exit(0)
         }
         super.init()
-
+        
         if #available(iOS 13.0, *) {
             self.getAddress(url: url)
             startFetchingOnlineUsers()
@@ -151,7 +151,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
                     print("Received new URL from getAddress: \(newUrl)")
                     DispatchQueue.main.async { // Ensure this runs on the main thread
                         self.ourPeerID = id ?? "no PeerID"
-                                        }
+                    }
                     
                     guard let url = URL(string: newUrl) else { return }
                     self.webSocket = NativeWebSocket(url: url)
@@ -183,7 +183,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
     
     func fetchOnlineUsers() {
         guard let url = URL(string: "https://videochat-signaling-app.ue.r.appspot.com/key=peerjs/peers") else { return }
-
+        
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
@@ -242,7 +242,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
         self.webSocket.connect()
     }
     
- 
+    
     
 }
 
@@ -265,105 +265,29 @@ extension SignalingClient: WebSocketProviderDelegate {
     
     
     func webSocket(_ webSocket: WebSocketProvider, didReceiveData data: Data) {
-      
+        
         
         
     }
     
+    //handle message is where we determine what to do when the server sends us a message
+    // basically this is where we answer a call
+    
     func handleMessage(message: String){
-        //print("we are in handleMessage")
         
-        // Print only the message string
-        //print("Received message:", messageString)
         
         if let (messageType, payload, src) = processReceivedMessage(message: message) {
             // Use messageType, payload, and src as needed
             print("Processed message type:", messageType)
+            //candidates come second
             if(messageType == "CANDIDATE"){
-                
-                //                let mLineIndex = payload["sdpMLineIndex"] as! Int32
-                //
-                //                let sdpMid = payload["sdpMid"] as! String
-                //
-                //
-                //                let candidate = RTCIceCandidate(sdp: self.theirSDP, sdpMLineIndex: mLineIndex, sdpMid: sdpMid)
-                //                self.webRTCClient.set(remoteCandidate: candidate) { (error) in
-                //                    if let error = error {
-                //                        debugPrint("error adding ice canddiate: \(error.localizedDescription)")
-                //                        debugPrint("candidate was ", candidate)
-                //                    }
-                //                }
-                
-                //let candidateLine = payload["candidate"] as? String
-                
-                
-                
-                let payload: [String: Any] = ["candidate":payload, "type":"media","connectionId":self.mediaID]
-                
-                let candidateReponse: [String: Any] = ["type": "CANDIDATE", "payload": payload, "dst":src]
-                do{
-                    let jsonData = try JSONSerialization.data( withJSONObject: candidateReponse)
-                    candidateResponses.append(jsonData)
-                    candidatesToHandle.append(payload)
-                    //self.webSocket.send(data: jsonData)
-                    //debugPrint("we sent our candidate response ", candidateReponse)
-                    handleIceCandidates(candidate: payload)
-                }
-                
-                catch {
-                    debugPrint("Error ")
-                }
+                handleCandidateMessage(payload: payload, src: src)
                 
             }
             
             // the offer message contains information about the client calling us (it has their sdp, and we will use it to create our answer)
             if(messageType == "OFFER"){
-                let msg = payload["sdp"] as? [String: Any]
-                let sdp = msg?["sdp"]
-                
-                let connectionID = payload["connectionId"] as! String
-                if(hasVideoMedia(sdp: sdp as! String)){
-                    self.theirSDP = sdp as! String
-                    self.connectionId = connectionID
-                    print("Processed sdp:", sdp as Any)
-                    let sessionDescription = RTCSessionDescription(type: RTCSdpType.offer, sdp: sdp as! String)
-                    
-                    
-                    
-                    
-                    if #available(iOS 13.0, *) {
-                        Task {
-                            
-                            
-                            //first we set the remote sdp (we received an offer)
-                            await self.webRTCClient.setRemoteSDP(sessionDescription)
-                            //then we create an answer sdp
-                            await self.webRTCClient.setPeerSDP(sessionDescription, src, connectionID) { connectionMessage in
-                                if let connectionMessage = connectionMessage {
-                                    // Use connectionMessage here
-                                    //print("Connection message:", connectionMessage)
-                                    do{
-                                        let jsonData = try JSONSerialization.data( withJSONObject: connectionMessage)
-                                        //sending our answer sdp
-                                        debugPrint("we sent our answer ", connectionMessage)
-                                        self.sentAnswer = true
-                                        self.webSocket.send(data: jsonData)
-                                        //self.sendStoredCandidates()
-                                        
-                                    }
-                                    catch{
-                                        print("error with json", error)
-                                    }
-                                } else {
-                                    print("Error: Could not set peer SDP")
-                                }
-                                
-                            }
-                        }
-                    } else {
-                        // Fallback on earlier versions
-                    }
-                }
+                handleOfferMessage(payload: payload, src: src)
             }
             
             print("Processed source:", src)
@@ -372,6 +296,78 @@ extension SignalingClient: WebSocketProviderDelegate {
         }
     }
     
+    //handling candidates and adding them to the peer
+    func handleCandidateMessage(payload: [String: Any], src: String){
+        
+        let payload: [String: Any] = ["candidate":payload, "type":"media","connectionId":self.mediaID]
+        
+        let candidateReponse: [String: Any] = ["type": "CANDIDATE", "payload": payload, "dst":src]
+        do{
+            let jsonData = try JSONSerialization.data( withJSONObject: candidateReponse)
+            candidateResponses.append(jsonData)
+            candidatesToHandle.append(payload)
+            //self.webSocket.send(data: jsonData)
+            //debugPrint("we sent our candidate response ", candidateReponse)
+            handleIceCandidates(candidate: payload)
+        }
+        
+        catch {
+            debugPrint("Error ")
+        }
+    }
+    
+    //this is the part where we "answer" their message
+    func handleOfferMessage(payload: [String: Any], src: String){
+        
+        
+        
+        let msg = payload["sdp"] as? [String: Any]
+        let sdp = msg?["sdp"]
+        
+        let connectionID = payload["connectionId"] as! String
+        if(hasVideoMedia(sdp: sdp as! String)){
+            self.theirSDP = sdp as! String
+            self.connectionId = connectionID
+            print("Processed sdp:", sdp as Any)
+            let sessionDescription = RTCSessionDescription(type: RTCSdpType.offer, sdp: sdp as! String)
+            
+            
+            
+            
+            if #available(iOS 13.0, *) {
+                Task {
+                    
+                    
+                    //first we set the remote sdp (we received an offer)
+                    await self.webRTCClient.setRemoteSDP(sessionDescription)
+                    //then we create an answer sdp
+                    await self.webRTCClient.setPeerSDP(sessionDescription, src, connectionID) { connectionMessage in
+                        if let connectionMessage = connectionMessage {
+                            // Use connectionMessage here
+                            //print("Connection message:", connectionMessage)
+                            do{
+                                let jsonData = try JSONSerialization.data( withJSONObject: connectionMessage)
+                                //sending our answer sdp
+                                debugPrint("we sent our answer ", connectionMessage)
+                                self.sentAnswer = true
+                                self.webSocket.send(data: jsonData)
+                                //self.sendStoredCandidates()
+                                
+                            }
+                            catch{
+                                print("error with json", error)
+                            }
+                        } else {
+                            print("Error: Could not set peer SDP")
+                        }
+                        
+                    }
+                }
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+    }
     func handleIceCandidates(candidate: [String: Any]){
         
         let candidatePayload = candidate["candidate"] as! [String: Any]
