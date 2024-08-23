@@ -27,7 +27,7 @@ struct HomeView: View {
                 .bold()
                 .padding(10)
         
-            Text("Your Peer ID: (\(signalingClient.ourPeerID)")
+            Text("Your Peer ID: \(signalingClient.ourPeerID)")
                 .bold()
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 25)
@@ -85,7 +85,7 @@ struct OnlineUserItemView: View {
             Spacer()
             
             Button(action: {
-                //action for call button
+                
             }) {
                 Text("Call")
                     .foregroundColor(.black)

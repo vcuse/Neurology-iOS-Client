@@ -9,6 +9,7 @@
 import Foundation
 import WebRTC
 import Combine
+import CallKit
 
 private let config = Config.default
 
@@ -19,6 +20,7 @@ protocol SignalClientDelegate: AnyObject {
     func signalClient(_ signalClient: SignalingClient, didReceiveRemoteSdp sdp: RTCSessionDescription)
     func signalClient(_ signalClient: SignalingClient, didReceiveCandidate candidate: RTCIceCandidate)
 }
+
 
 final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObject {
     
@@ -93,6 +95,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
     private var candidatesToHandle = [[String: Any]]()
     private var connectionId = ""
     private var theirPeerID = " "
+    private var currentCallUUID: UUID?
     private var fetchTimer: Timer?
     @Published var ourPeerID = " "
     @Published var onlineUsers: [String] = []
@@ -214,7 +217,14 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
     }
     
     func callUser(id: String) {
-        // implement logic to call a user
+        let callUUID = UUID()
+        self.currentCallUUID = callUUID
+        CallManager.shared.startCall(uuid: callUUID, handle: id, hasVideo: true) { error in if let error = error {
+            print("Error starting call: \(error.localizedDescription)")
+            } else {
+                print("Outgoing call successfully started.")
+            }
+        }
         print("Calling user with ID: \(id)")
         isRinging = true
     }
@@ -226,7 +236,15 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
     }
     
     func endCall() {
-        // implement logic
+        if let callUUID = currentCallUUID {
+            CallManager.shared.endCall(uuid: callUUID) { error in
+                if let error = error {
+                    print("Error ending call: \(error.localizedDescription)")
+                } else {
+                    print("Call successfully ended.")
+                }
+            }
+        }
         print("Ending the call")
         isRinging = false
     }
@@ -367,6 +385,20 @@ extension SignalingClient: WebSocketProviderDelegate {
                 // Fallback on earlier versions
             }
         }
+        
+        
+        // Report incoming call to CallKit
+        let callUUID = UUID()
+        self.currentCallUUID = callUUID
+        CallManager.shared.reportIncomingCall(uuid: callUUID, handle: src, hasVideo: true) { error in
+            if let error = error {
+                print("error reporting incoming call: \(error.localizedDescription)")
+            } else {
+                print("Incoming call successfully reported.")
+            }
+        }
+        
+        
     }
     func handleIceCandidates(candidate: [String: Any]){
         
@@ -474,4 +506,3 @@ extension SignalingClient: WebSocketProviderDelegate {
         return (messageType, payload, src)
     }
 }
-
