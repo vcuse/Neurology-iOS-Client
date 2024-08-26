@@ -17,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var voipRegistry: PKPushRegistry!
     var cxProvider = CallProvider()
     
+    var signalingClient = SignalingClient(url: URL (string: "wss://videochat-signaling-app.ue.r.appspot.com:443")!)
+    
     
     func checkforUUID() -> String{
         
@@ -96,9 +98,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     private func handleIncomingCall(payload: PKPushPayload) {
             // Extract information from the payload
-            let callId = payload.dictionaryPayload["callId"] as? String ?? "unknown"
+        let callId = payload.dictionaryPayload["callId"] as? String ?? "unknown"
             
-            print("INCOMING CALL")
+        print("INCOMING CALL")	
         
         let uuid = UUID()
         let update = CXCallUpdate()
