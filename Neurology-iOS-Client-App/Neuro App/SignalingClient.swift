@@ -174,6 +174,17 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
         //print("Unique ID OUTSIDE OF CODE IS ", uniqueID)
         
     }
+    func disconnectFromServer() {
+        let payload: [String: Any] = ["type": "DISCONNECT", "src" : self.ourPeerID, "payload" : "disconnect"]
+        do{
+            let jsonData = try  JSONSerialization.data(withJSONObject: payload)
+            self.webSocket.send(data: jsonData)
+            
+        }
+        catch {
+            print("could not send dc message to the server")
+        }
+    }
     
     func startFetchingOnlineUsers() {
         fetchTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
@@ -281,13 +292,13 @@ extension SignalingClient: WebSocketProviderDelegate {
             print("Processed message type:", messageType)
             //candidates come second
             if(messageType == "CANDIDATE"){
-                handleCandidateMessage(payload: payload, src: src)
+                //handleCandidateMessage(payload: payload, src: src)
                 
             }
             
             // the offer message contains information about the client calling us (it has their sdp, and we will use it to create our answer)
             if(messageType == "OFFER"){
-                handleOfferMessage(payload: payload, src: src)
+                //handleOfferMessage(payload: payload, src: src)
             }
             
             print("Processed source:", src)

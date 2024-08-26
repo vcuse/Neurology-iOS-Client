@@ -26,7 +26,7 @@ struct HomeView: View {
                 .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                 .bold()
                 .padding(10)
-        
+            
             Text("Your Peer ID: (\(signalingClient.ourPeerID)")
                 .bold()
                 .multilineTextAlignment(.center)
@@ -58,7 +58,27 @@ struct HomeView: View {
             .padding(10)
             
             Spacer()
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        // Action for the floating button
+                        signalingClient.disconnectFromServer()
+                    }) {
+                        Text("X")
+                            .font(.title)
+                            .foregroundColor(.white)
+                            .frame(width: 50, height: 50)
+                            .background(Color.red)
+                            .clipShape(Circle())
+                            .shadow(radius: 10)
+                    }
+                    .padding()
+                }
+            }
         }
+        
         .overlay(
             Group {
                 if signalingClient.isRinging {
