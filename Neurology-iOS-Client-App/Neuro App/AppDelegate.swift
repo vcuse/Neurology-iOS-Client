@@ -100,7 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             // Extract information from the payload
         let callId = payload.dictionaryPayload["callId"] as? String ?? "unknown"
             
-        print("INCOMING CALL")
+        print("INCOMING CALL")	
         
         let uuid = UUID()
         let update = CXCallUpdate()
