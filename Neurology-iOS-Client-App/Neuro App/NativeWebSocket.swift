@@ -49,6 +49,8 @@ class NativeWebSocket: NSObject, WebSocketProvider {
         
     }
     
+   
+    
     private func startHeartBeat(){
         heartbeatTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
         Task{

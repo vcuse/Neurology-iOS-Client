@@ -10,12 +10,27 @@ import UserNotifications
 import PushKit
 import CallKit
 
+let globalUUID = "com.Neuro-APP.uuid"
+
 
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, PKPushRegistryDelegate {
     var voipRegistry: PKPushRegistry!
     var cxProvider = CallProvider()
     
     
+    func checkforUUID() -> String{
+        
+        // Retrieve UUID from UserDefaults
+                if let uuidString = UserDefaults.standard.string(forKey: globalUUID) {
+                    // If UUID exists in UserDefaults, return it
+                    return uuidString
+                } else {
+                    // If no UUID is found, generate a new one
+                    let newUUID = UUID().uuidString
+                    UserDefaults.standard.set(newUUID, forKey: globalUUID)
+                    return newUUID
+                }
+    }
     
     func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
         if type == .voIP {
@@ -44,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // Custom initialization logic here
         print("App has launched")
-        
+        checkforUUID()
         // Configure notification settings
         UNUserNotificationCenter.current().delegate = self
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
