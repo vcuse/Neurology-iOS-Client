@@ -88,6 +88,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
     weak var delegate: SignalClientDelegate?
     weak var webRTCDelegate: WebRTCClientDelegate?
     private var theirSDP = " "
+    private var theirSrc = " "
     private var mediaID = " "
     private var candidateResponses: [Data] = []
     private var candidatesToHandle = [[String: Any]]()
@@ -307,6 +308,7 @@ extension SignalingClient: WebSocketProviderDelegate {
         }
     }
     
+    
     //handling candidates and adding them to the peer
     func handleCandidateMessage(payload: [String: Any], src: String){
         
@@ -317,8 +319,7 @@ extension SignalingClient: WebSocketProviderDelegate {
             let jsonData = try JSONSerialization.data( withJSONObject: candidateReponse)
             candidateResponses.append(jsonData)
             candidatesToHandle.append(payload)
-            //self.webSocket.send(data: jsonData)
-            //debugPrint("we sent our candidate response ", candidateReponse)
+
             handleIceCandidates(candidate: payload)
         }
         
@@ -330,8 +331,6 @@ extension SignalingClient: WebSocketProviderDelegate {
     //this is the part where we "answer" their message
     func handleOfferMessage(payload: [String: Any], src: String){
         
-        
-        
         let msg = payload["sdp"] as? [String: Any]
         let sdp = msg?["sdp"]
         
@@ -342,12 +341,8 @@ extension SignalingClient: WebSocketProviderDelegate {
             print("Processed sdp:", sdp as Any)
             let sessionDescription = RTCSessionDescription(type: RTCSdpType.offer, sdp: sdp as! String)
             
-            
-            
-            
             if #available(iOS 13.0, *) {
                 Task {
-                    
                     
                     //first we set the remote sdp (we received an offer)
                     await self.webRTCClient.setRemoteSDP(sessionDescription)
@@ -400,6 +395,9 @@ extension SignalingClient: WebSocketProviderDelegate {
             self.webSocket.send(data: response)
         }
     }
+    
+    //checking if the SDP we received has video chat included (we need this to be true)
+    //otherwise the chat will be audio only (we don't want that)
     func hasVideoMedia(sdp: String) -> Bool {
         let sdpLines = sdp.components(separatedBy: .newlines)
         for line in sdpLines {
@@ -421,6 +419,7 @@ extension SignalingClient: WebSocketProviderDelegate {
         
         
     }
+    
     func setRTCIceCandidate(candidate rtcIceCandidate: RTCIceCandidate){
         
     }

@@ -23,33 +23,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func checkforUUID() -> String{
         
         // Retrieve UUID from UserDefaults
-                if let uuidString = UserDefaults.standard.string(forKey: globalUUID) {
-                    // If UUID exists in UserDefaults, return it
-                    return uuidString
-                } else {
-                    // If no UUID is found, generate a new one
-                    let newUUID = UUID().uuidString
-                    UserDefaults.standard.set(newUUID, forKey: globalUUID)
-                    return newUUID
-                }
+        if let uuidString = UserDefaults.standard.string(forKey: globalUUID) {
+            // If UUID exists in UserDefaults, return it
+            return uuidString
+        } else {
+            // If no UUID is found, generate a new one
+            let newUUID = UUID().uuidString
+            UserDefaults.standard.set(newUUID, forKey: globalUUID)
+            return newUUID
+        }
     }
     
     func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
         if type == .voIP {
-                    let tokenString = pushCredentials.token.map { String(format: "%02x", $0) }.joined()
-                    print("VoIP Device Token: \(tokenString)")
+            let tokenString = pushCredentials.token.map { String(format: "%02x", $0) }.joined()
+            print("VoIP Device Token: \(tokenString)")
             UserDefaults.standard.setValue(tokenString, forKey: "deviceToken")
-                    // Save or send the VoIP token to your server if needed
-                }
-    
+            // Save or send the VoIP token to your server if needed
+        }
+        
     }
     
     func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType) {
-            if type == .voIP {
-                // Handle the incoming VoIP push here
-                handleIncomingCall(payload: payload)
-            }
+        if type == .voIP {
+            // Handle the incoming VoIP push here
+            handleIncomingCall(payload: payload)
         }
+    }
     
     
     let pushNotificationManager = PushNotificationManager()
@@ -84,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let tokenString = deviceToken.map { String(format: "%02x", $0) }.joined()
         print("Device Token: \(tokenString)")
         
-       
+        
         
         // Send the token to your server if needed
     }
@@ -95,13 +95,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         self.voipRegistry.delegate = self
         self.voipRegistry.desiredPushTypes = [PKPushType.voIP]
     }
-
+    
     private func handleIncomingCall(payload: PKPushPayload) {
-            // Extract information from the payload
+        // Extract information from the payload
         let callId = payload.dictionaryPayload["callId"] as? String ?? "unknown"
-            
-        print("INCOMING CALL")	
         
+        print("INCOMING CALL")
         let uuid = UUID()
         let update = CXCallUpdate()
         
@@ -109,7 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             // Add your implementation to report the call.
             // ...
         }
-        }
+    }
     
     // Handle registration failures
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
