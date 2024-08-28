@@ -17,7 +17,6 @@
 		0813C0B72C6159A200CF5C70 /* PeerJSOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0813C0B32C6159A200CF5C70 /* PeerJSOption.swift */; };
 		0813C0B82C6159A200CF5C70 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EEC3232C5BF9E70086C228 /* Config.swift */; };
 		088B348E2C5C03A000094A02 /* Neuro_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088B348D2C5C03A000094A02 /* Neuro_AppApp.swift */; };
-		088B34902C5C03A000094A02 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088B348F2C5C03A000094A02 /* ContentView.swift */; };
 		088B34922C5C03A100094A02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 088B34912C5C03A100094A02 /* Assets.xcassets */; };
 		088B34952C5C03A100094A02 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 088B34942C5C03A100094A02 /* Preview Assets.xcassets */; };
 		088B349A2C5C03DA00094A02 /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 088B34992C5C03DA00094A02 /* WebRTC */; };
@@ -25,6 +24,8 @@
 		08A99ED82C6297FA0046D4A7 /* NativeWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A99ED62C6297FA0046D4A7 /* NativeWebSocket.swift */; };
 		08A99ED92C6297FA0046D4A7 /* WebSocketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A99ED72C6297FA0046D4A7 /* WebSocketProvider.swift */; };
 		08CC42DA2C6BCA61002C7AE4 /* CallProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CC42D92C6BCA61002C7AE4 /* CallProvider.swift */; };
+		08E4E3B72C7E50DC0043D541 /* RTCVideoWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E4E3B62C7E50DC0043D541 /* RTCVideoWrapper.swift */; };
+		08E4E3B92C7E529B0043D541 /* RTCVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E4E3B82C7E529B0043D541 /* RTCVideoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,13 +42,14 @@
 		088B347A2C5C024000094A02 /* Neuro_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neuro_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		088B348B2C5C03A000094A02 /* Neuro App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Neuro App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		088B348D2C5C03A000094A02 /* Neuro_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neuro_AppApp.swift; sourceTree = "<group>"; };
-		088B348F2C5C03A000094A02 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		088B34912C5C03A100094A02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		088B34942C5C03A100094A02 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		08A99ED42C6297E20046D4A7 /* SignInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		08A99ED62C6297FA0046D4A7 /* NativeWebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeWebSocket.swift; sourceTree = "<group>"; };
 		08A99ED72C6297FA0046D4A7 /* WebSocketProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketProvider.swift; sourceTree = "<group>"; };
 		08CC42D92C6BCA61002C7AE4 /* CallProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CallProvider.swift; path = "../../../Neurology-iOS-Client/Neurology-iOS-Client-App/Neuro App/CallProvider.swift"; sourceTree = "<group>"; };
+		08E4E3B62C7E50DC0043D541 /* RTCVideoWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RTCVideoWrapper.swift; path = ../RTCVideoWrapper.swift; sourceTree = "<group>"; };
+		08E4E3B82C7E529B0043D541 /* RTCVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTCVideoView.swift; sourceTree = "<group>"; };
 		08EEC3212C5AD5E30086C228 /* PeerJSOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PeerJSOption.swift; path = "../../../../../Desktop/WebRTC-iOS/WebRTC-Demo-App/Sources/Extensions/PeerJSOption.swift"; sourceTree = "<group>"; };
 		08EEC3232C5BF9E70086C228 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		08F4A02B2C6D3C9000234934 /* Neuro-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Neuro-App-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -89,7 +91,8 @@
 				60E860F62C5192DE0097826E /* HomeView.swift */,
 				08EEC3232C5BF9E70086C228 /* Config.swift */,
 				60F68C252C5ABB3D00933EE3 /* CallView.swift */,
-				088B348F2C5C03A000094A02 /* ContentView.swift */,
+				08E4E3B62C7E50DC0043D541 /* RTCVideoWrapper.swift */,
+				08E4E3B82C7E529B0043D541 /* RTCVideoView.swift */,
 				088B34912C5C03A100094A02 /* Assets.xcassets */,
 				088B34932C5C03A100094A02 /* Preview Content */,
 				0813C0B12C6155B200CF5C70 /* AppDelegate.swift */,
@@ -255,13 +258,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				08CC42DA2C6BCA61002C7AE4 /* CallProvider.swift in Sources */,
+				08E4E3B72C7E50DC0043D541 /* RTCVideoWrapper.swift in Sources */,
 				080411D92C6BB1C60019364A /* PushNotificationManager.swift in Sources */,
 				0813C0AF2C61538700CF5C70 /* CallView.swift in Sources */,
 				0813C0B02C61539200CF5C70 /* HomeView.swift in Sources */,
-				088B34902C5C03A000094A02 /* ContentView.swift in Sources */,
 				0813C0B62C6159A200CF5C70 /* SignalingClient.swift in Sources */,
 				08A99ED92C6297FA0046D4A7 /* WebSocketProvider.swift in Sources */,
 				0813C0B72C6159A200CF5C70 /* PeerJSOption.swift in Sources */,
+				08E4E3B92C7E529B0043D541 /* RTCVideoView.swift in Sources */,
 				0813C0B22C6155B200CF5C70 /* AppDelegate.swift in Sources */,
 				08A99ED82C6297FA0046D4A7 /* NativeWebSocket.swift in Sources */,
 				088B348E2C5C03A000094A02 /* Neuro_AppApp.swift in Sources */,

@@ -9,16 +9,20 @@ import UIKit
 import UserNotifications
 import PushKit
 import CallKit
+import AVFoundation
 
 let globalUUID = "com.Neuro-APP.uuid"
 
 
-class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, PKPushRegistryDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, PKPushRegistryDelegate, CXProviderDelegate {
+    func providerDidReset(_ provider: CXProvider) {
+        print("reset")
+    }
+    
     var voipRegistry: PKPushRegistry!
-    var cxProvider = CallProvider()
-    
+
     var signalingClient = SignalingClient(url: URL (string: "wss://videochat-signaling-app.ue.r.appspot.com:443")!)
-    
+    var provider: CXProvider!
     
     func checkforUUID() -> String{
         
@@ -46,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType) {
         if type == .voIP {
+            
             // Handle the incoming VoIP push here
             handleIncomingCall(payload: payload)
         }
@@ -57,6 +62,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        let configuration = CXProviderConfiguration(localizedName: "Neuro App")
+        configuration.supportsVideo = true // Enable if your app supports video calls
+
+        configuration.ringtoneSound = "Ringtone.caf" // Provide your custom ringtone sound if needed
+        provider = CXProvider(configuration: configuration)
+        provider.setDelegate(self, queue: nil)
         
         
         // Custom initialization logic here
@@ -73,6 +84,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 print("Notification permission denied: \(String(describing: error))")
             }
         }
+        
+        AVCaptureDevice.requestAccess(for: .video) { granted in
+            if granted {
+                // Access granted
+            } else {
+                // Access denied
+            }
+        }
+
+        AVCaptureDevice.requestAccess(for: .audio) { granted in
+            if granted {
+                // Access granted
+            } else {
+                // Access denied
+            }
+        }
+                
+                
         
         registerForVoIPPushes()
         
@@ -97,17 +126,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     private func handleIncomingCall(payload: PKPushPayload) {
+        
         // Extract information from the payload
-        let callId = payload.dictionaryPayload["callId"] as? String ?? "unknown"
+        let callId = payload.dictionaryPayload["messageFrom"] as? String ?? "unknown"
         
         print("INCOMING CALL")
         let uuid = UUID()
         let update = CXCallUpdate()
+        update.remoteHandle = CXHandle(type: .generic, value: "test name")
+        update.hasVideo = true
         
-        cxProvider.provider.reportNewIncomingCall(with: uuid, update: update){ error in
+        provider.reportNewIncomingCall(with: uuid, update: update){ error in
             // Add your implementation to report the call.
             // ...
+            if error == nil {
+               // If the system allows the call to proceed, make a data record for it.
+               //let newCall = Call(callId, phoneNumber: "test")
+                
+            }
         }
+        //cxProvider.startCall(uuid: callId, handle: <#T##String#>)
     }
     
     // Handle registration failures
@@ -126,6 +164,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         print("Notification tapped: \(response.notification.request.content.userInfo)")
         completionHandler()
     }
+    
+    
+    func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
+        signalingClient.handleOfferMessage()
+        signalingClient.handleIceCandidates()
+        print("ANSWERING A CALL")
+        return
+    }
+    
+    
+    
+
+    
+    
     
     
 }

@@ -92,6 +92,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
     private var mediaID = " "
     private var candidateResponses: [Data] = []
     private var candidatesToHandle = [[String: Any]]()
+    private var offerMessage = [String: Any]()
     private var connectionId = ""
     private var theirPeerID = " "
     private var fetchTimer: Timer?
@@ -243,6 +244,9 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
         isRinging = false
     }
     
+    func getSignalingClient() -> WebRTCClient{
+        return self.webRTCClient
+    }
     
     func getOurID() -> String{
         return self.ourPeerID
@@ -287,25 +291,33 @@ extension SignalingClient: WebSocketProviderDelegate {
     
     func handleMessage(message: String){
         
-        
+        //we are splitting the received message into 3 variables (just to make it easier to deal with)
         if let (messageType, payload, src) = processReceivedMessage(message: message) {
             // Use messageType, payload, and src as needed
             print("Processed message type:", messageType)
             //candidates come second
             if(messageType == "CANDIDATE"){
-                //handleCandidateMessage(payload: payload, src: src)
-                
+                handleCandidateMessage(payload: payload, src: src)
             }
             
             // the offer message contains information about the client calling us (it has their sdp, and we will use it to create our answer)
             if(messageType == "OFFER"){
+                storeOfferMessage(payload: payload, src: src)
                 //handleOfferMessage(payload: payload, src: src)
             }
             
-            print("Processed source:", src)
         } else {
             print("Failed to process received message")
         }
+    }
+    
+    func storeOfferMessage(payload: [String: Any], src: String){
+        offerMessage = payload
+        theirSrc = src
+    }
+    
+    func handleStoredOfferMessage(){
+        
     }
     
     
@@ -320,7 +332,7 @@ extension SignalingClient: WebSocketProviderDelegate {
             candidateResponses.append(jsonData)
             candidatesToHandle.append(payload)
 
-            handleIceCandidates(candidate: payload)
+            //handleIceCandidates(candidate: payload)
         }
         
         catch {
@@ -329,12 +341,12 @@ extension SignalingClient: WebSocketProviderDelegate {
     }
     
     //this is the part where we "answer" their message
-    func handleOfferMessage(payload: [String: Any], src: String){
+    func handleOfferMessage(){
         
-        let msg = payload["sdp"] as? [String: Any]
+        let msg = offerMessage["sdp"] as? [String: Any]
         let sdp = msg?["sdp"]
         
-        let connectionID = payload["connectionId"] as! String
+        let connectionID = offerMessage["connectionId"] as! String
         if(hasVideoMedia(sdp: sdp as! String)){
             self.theirSDP = sdp as! String
             self.connectionId = connectionID
@@ -347,7 +359,7 @@ extension SignalingClient: WebSocketProviderDelegate {
                     //first we set the remote sdp (we received an offer)
                     await self.webRTCClient.setRemoteSDP(sessionDescription)
                     //then we create an answer sdp
-                    await self.webRTCClient.setPeerSDP(sessionDescription, src, connectionID) { connectionMessage in
+                    await self.webRTCClient.setPeerSDP(sessionDescription, theirSrc, connectionID) { connectionMessage in
                         if let connectionMessage = connectionMessage {
                             // Use connectionMessage here
                             //print("Connection message:", connectionMessage)
@@ -374,19 +386,21 @@ extension SignalingClient: WebSocketProviderDelegate {
             }
         }
     }
-    func handleIceCandidates(candidate: [String: Any]){
+    
+    func handleIceCandidates(){
         
-        let candidatePayload = candidate["candidate"] as! [String: Any]
-        let iceCandidate = RTCIceCandidate(sdp: self.theirSDP, sdpMLineIndex: candidatePayload["sdpMLineIndex"] as! Int32, sdpMid: candidatePayload["sdpMid"] as? String)
-        self.webRTCClient.set(remoteCandidate: iceCandidate){error in
-            if let error = error {
-                debugPrint("Error adding remote ICE candidate: \(error.localizedDescription)")
-            } else {
-                debugPrint("Successfully added remote ICE candidate")
+        for candidate in candidatesToHandle	{
+            let candidatePayload = candidate["candidate"] as! [String: Any]
+            let iceCandidate = RTCIceCandidate(sdp: self.theirSDP, sdpMLineIndex: candidatePayload["sdpMLineIndex"] as! Int32, sdpMid: candidatePayload["sdpMid"] as? String)
+            self.webRTCClient.set(remoteCandidate: iceCandidate){error in
+                if let error = error {
+                    debugPrint("Error adding remote ICE candidate: \(error.localizedDescription)")
+                } else {
+                    debugPrint("Successfully added remote ICE candidate")
+                }
             }
-            
-            
         }
+        
         
     }
     

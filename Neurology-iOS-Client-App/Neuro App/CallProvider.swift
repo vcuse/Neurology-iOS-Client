@@ -20,8 +20,9 @@ let provider: CXProvider
         // Create the provider configuration
         let configuration = CXProviderConfiguration(localizedName: "Neuro App")
         configuration.supportsVideo = true // Enable if your app supports video calls
-        configuration.maximumCallsPerCallGroup = 1
-        configuration.supportedHandleTypes = [.phoneNumber]
+        //configuration.maximumCallsPerCallGroup = 2
+        //configuration.supportedHandleTypes = [.generic]
+        
         
         // Optionally configure the appearance of the call interface
         configuration.ringtoneSound = "Ringtone.caf" // Provide your custom ringtone sound if needed
@@ -45,5 +46,8 @@ let provider: CXProvider
     func endCall(uuid: UUID) {
         
     }
+    
+    // What happens when the user accepts the call by pressing the incoming call button? You should implement the method below and call the fulfill method if the call is successful.
+        
 }
 
