@@ -29,9 +29,17 @@ class API {
     }
     
     func generateID() -> String{
-        let uuid = UserDefaults.standard.string(forKey: globalUUID)
-        print("generated UUID: \(uuid) ")
-        return uuid!
+        // Retrieve UUID from UserDefaults
+        if let uuidString = UserDefaults.standard.string(forKey: globalUUID) {
+            // If UUID exists in UserDefaults, return it
+            return uuidString
+        } else {
+            // If no UUID is found, generate a new one
+            let newUUID = UUID().uuidString
+            UserDefaults.standard.set(newUUID, forKey: globalUUID)
+            return newUUID
+        }
+        //return uuid!
     }
     
     @available(iOS 13.0, *)

@@ -15,8 +15,9 @@ struct Neuro_App: App {
     
     var body: some Scene {
         WindowGroup {
-            HomeView()
-                .environmentObject(appDelegate.signalingClient)
+         
+           HomeView()
+             .environmentObject(appDelegate.signalingClient)
         }
     }
 }
