@@ -28,11 +28,16 @@ class RTCVideoWrapper: UIView, RTCVideoRenderer {
     }
     
     func setSize(_ size: CGSize) {
-        print("TODO")
+        // Optionally update the size of the video view if needed
+        //self.videoView.frame.size = size
     }
     
     func renderFrame(_ frame: RTCVideoFrame?) {
-        print("TODO")
+        guard let frame = frame else {
+            print("Received nil frame, not rendering.")
+            return
+        }
+        videoView.renderFrame(frame)
     }
     
     private func setupConstraints() {

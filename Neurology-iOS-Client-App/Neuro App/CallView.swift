@@ -31,11 +31,11 @@ struct CallView: View {
             Color.black.edgesIgnoringSafeArea(.all)
             
             ZStack {
-                RTCVideoView(frame: UIScreen.main.bounds)
+                RTCVideoView(renderer: localRenderer)
                     .edgesIgnoringSafeArea(.all)
                     .background(Color.black)
                     .overlay(
-                        RTCVideoView(frame: CGRect(origin: .zero, size: UIScreen.main.bounds.size))
+                        RTCVideoView(renderer: remoteRenderer)
                             .aspectRatio(contentMode: .fill)
                             .edgesIgnoringSafeArea(.all)
                     )

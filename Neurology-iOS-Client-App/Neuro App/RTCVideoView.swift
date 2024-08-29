@@ -8,14 +8,10 @@
 import SwiftUI
 
 struct RTCVideoView: UIViewRepresentable {
-    let rtcVideoWrapper: RTCVideoWrapper
+    let renderer: RTCVideoWrapper
 
-    init(frame: CGRect) {
-        self.rtcVideoWrapper = RTCVideoWrapper(frame: frame)
-    }
-    
     func makeUIView(context: Context) -> RTCVideoWrapper {
-        return rtcVideoWrapper
+        return renderer
     }
     
     func updateUIView(_ uiView: RTCVideoWrapper, context: Context) {
