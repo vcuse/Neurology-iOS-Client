@@ -11,7 +11,7 @@ import WebRTC
 struct CallView: View {
     @EnvironmentObject var signalingClient: SignalingClient
     
-    @ObservedObject private var webRTCClient: WebRTCClient
+    //@ObservedObject private var webRTCClient: WebRTCClient
     
     
     @State private var localRenderer = RTCVideoWrapper(frame: .zero)
@@ -31,11 +31,11 @@ struct CallView: View {
             Color.black.edgesIgnoringSafeArea(.all)
             
             ZStack {
-                RTCVideoView(frame: UIScreen.main.bounds)
+                RTCVideoView(renderer: localRenderer)
                     .edgesIgnoringSafeArea(.all)
                     .background(Color.black)
                     .overlay(
-                        RTCVideoView(frame: CGRect(origin: .zero, size: UIScreen.main.bounds.size))
+                        RTCVideoView(renderer: remoteRenderer)
                             .aspectRatio(contentMode: .fill)
                             .edgesIgnoringSafeArea(.all)
                     )
@@ -44,8 +44,6 @@ struct CallView: View {
                     }
                 
                 VStack {
-                    
-                    
                     Spacer()
                     
                     if showChat {

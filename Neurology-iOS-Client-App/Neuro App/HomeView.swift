@@ -13,83 +13,92 @@ import UserNotifications
 
 struct HomeView: View {
     
-    
-    
     private let config = Config.default
     
     @EnvironmentObject var signalingClient: SignalingClient
     
     
     var body: some View {
-        VStack {
-            Text("Hello, user!")
-                .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                .bold()
-                .padding(10)
+        if(signalingClient.isInCall){
+            CallView()
+        }
+        else {
             
-            Text("Your Peer ID: (\(signalingClient.ourPeerID)")
-                .bold()
-                .multilineTextAlignment(.center)
-                .padding(.bottom, 25)
-            Text("Online Now:")
-                .font(.headline)
-            
-            VStack(alignment: .leading) {
-                // filter out our own id
-                let filteredOnlineUsers = signalingClient.onlineUsers.filter { $0 != signalingClient.ourPeerID }
-                
-                if filteredOnlineUsers.isEmpty {
-                    Text("Hmm, nobody's here right now!")
-                        .padding()
-                        .background(Color.yellow)
-                        .cornerRadius(10)
-                        .shadow(radius: 5)
-                } else {
+            NavigationView {
+                VStack {
+                    Text("Hello, user!")
+                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                        .bold()
+                        .padding(10)
+                    
+                    Text("Your Peer ID: (\(signalingClient.ourPeerID)")
+                        .bold()
+                        .multilineTextAlignment(.center)
+                        .padding(.bottom, 25)
+                    Text("Online Now:")
+                        .font(.headline)
+                    
                     VStack(alignment: .leading) {
-                        ForEach(filteredOnlineUsers, id: \.self) { user in
-                            OnlineUserItemView(uuid: user)
+                        // filter out our own id
+                        let filteredOnlineUsers = signalingClient.onlineUsers.filter { $0 != signalingClient.ourPeerID }
+                        
+                        if filteredOnlineUsers.isEmpty {
+                            Text("Hmm, nobody's here right now!")
+                                .padding()
+                                .background(Color.yellow)
+                                .cornerRadius(10)
+                                .shadow(radius: 5)
+                        } else {
+                            VStack(alignment: .leading) {
+                                ForEach(filteredOnlineUsers, id: \.self) { user in
+                                    OnlineUserItemView(uuid: user)
+                                }
+                            }
+                            .background(Color.yellow)
+                            .cornerRadius(10)
+                            .shadow(radius: 5)
                         }
                     }
-                    .background(Color.yellow)
-                    .cornerRadius(10)
-                    .shadow(radius: 5)
-                }
-            }
-            .padding(10)
-            
-            Spacer()
-            VStack {
-                Spacer()
-                HStack {
+                    .padding(10)
+                    
                     Spacer()
-                    Button(action: {
-                        // Action for the floating button
-                        signalingClient.disconnectFromServer()
-                    }) {
-                        Text("X")
-                            .font(.title)
-                            .foregroundColor(.white)
-                            .frame(width: 50, height: 50)
-                            .background(Color.red)
-                            .clipShape(Circle())
-                            .shadow(radius: 10)
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                // Action for the floating button
+                                signalingClient.disconnectFromServer()
+                            }) {
+                                Text("X")
+                                    .font(.title)
+                                    .foregroundColor(.white)
+                                    .frame(width: 50, height: 50)
+                                    .background(Color.red)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 10)
+                            }
+                            .padding()
+                        }
                     }
-                    .padding()
                 }
-            }
-        }
-        
-        .overlay(
-            Group {
-                if signalingClient.isRinging {
-                    RingingPopopView(signalingClient: signalingClient)
+                
+                .overlay(
+                    Group {
+                        if signalingClient.isRinging {
+                            RingingPopopView(signalingClient: signalingClient)
+                        }
+                    }
+                )
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                .padding()
+                .onAppear() {
+                    signalingClient.fetchOnlineUsers()
                 }
+                
+                
+                
             }
-        )
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .padding()
-        .onAppear() {
-            signalingClient.fetchOnlineUsers()
         }
     }
 }
