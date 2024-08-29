@@ -99,6 +99,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
     @Published var ourPeerID = " "
     @Published var onlineUsers: [String] = []
     @Published var isRinging = false
+    @Published var isInCall = false
     
     
     
@@ -403,7 +404,9 @@ extension SignalingClient: WebSocketProviderDelegate {
         
         
     }
-    
+    func setCallConnected(){
+        self.isInCall = true
+    }
     func sendStoredCandidates(){
         for response in candidateResponses {
             self.webSocket.send(data: response)

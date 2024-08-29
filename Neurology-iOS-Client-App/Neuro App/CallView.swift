@@ -11,7 +11,7 @@ import WebRTC
 struct CallView: View {
     @EnvironmentObject var signalingClient: SignalingClient
     
-    @ObservedObject private var webRTCClient: WebRTCClient
+    //@ObservedObject private var webRTCClient: WebRTCClient
     
     
     @State private var localRenderer = RTCVideoWrapper(frame: .zero)
@@ -44,8 +44,6 @@ struct CallView: View {
                     }
                 
                 VStack {
-                    
-                    
                     Spacer()
                     
                     if showChat {

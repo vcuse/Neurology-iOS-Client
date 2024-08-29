@@ -64,12 +64,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         let configuration = CXProviderConfiguration(localizedName: "Neuro App")
         configuration.supportsVideo = true // Enable if your app supports video calls
-
+        
         configuration.ringtoneSound = "Ringtone.caf" // Provide your custom ringtone sound if needed
         provider = CXProvider(configuration: configuration)
         provider.setDelegate(self, queue: nil)
         
-        
+        configuration.supportedHandleTypes = [.generic]
         // Custom initialization logic here
         print("App has launched")
         checkforUUID()
@@ -169,15 +169,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
         signalingClient.handleOfferMessage()
         signalingClient.handleIceCandidates()
+        signalingClient.setCallConnected()
         print("ANSWERING A CALL")
+        action.fulfill()
         return
     }
     
-    
-    
+    //handling the call ending
+    func provider(_ provider: CXProvider, perform action: CXEndCallAction) {
+        // Handle the call ending action
+        print("Ending a call")
 
+        // Example:
+        // signalingClient.endCall(uuid: action.callUUID)
+        // endCallSession(with: action.callUUID)
+
+        // Mark the action as completed
+        action.fulfill()
+    }
     
-    
+    func application(_ application: UIApplication,
+                     continue userActivity: NSUserActivity,
+                     restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        
+        // Check if the activity type is related to starting a video call
+        if userActivity.activityType == "INStartVideoCallIntent" {
+            // Handle starting a video call
+            print("Starting a video call")
+            
+            // Extract any additional information if needed
+            if let userInfo = userActivity.userInfo {
+                // Process userInfo if necessary
+                print("User info: \(userInfo)")
+            }
+            
+            // You might want to present a specific view controller or perform other actions
+            // For example:
+            // let videoCallViewController = VideoCallViewController()
+            // window?.rootViewController?.present(videoCallViewController, animated: true, completion: nil)
+            
+            return true
+        }
+        
+        // If the activity type is not handled, return false
+        return false
+    }
     
     
 }
