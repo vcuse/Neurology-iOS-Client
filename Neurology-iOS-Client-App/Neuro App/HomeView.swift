@@ -31,7 +31,7 @@ struct HomeView: View {
                         .bold()
                         .padding(10)
                     
-                    Text("Your Peer ID: (\(signalingClient.ourPeerID)")
+                    Text("Your Peer ID: \(signalingClient.ourPeerID)")
                         .bold()
                         .multilineTextAlignment(.center)
                         .padding(.bottom, 25)
@@ -62,6 +62,7 @@ struct HomeView: View {
                     .padding(10)
                     
                     Spacer()
+                    /*
                     VStack {
                         Spacer()
                         HStack {
@@ -81,6 +82,7 @@ struct HomeView: View {
                             .padding()
                         }
                     }
+                     */
                 }
                 
                 .overlay(

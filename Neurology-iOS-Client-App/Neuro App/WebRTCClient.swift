@@ -420,4 +420,18 @@ extension WebRTCClient: RTCDataChannelDelegate {
     func dataChannel(_ dataChannel: RTCDataChannel, didReceiveMessageWith buffer: RTCDataBuffer) {
         self.delegate?.webRTCClient(self, didReceiveData: buffer.data)
     }
+    
+    func closePeerConnection() {
+        self.localDataChannel?.close()
+        self.remoteDataChannel?.close()
+        
+        // Close peer connection
+        self.peerConnection.close()
+        
+        // Release video capturer
+        self.videoCapturer = nil
+        
+        self.localVideoTrack = nil
+        self.remoteVideoTrack = nil
+    }
 }
