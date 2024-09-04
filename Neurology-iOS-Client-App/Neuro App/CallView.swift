@@ -16,8 +16,6 @@ struct CallView: View {
     
     @State private var localRenderer = RTCVideoWrapper(frame: .zero)
     @State private var remoteRenderer = RTCVideoWrapper(frame: .zero)
-    
-    
     @State private var isMuted: Bool = false
     @State private var showChat: Bool = false
     @State private var messageText: String = ""
@@ -56,6 +54,7 @@ struct CallView: View {
                                                 .padding(5)
                                                 .frame(maxWidth: .infinity, alignment: .leading)
                                                 .id(index)
+                                                .foregroundStyle(Color.black)
                                         }
                                     }
                                     .padding(10)
@@ -81,11 +80,13 @@ struct CallView: View {
                             
                             
                             HStack {
-                                TextField("Type a message...", text: $messageText, onEditingChanged: { isEditing in
+                                TextField("", text: $messageText, onEditingChanged: { isEditing in
                                     self.isEditing = isEditing
                                 })
+                                .padding(10)
                                 .background(Color.white)
                                 .cornerRadius(10)
+                                .foregroundColor(.black)
                                 
                                 
                                 Button(action: {
@@ -117,7 +118,7 @@ struct CallView: View {
                     
                     HStack {
                         Button(action: {
-                            // Add functionality for the hangup button here
+                            endCall()
                         }) {
                             Image(systemName: "phone.down.fill")
                                 .foregroundColor(.white)
@@ -131,9 +132,7 @@ struct CallView: View {
                         Spacer()
                         
                         Button(action: {
-                            // Toggle mute functionality
-                            self.isMuted.toggle()
-                            // Add your functionality for the mute button here
+                            toggleMute()
                         }) {
                             Image(systemName: self.isMuted ? "mic.slash.fill" : "mic.fill")
                                 .foregroundColor(.white)
@@ -173,11 +172,25 @@ struct CallView: View {
         
         
     }
+    
     private func setupWebRTC() {
         var webRTC = signalingClient.getSignalingClient()
         
         webRTC.startCaptureLocalVideo(renderer: localRenderer)
         webRTC.renderRemoteVideo(to: remoteRenderer)
+    }
+    
+    private func toggleMute() {
+        signalingClient.toggleAudioMute(isMuted: isMuted)
+        isMuted.toggle()
+    }
+    
+    // Ends call and resets call variables
+    // TODO: Chat
+    private func endCall() {
+        signalingClient.endCall()
+        isMuted = false
+        messageLog.removeAll()
     }
     
    

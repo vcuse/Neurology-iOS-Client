@@ -240,9 +240,34 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
     }
     
     func endCall() {
-        // implement logic
-        print("Ending the call")
+        // Notify remote peer that we're disconnecting
+        let payload: [String: Any] = ["type": "DISCONNECT", "src": self.ourPeerID, "payload": "disconnect"]
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: payload)
+            self.webSocket.send(data: jsonData)
+        } catch {
+            print("Error sending disconnect message to server: \(error)")
+        }
+        
+        // Close connection and clean up
+        self.webRTCClient.closePeerConnection()
+        
+        // Reset the signaling client state
         isRinging = false
+        isInCall = false
+        
+        // Inform delegate about disconnection
+        self.delegate?.signalClientDidDisconnect(self)
+    
+        print("Call disconnected")
+    }
+    
+    func toggleAudioMute(isMuted: Bool) {
+        if isMuted {
+            webRTCClient.unmuteAudio()
+        } else {
+            webRTCClient.muteAudio()
+        }
     }
     
     func getSignalingClient() -> WebRTCClient{
