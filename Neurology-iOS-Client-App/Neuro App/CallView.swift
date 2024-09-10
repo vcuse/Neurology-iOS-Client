@@ -10,7 +10,7 @@ import WebRTC
 
 struct CallView: View {
     @EnvironmentObject var signalingClient: SignalingClient
-    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     //@ObservedObject private var webRTCClient: WebRTCClient
     
     @State private var callUUID = UUID()
@@ -193,12 +193,9 @@ struct CallView: View {
         // End WebRTC connection
         signalingClient.endCall()
 
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            print("AppDelegate reference obtained")
+       
             appDelegate.endCall()  // Call the AppDelegate's endCall method
-        } else {
-            print("Error: Unable to access AppDelegate")
-        }
+        
 
         // Clean up UI in CallView
         isMuted = false
