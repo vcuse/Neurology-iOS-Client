@@ -13,7 +13,7 @@ struct CallView: View {
     
     //@ObservedObject private var webRTCClient: WebRTCClient
     
-    
+    @State private var callUUID = UUID()
     @State private var localRenderer = RTCVideoWrapper(frame: .zero)
     @State private var remoteRenderer = RTCVideoWrapper(frame: .zero)
     @State private var isMuted: Bool = false
@@ -186,12 +186,25 @@ struct CallView: View {
     }
     
     // Ends call and resets call variables
-    // TODO: Chat
     private func endCall() {
+        // Add this line to ensure this method is triggered
+        print("End Call button pressed in CallView")
+
+        // End WebRTC connection
         signalingClient.endCall()
+
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            print("AppDelegate reference obtained")
+            appDelegate.endCall()  // Call the AppDelegate's endCall method
+        } else {
+            print("Error: Unable to access AppDelegate")
+        }
+
+        // Clean up UI in CallView
         isMuted = false
         messageLog.removeAll()
     }
+
     
    
 }
