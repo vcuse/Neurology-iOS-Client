@@ -16,6 +16,11 @@ class RTCVideoWrapper: UIView, RTCVideoRenderer {
     override init(frame: CGRect) {
         self.videoView = RTCMTLVideoView(frame: frame)
         super.init(frame: frame)
+        
+        // Apply horizontal flip for front-facing camera (mirroring)
+        self.videoView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        self.videoView.contentMode = .scaleAspectFit // Maintain aspect ratio
         self.addSubview(videoView)
         setupConstraints()
     }
@@ -23,13 +28,17 @@ class RTCVideoWrapper: UIView, RTCVideoRenderer {
     required init?(coder: NSCoder) {
         self.videoView = RTCMTLVideoView(frame: .zero)
         super.init(coder: coder)
+        
+        // Apply horizontal flip for front-facing camera (mirroring)
+        self.videoView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        self.videoView.contentMode = .scaleAspectFit // Maintain aspect ratio
         self.addSubview(videoView)
         setupConstraints()
     }
     
     func setSize(_ size: CGSize) {
         // Optionally update the size of the video view if needed
-        //self.videoView.frame.size = size
     }
     
     func renderFrame(_ frame: RTCVideoFrame?) {
@@ -53,7 +62,4 @@ class RTCVideoWrapper: UIView, RTCVideoRenderer {
     func setRenderer(_ renderer: RTCVideoRenderer) {
         //videoView = renderer
     }
-    
-    
-    
 }

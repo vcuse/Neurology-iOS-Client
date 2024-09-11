@@ -12,6 +12,7 @@ import CallKit
 import AVFoundation
 
 let globalUUID = "com.Neuro-APP.uuid"
+var uuid: UUID? = nil
 
 
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, PKPushRegistryDelegate, CXProviderDelegate {
@@ -21,7 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     var voipRegistry: PKPushRegistry!
     
-    var uuid: UUID?
 
     var signalingClient = SignalingClient(url: URL (string: "wss://videochat-signaling-app.ue.r.appspot.com:443")!)
     var provider: CXProvider!
@@ -133,7 +133,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let callId = payload.dictionaryPayload["messageFrom"] as? String ?? "unknown"
         
         print("INCOMING CALL")
-        self.uuid = UUID()
+        
+        uuid = UUID(uuidString: payload.dictionaryPayload["messageFrom"] as! String)!
+        
+        print("uuid is saved as \(uuid!)")
+        
         let update = CXCallUpdate()
         update.remoteHandle = CXHandle(type: .generic, value: "test name")
         update.hasVideo = true
@@ -221,14 +225,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func endCall() {
         print("endCall() in AppDelegate invoked")
 
-        guard let uuid = self.uuid else {
+        guard let testUuid = uuid else {
             print("Error: UUID is nil, cannot end the call.")
             return
         }
 
-        print("Ending call with UUID: \(uuid.uuidString)")
-
-        let endCallAction = CXEndCallAction(call: uuid)
+        print("Ending call with UUID: \(uuid!.uuidString)")
+        
+        let endCallAction = CXEndCallAction(call: uuid!)
         let transaction = CXTransaction(action: endCallAction)
 
         DispatchQueue.main.async {
@@ -242,7 +246,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
 
         // Clean up
-        self.uuid = nil
+        uuid = nil
     }
 
 

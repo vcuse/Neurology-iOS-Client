@@ -194,7 +194,7 @@ struct CallView: View {
         signalingClient.endCall()
 
        
-            appDelegate.endCall()  // Call the AppDelegate's endCall method
+        appDelegate.endCall()  // Call the AppDelegate's endCall method
         
 
         // Clean up UI in CallView
