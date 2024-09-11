@@ -10,10 +10,10 @@ import WebRTC
 
 struct CallView: View {
     @EnvironmentObject var signalingClient: SignalingClient
-    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     //@ObservedObject private var webRTCClient: WebRTCClient
     
-    
+    @State private var callUUID = UUID()
     @State private var localRenderer = RTCVideoWrapper(frame: .zero)
     @State private var remoteRenderer = RTCVideoWrapper(frame: .zero)
     @State private var isMuted: Bool = false
@@ -186,12 +186,22 @@ struct CallView: View {
     }
     
     // Ends call and resets call variables
-    // TODO: Chat
     private func endCall() {
+        // Add this line to ensure this method is triggered
+        print("End Call button pressed in CallView")
+
+        // End WebRTC connection
         signalingClient.endCall()
+
+       
+        appDelegate.endCall()  // Call the AppDelegate's endCall method
+        
+
+        // Clean up UI in CallView
         isMuted = false
         messageLog.removeAll()
     }
+
     
    
 }

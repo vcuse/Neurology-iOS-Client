@@ -12,6 +12,7 @@ import CallKit
 import AVFoundation
 
 let globalUUID = "com.Neuro-APP.uuid"
+var uuid: UUID? = nil
 
 
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, PKPushRegistryDelegate, CXProviderDelegate {
@@ -20,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     var voipRegistry: PKPushRegistry!
+    
 
     var signalingClient = SignalingClient(url: URL (string: "wss://videochat-signaling-app.ue.r.appspot.com:443")!)
     var provider: CXProvider!
@@ -131,12 +133,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let callId = payload.dictionaryPayload["messageFrom"] as? String ?? "unknown"
         
         print("INCOMING CALL")
-        let uuid = UUID()
+        
+        uuid = UUID(uuidString: payload.dictionaryPayload["messageFrom"] as! String)!
+        
+        print("uuid is saved as \(uuid!)")
+        
         let update = CXCallUpdate()
         update.remoteHandle = CXHandle(type: .generic, value: "test name")
         update.hasVideo = true
         
-        provider.reportNewIncomingCall(with: uuid, update: update){ error in
+        provider.reportNewIncomingCall(with: uuid!, update: update){ error in
             // Add your implementation to report the call.
             // ...
             if error == nil {
@@ -180,10 +186,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Handle the call ending action
         print("Ending a call")
 
-        // Example:
-        // signalingClient.endCall(uuid: action.callUUID)
-        // endCallSession(with: action.callUUID)
-
+        // WebRTC handling called from CallView and handled in Signaling Client
+        
         // Mark the action as completed
         action.fulfill()
     }
@@ -214,6 +218,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // If the activity type is not handled, return false
         return false
     }
+    
+    
+    var callController = CXCallController()
+
+    func endCall() {
+        print("endCall() in AppDelegate invoked")
+
+        guard let testUuid = uuid else {
+            print("Error: UUID is nil, cannot end the call.")
+            return
+        }
+
+        print("Ending call with UUID: \(uuid!.uuidString)")
+        
+        let endCallAction = CXEndCallAction(call: uuid!)
+        let transaction = CXTransaction(action: endCallAction)
+
+        DispatchQueue.main.async {
+            self.callController.request(transaction) { error in
+                if let error = error {
+                    print("Error requesting CXEndCallAction: \(error.localizedDescription)")
+                } else {
+                    print("CXEndCallAction successfully requested.")
+                }
+            }
+        }
+
+        // Clean up
+        uuid = nil
+    }
+
+
     
     
 }
