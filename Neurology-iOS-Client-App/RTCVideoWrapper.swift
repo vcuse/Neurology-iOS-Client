@@ -12,6 +12,7 @@ import UIKit
 class RTCVideoWrapper: UIView, RTCVideoRenderer {
     
     private let videoView: RTCMTLVideoView
+    private var aspectRatioConstraint: NSLayoutConstraint?
     
     override init(frame: CGRect) {
         self.videoView = RTCMTLVideoView(frame: frame)
@@ -38,7 +39,7 @@ class RTCVideoWrapper: UIView, RTCVideoRenderer {
     }
     
     func setSize(_ size: CGSize) {
-        // Optionally update the size of the video view if needed
+        updateAspectRatioConstraint(size: size)
     }
     
     func renderFrame(_ frame: RTCVideoFrame?) {
@@ -46,6 +47,9 @@ class RTCVideoWrapper: UIView, RTCVideoRenderer {
             print("Received nil frame, not rendering.")
             return
         }
+        // Update aspect ratio whenever a new frame is rendered
+        let videoSize = CGSize(width: CGFloat(frame.width), height: CGFloat(frame.height))
+        updateAspectRatioConstraint(size: videoSize)
         videoView.renderFrame(frame)
     }
     
@@ -59,7 +63,19 @@ class RTCVideoWrapper: UIView, RTCVideoRenderer {
         ])
     }
     
-    func setRenderer(_ renderer: RTCVideoRenderer) {
-        //videoView = renderer
+    private func updateAspectRatioConstraint(size: CGSize) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            // Remove the existing aspect ratio constraint
+            if let aspectRatioConstraint = self.aspectRatioConstraint {
+                self.removeConstraint(aspectRatioConstraint)
+            }
+            
+            // Calculate and apply the new aspect ratio
+            let aspectRatio = size.width / size.height
+            self.aspectRatioConstraint = self.videoView.widthAnchor.constraint(equalTo: self.videoView.heightAnchor, multiplier: aspectRatio)
+            self.aspectRatioConstraint?.isActive = true
+        }
     }
 }

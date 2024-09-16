@@ -239,6 +239,26 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
         isRinging = false
     }
     
+    func declineCall() {
+        // Notify the remote peer that the call was declined
+        let message: [String: Any] = [
+            "type": "CALL_DECLINED",
+            "src": self.ourPeerID,
+            "dst": self.theirPeerID,
+            "payload": [
+                "reason": "declined"
+            ]
+        ]
+
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: message)
+            self.webSocket.send(data: jsonData)
+            print("Decline call message sent")
+        } catch {
+            print("Error sending decline call message: \(error)")
+        }
+    }
+    
     func endCall() {
         // Notify remote peer that we're disconnecting
         let payload: [String: Any] = ["type": "DISCONNECT", "src": self.ourPeerID, "payload": "disconnect"]
