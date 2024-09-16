@@ -185,11 +185,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func provider(_ provider: CXProvider, perform action: CXEndCallAction) {
         // Handle the call ending action
         print("Ending a call")
-
-        // WebRTC handling called from CallView and handled in Signaling Client
         
         // Mark the action as completed
         action.fulfill()
+        
+        print("Call ended, CallKit state reset.")
+
     }
     
     func application(_ application: UIApplication,
@@ -247,6 +248,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
         // Clean up
         uuid = nil
+    }
+    
+    
+    func declineCall() {
+        print("declineCall() in AppDelegate invoked")
+        
+        guard let testUuid = uuid else {
+            print("Error: UUID is nil, cannot decline the call.")
+            return
+        }
+        
+        signalingClient.declineCall()
+        
+        uuid = nil
+        
+        // Create a CXEndCallAction to remove the call from CallKit's view
+            let endCallAction = CXEndCallAction(call: testUuid)
+            let transaction = CXTransaction(action: endCallAction)
+
+        DispatchQueue.main.async {
+            self.callController.request(transaction) { error in
+                if let error = error {
+                    print("Error requesting CXEndCallAction: \(error.localizedDescription)")
+                } else {
+                    print("CXEndCallAction successfully requested.")
+                }
+            }
+        }
     }
 
 
