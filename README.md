@@ -11,3 +11,11 @@ Here are some current screenshots:
 
 
 <img src="https://github.com/user-attachments/assets/1e847ec3-2655-4e26-80b8-ffe675ab0d2e" width=200>
+
+--------------------------------------------------------------------------------
+
+**How does our application work?**
+
+We use WebRTC to handle the peer2peer video connections. The application connects to a signaling server running a modified version of PeerJS. 
+That server tells our application who is calling them and allows us to answer their call. 
+Additionally, for our username and password authentication, we plan to use PostGRES in combination with postGREST to create a REST API that will be used for login. 
