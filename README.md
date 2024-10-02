@@ -12,6 +12,10 @@ Here are some current screenshots:
 
 <img src="https://github.com/user-attachments/assets/1e847ec3-2655-4e26-80b8-ffe675ab0d2e" width=200>
 
+
+<img src="https://github.com/user-attachments/assets/3945c927-507a-403e-bba3-d0534290b3b2" width=200>
+
+
 --------------------------------------------------------------------------------
 
 **How does our application work?**
