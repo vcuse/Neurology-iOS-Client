@@ -1,17 +1,12 @@
-//
-//  CallView.swift
-//  Neurology-iOS-Client-App
-//
-//  Created by Lauren Viado on 7/31/24.
-//
-
 import SwiftUI
 import WebRTC
+import CoreData
 
 struct CallView: View {
     @EnvironmentObject var signalingClient: SignalingClient
+    @Environment(\.managedObjectContext) private var viewContext
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    //@ObservedObject private var webRTCClient: WebRTCClient
+    @ObservedObject var formViewModel = StrokeScaleFormViewModel() // ObservedObject for StrokeScaleFormViewModel
     
     @State private var callUUID = UUID()
     @State private var localRenderer = RTCVideoWrapper(frame: .zero)
@@ -21,12 +16,12 @@ struct CallView: View {
     @State private var messageText: String = ""
     @State private var isEditing: Bool = false
     @State private var messageLog: [String] = []
-    
+    @State private var showStrokeScaleForm: Bool = false
+    @State private var savedForms: [SavedForm] = [] // List to hold saved forms
     
     var body: some View {
         ZStack {
-            // Temp background for the call view
-            Color.black.edgesIgnoringSafeArea(.all)
+            Color.black.edgesIgnoringSafeArea(.all) // Background
             
             ZStack {
                 RTCVideoView(renderer: localRenderer)
@@ -61,7 +56,6 @@ struct CallView: View {
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 .onAppear {
-                                    // Scroll to the last message when the view appears
                                     if let lastIndex = messageLog.indices.last {
                                         withAnimation {
                                             proxy.scrollTo(lastIndex, anchor: .bottom)
@@ -69,7 +63,6 @@ struct CallView: View {
                                     }
                                 }
                                 .onChange(of: messageLog.count) {
-                                    // scroll to last message
                                     if let lastIndex = messageLog.indices.last {
                                         withAnimation {
                                             proxy.scrollTo(lastIndex, anchor: .bottom)
@@ -77,7 +70,6 @@ struct CallView: View {
                                     }
                                 }
                             }
-                            
                             
                             HStack {
                                 TextField("", text: $messageText, onEditingChanged: { isEditing in
@@ -87,7 +79,6 @@ struct CallView: View {
                                 .background(Color.white)
                                 .cornerRadius(10)
                                 .foregroundColor(.black)
-                                
                                 
                                 Button(action: {
                                     if !self.messageText.isEmpty {
@@ -141,7 +132,29 @@ struct CallView: View {
                                 .background(self.isMuted ? Color.gray : Color.blue)
                                 .clipShape(Circle())
                         }
-                        .frame(width: 60, height: 60) // Ensure buttons are the same size
+                        .frame(width: 60, height: 60)
+                        
+                        Spacer()
+                        
+                        // NIH Stroke Scale Button
+                        Button(action: {
+                            showStrokeScaleForm.toggle() // Show the NIH Stroke Scale form
+                        }) {
+                            Image(systemName: "doc.text.fill")
+                                .foregroundColor(.white)
+                                .font(.system(size: 26))
+                                .padding(16)
+                                .background(Color.purple)
+                                .clipShape(Circle())
+                        }
+                        .frame(width: 60, height: 60)
+                        .sheet(isPresented: $showStrokeScaleForm) {
+                            StrokeScaleFormView(
+                                isPresented: $showStrokeScaleForm,
+                                viewModel: formViewModel,
+                                saveForm: saveForm
+                            )
+                        }
                         
                         Spacer()
                         
@@ -161,47 +174,68 @@ struct CallView: View {
                                 .background(Color.green)
                                 .clipShape(Circle())
                         }
-                        .frame(width: 60, height: 60) // Ensure buttons are the same size
+                        .frame(width: 60, height: 60)
                     }
                     .padding(.horizontal, 40)
                     .padding(.bottom, 30)
                 }
             }
         }
-        
-        
-        
     }
     
+    // Helper functions
     private func setupWebRTC() {
         var webRTC = signalingClient.getSignalingClient()
-        
         webRTC.startCaptureLocalVideo(renderer: localRenderer)
         webRTC.renderRemoteVideo(to: remoteRenderer)
     }
-    
+
+    private func saveForm() {
+        // Get the Core Data context from the environment
+        let context = appDelegate.persistentContainer.viewContext
+        
+        // Create a new NIHFormEntity
+        let newForm = NIHFormEntity(context: context)
+        newForm.date = Date() // Save the current date
+        
+        // Collect selected options from each question
+        let selectedOptions = formViewModel.questions.map { $0.selectedOption ?? -1 }
+        
+        // Encode the array of selected options into data and save it in Core Data
+        do {
+            let optionsData = try JSONEncoder().encode(selectedOptions)
+            newForm.selectedOptions = optionsData as Data  // Store the binary data
+            try context.save() // Save the context to persist the form data
+            print("Form saved to Core Data with selected options: \(selectedOptions)")
+        } catch {
+            print("Failed to save form: \(error)")
+        }
+    }
+
+
+    private func endCall() {
+        signalingClient.endCall()
+        appDelegate.endCall()
+        isMuted = false
+        messageLog.removeAll()
+        resetStrokeScaleForm()
+    }
+
+    private func resetStrokeScaleForm() {
+        for index in $formViewModel.questions.indices {
+            formViewModel.questions[index].selectedOption = nil
+        }
+    }
+
     private func toggleMute() {
         signalingClient.toggleAudioMute(isMuted: isMuted)
         isMuted.toggle()
     }
-    
-    // Ends call and resets call variables
-    private func endCall() {
-        // Add this line to ensure this method is triggered
-        print("End Call button pressed in CallView")
+}
 
-        // End WebRTC connection
-        signalingClient.endCall()
-
-       
-        appDelegate.endCall()  // Call the AppDelegate's endCall method
-        
-
-        // Clean up UI in CallView
-        isMuted = false
-        messageLog.removeAll()
-    }
-
-    
-   
+// The SavedForm struct
+struct SavedForm: Identifiable {
+    let id = UUID()
+    let date: Date
+    let formData: [StrokeScaleQuestion]
 }
