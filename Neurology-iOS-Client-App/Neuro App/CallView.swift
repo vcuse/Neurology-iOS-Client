@@ -192,25 +192,34 @@ struct CallView: View {
 
     private func saveForm() {
         // Get the Core Data context from the environment
-        let context = appDelegate.persistentContainer.viewContext
-        
+        let context = viewContext
+
         // Create a new NIHFormEntity
         let newForm = NIHFormEntity(context: context)
-        newForm.date = Date() // Save the current date
-        
+        newForm.date = Date()
+
         // Collect selected options from each question
         let selectedOptions = formViewModel.questions.map { $0.selectedOption ?? -1 }
-        
+
         // Encode the array of selected options into data and save it in Core Data
         do {
             let optionsData = try JSONEncoder().encode(selectedOptions)
-            newForm.selectedOptions = optionsData as Data  // Store the binary data
-            try context.save() // Save the context to persist the form data
-            print("Form saved to Core Data with selected options: \(selectedOptions)")
+            newForm.selectedOptions = optionsData as Data
+
+            // Ensure the save operation happens on the main thread
+            DispatchQueue.main.async {
+                do {
+                    try context.save() 
+                    print("Form saved successfully.")
+                } catch {
+                    print("Failed to save form: \(error)")
+                }
+            }
         } catch {
-            print("Failed to save form: \(error)")
+            print("Failed to encode selected options: \(error)")
         }
     }
+
 
 
     private func endCall() {

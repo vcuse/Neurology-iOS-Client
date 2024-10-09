@@ -12,21 +12,26 @@ struct SavedFormsView: View {
         NavigationView {
             List {
                 ForEach(savedForms, id: \.self) { form in
-                    HStack {
-                        // Show the date as the title
-                        Text(form.date ?? Date(), style: .date)
-                        Spacer()
-                        // View button
-                        NavigationLink(destination: SavedFormDetailView(savedForm: form)) {
-                            Text("View")
-                                .font(.headline)
-                                .foregroundColor(.blue)
+                    // Make the entire row clickable by using a NavigationLink
+                    NavigationLink(destination: SavedFormDetailView(savedForm: form)) {
+                        HStack {
+                            // Show the date as the title
+                            Text(form.date ?? Date(), style: .date)
+                            Spacer()
                         }
+                        .padding()
                     }
-                    .padding()
                 }
             }
             .navigationTitle("Saved Forms")
+            .onAppear {
+                // Refresh Core Data context when the view appears
+                do {
+                    try viewContext.refreshAllObjects() // Refresh to ensure the latest data
+                } catch {
+                    print("Error refreshing Core Data context: \(error)")
+                }
+            }
         }
     }
 }
