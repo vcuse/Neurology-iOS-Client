@@ -88,7 +88,13 @@ struct Option {
     let score: Int
 }
 
-
+struct StrokeScaleQuestion {
+    let id: Int
+    let questionHeader: String
+    let subHeader: String?
+    let options: [Option]
+    var selectedOption: Int?
+}
 
 struct OptionRowView: View {
     let question: StrokeScaleQuestion
