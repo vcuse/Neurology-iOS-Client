@@ -14,6 +14,7 @@ protocol WebSocketProvider: AnyObject {
     func send(data: Data)
 }
 
+
 protocol WebSocketProviderDelegate: AnyObject {
     func webSocketDidConnect(_ webSocket: WebSocketProvider)
     func webSocketDidDisconnect(_ webSocket: WebSocketProvider)

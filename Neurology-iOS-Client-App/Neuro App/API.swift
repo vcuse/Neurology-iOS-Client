@@ -8,6 +8,7 @@ class API {
     init(options: PeerJSOption, url: URL) {	
         self.options = options
     }
+    //test blahhhh
     
     private func buildRequest(method: String) -> URLRequest? {
         let protocolScheme = options.secure ? "https" : "http"
