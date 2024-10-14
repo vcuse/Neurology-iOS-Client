@@ -25,6 +25,11 @@
 		08A99ED92C6297FA0046D4A7 /* WebSocketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A99ED72C6297FA0046D4A7 /* WebSocketProvider.swift */; };
 		08E4E3B72C7E50DC0043D541 /* RTCVideoWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E4E3B62C7E50DC0043D541 /* RTCVideoWrapper.swift */; };
 		08E4E3B92C7E529B0043D541 /* RTCVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E4E3B82C7E529B0043D541 /* RTCVideoView.swift */; };
+		60140A512CAAFB4800E61908 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60140A502CAAFB4800E61908 /* CoreData.framework */; };
+		60140A6B2CAED8BB00E61908 /* NeuroDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 60140A692CAED8BB00E61908 /* NeuroDataModel.xcdatamodeld */; };
+		60140A712CAEE2F400E61908 /* SavedFormDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60140A702CAEE2F400E61908 /* SavedFormDetailView.swift */; };
+		60B7690B2C9B818C00CC8343 /* StrokeScaleFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B7690A2C9B818100CC8343 /* StrokeScaleFormView.swift */; };
+		60B7690F2CA32CE000CC8343 /* SavedFormsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B7690E2CA32CD500CC8343 /* SavedFormsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +62,11 @@
 		08FBF1D22C59B78600F4AE9A /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		08FBF1D52C59B78600F4AE9A /* SignalingClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignalingClient.swift; sourceTree = "<group>"; };
 		08FBF1D62C59B78600F4AE9A /* WebRTCClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebRTCClient.swift; sourceTree = "<group>"; };
+		60140A502CAAFB4800E61908 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		60140A6A2CAED8BB00E61908 /* NeuroDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NeuroDataModel.xcdatamodel; sourceTree = "<group>"; };
+		60140A702CAEE2F400E61908 /* SavedFormDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedFormDetailView.swift; sourceTree = "<group>"; };
+		60B7690A2C9B818100CC8343 /* StrokeScaleFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokeScaleFormView.swift; sourceTree = "<group>"; };
+		60B7690E2CA32CD500CC8343 /* SavedFormsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedFormsView.swift; sourceTree = "<group>"; };
 		60E860F62C5192DE0097826E /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		60F68C252C5ABB3D00933EE3 /* CallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,6 +77,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				088B349A2C5C03DA00094A02 /* WebRTC in Frameworks */,
+				60140A512CAAFB4800E61908 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,9 +97,13 @@
 				0813C0B32C6159A200CF5C70 /* PeerJSOption.swift */,
 				08FBF1D72C59B78600F4AE9A /* Services */,
 				088B348D2C5C03A000094A02 /* Neuro_AppApp.swift */,
+				60B7690A2C9B818100CC8343 /* StrokeScaleFormView.swift */,
 				60E860F62C5192DE0097826E /* HomeView.swift */,
+				60140A702CAEE2F400E61908 /* SavedFormDetailView.swift */,
 				08EEC3232C5BF9E70086C228 /* Config.swift */,
 				60F68C252C5ABB3D00933EE3 /* CallView.swift */,
+				60B7690E2CA32CD500CC8343 /* SavedFormsView.swift */,
+				60140A692CAED8BB00E61908 /* NeuroDataModel.xcdatamodeld */,
 				08E4E3B62C7E50DC0043D541 /* RTCVideoWrapper.swift */,
 				08E4E3B82C7E529B0043D541 /* RTCVideoView.swift */,
 				088B34912C5C03A100094A02 /* Assets.xcassets */,
@@ -171,6 +186,7 @@
 		60E861222C5A84E00097826E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				60140A502CAAFB4800E61908 /* CoreData.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -257,6 +273,7 @@
 				08E4E3B72C7E50DC0043D541 /* RTCVideoWrapper.swift in Sources */,
 				080411D92C6BB1C60019364A /* PushNotificationManager.swift in Sources */,
 				0813C0AF2C61538700CF5C70 /* CallView.swift in Sources */,
+				60B7690B2C9B818C00CC8343 /* StrokeScaleFormView.swift in Sources */,
 				0813C0B02C61539200CF5C70 /* HomeView.swift in Sources */,
 				0813C0B62C6159A200CF5C70 /* SignalingClient.swift in Sources */,
 				08A99ED92C6297FA0046D4A7 /* WebSocketProvider.swift in Sources */,
@@ -267,7 +284,10 @@
 				088B348E2C5C03A000094A02 /* Neuro_AppApp.swift in Sources */,
 				0813C0B82C6159A200CF5C70 /* Config.swift in Sources */,
 				0813C0B42C6159A200CF5C70 /* WebRTCClient.swift in Sources */,
+				60140A712CAEE2F400E61908 /* SavedFormDetailView.swift in Sources */,
 				0813C0B52C6159A200CF5C70 /* API.swift in Sources */,
+				60140A6B2CAED8BB00E61908 /* NeuroDataModel.xcdatamodeld in Sources */,
+				60B7690F2CA32CE000CC8343 /* SavedFormsView.swift in Sources */,
 				08A99ED52C6297E20046D4A7 /* SignInView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -509,6 +529,19 @@
 			productName = WebRTC;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		60140A692CAED8BB00E61908 /* NeuroDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				60140A6A2CAED8BB00E61908 /* NeuroDataModel.xcdatamodel */,
+			);
+			currentVersion = 60140A6A2CAED8BB00E61908 /* NeuroDataModel.xcdatamodel */;
+			path = NeuroDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 60E860E92C5192DE0097826E /* Project object */;
 }

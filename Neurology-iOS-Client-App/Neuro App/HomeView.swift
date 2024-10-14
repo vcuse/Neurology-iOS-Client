@@ -16,11 +16,12 @@ struct HomeView: View {
     private let config = Config.default
     
     @EnvironmentObject var signalingClient: SignalingClient
+    @StateObject private var formViewModel = StrokeScaleFormViewModel()
     
     
     var body: some View {
         if(signalingClient.isInCall){
-            CallView()
+            CallView(formViewModel: formViewModel)
         }
         else {
             
@@ -62,27 +63,19 @@ struct HomeView: View {
                     .padding(10)
                     
                     Spacer()
-                    /*
-                    VStack {
-                        Spacer()
-                        HStack {
-                            Spacer()
-                            Button(action: {
-                                // Action for the floating button
-                                signalingClient.disconnectFromServer()
-                            }) {
-                                Text("X")
-                                    .font(.title)
-                                    .foregroundColor(.white)
-                                    .frame(width: 50, height: 50)
-                                    .background(Color.red)
-                                    .clipShape(Circle())
-                                    .shadow(radius: 10)
-                            }
+                    
+                    NavigationLink(destination: SavedFormsView()) {
+                        Text("View Saved Forms")
+                            .font(.headline)
+                            .foregroundColor(.black)
                             .padding()
-                        }
+                            .frame(maxWidth: .infinity)
+                            .background(Color.white)
+                            .cornerRadius(10)
                     }
-                     */
+                    .padding(.horizontal)
+                    .padding(.bottom, 20)
+                    
                 }
                 
                 .overlay(
