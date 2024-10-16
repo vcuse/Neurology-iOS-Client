@@ -1,10 +1,12 @@
 import SwiftUI
 
+import SwiftUI
+
 struct StrokeScaleFormView: View {
     @Binding var isPresented: Bool
     @ObservedObject var viewModel: StrokeScaleFormViewModel
     let saveForm: () -> Void
-
+    
     var body: some View {
         VStack {
             HStack {
@@ -44,25 +46,13 @@ struct StrokeScaleFormView: View {
 
             Spacer()
             
-            // Save and Send buttons
+            // Save button only
             HStack {
                 Button(action: {
                     saveForm()
                     isPresented = false // Close form after saving
                 }) {
                     Text("Save")
-                        .font(.headline)
-                        .foregroundColor(.black)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                }
-
-                Button(action: {
-                    //sendForm()
-                }) {
-                    Text("Send")
                         .font(.headline)
                         .foregroundColor(.black)
                         .padding()
@@ -79,8 +69,8 @@ struct StrokeScaleFormView: View {
         .shadow(radius: 10)
         .padding()
     }
-    
 }
+
 
 
 struct Option {

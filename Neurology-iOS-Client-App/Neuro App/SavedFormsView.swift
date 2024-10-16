@@ -9,6 +9,7 @@ struct SavedFormsView: View {
     ) private var savedForms: FetchedResults<NIHFormEntity>
 
     var body: some View {
+        // Ensure the view is inside a single NavigationView at the top level
         NavigationView {
             List {
                 ForEach(savedForms, id: \.self) { form in
@@ -27,11 +28,13 @@ struct SavedFormsView: View {
             .onAppear {
                 // Refresh Core Data context when the view appears
                 do {
-                    try viewContext.refreshAllObjects() // Refresh to ensure the latest data
+                    try viewContext.refreshAllObjects()
                 } catch {
                     print("Error refreshing Core Data context: \(error)")
                 }
             }
         }
+        // Force single-column navigation style
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
