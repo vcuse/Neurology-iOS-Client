@@ -98,7 +98,7 @@ struct SavedFormDetailView: View {
             // Hides the navigation bar to prevent empty space and extra back button
             .navigationBarHidden(true)
 
-            // Export button
+            // Export & Delete button
             HStack {
                 Button(action: {
                     exportFormAsPDF() // Call the PDF export function
@@ -112,7 +112,7 @@ struct SavedFormDetailView: View {
                         .cornerRadius(10)
                 }
                     Button(action: {
-                        //deleteForm()
+                        deleteForm()
                     }) {
                         Text("Delete")
                             .font(.headline)
@@ -231,6 +231,34 @@ struct SavedFormDetailView: View {
             rootViewController.present(activityViewController, animated: true, completion: nil)
         }
     }
+    
+    private func deleteForm() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            print("Failed to access AppDelegate") // Log if AppDelegate isn't accessible
+            return
+        }
+
+        let managedContext = appDelegate.persistentContainer.viewContext
+
+        // Proceed with deletion
+        managedContext.delete(savedForm)
+
+        do {
+            try managedContext.save()
+            print("Form deleted successfully")
+        } catch {
+            print("Failed to delete the form: \(error.localizedDescription)")
+        }
+
+        // Optionally pop the view after deletion
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let rootViewController = windowScene.windows.first?.rootViewController as? UINavigationController {
+            rootViewController.popViewController(animated: true)
+        }
+    }
+
+
+
     
     
 }
