@@ -4,6 +4,7 @@ import SwiftUI
 
 struct StrokeScaleFormView: View {
     @Binding var isPresented: Bool
+    @Binding var patientName: String
     @ObservedObject var viewModel: StrokeScaleFormViewModel
     let saveForm: () -> Void
     
@@ -27,6 +28,11 @@ struct StrokeScaleFormView: View {
                 }
                 .padding()
             }
+            
+            TextField("Patient Name", text: $patientName)
+                .padding()
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                        
 
             Text("Date: \(Date(), style: .date)")
                 .padding(.leading)

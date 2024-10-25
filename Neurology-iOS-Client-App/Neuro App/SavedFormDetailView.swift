@@ -39,6 +39,15 @@ struct SavedFormDetailView: View {
         VStack {
             Text("NIH Stroke Scale Form")
                 .font(.title)
+            
+            if let patientName = savedForm.patientName {
+                Text("Patient Name: \(patientName)")
+                    .font(.headline)
+            } else {
+                Text("Patient Name: Unknown")
+                    .font(.headline)
+                    .padding(.top)
+            }
 
             Text("Date: \(savedForm.date ?? Date(), style: .date)")
             
@@ -96,7 +105,7 @@ struct SavedFormDetailView: View {
 
             Spacer()
             // Hides the navigation bar to prevent empty space and extra back button
-            .navigationBarHidden(true)
+            .navigationBarBackButtonHidden(true)
 
             // Export & Delete button
             HStack {
@@ -149,6 +158,11 @@ struct SavedFormDetailView: View {
             let title = "NIH Stroke Scale Form"
             title.draw(at: CGPoint(x: 20, y: yPosition), withAttributes: [NSAttributedString.Key.font: headerFont])
             yPosition += 40
+            
+            // Patient Name
+            let patientNameText = "Patient Name: \(savedForm.patientName ?? "Unknown")"
+            patientNameText.draw(at: CGPoint(x: 20, y: yPosition), withAttributes: [NSAttributedString.Key.font: font])
+            yPosition += 30
             
             // Date
             let dateFormatter = DateFormatter()
