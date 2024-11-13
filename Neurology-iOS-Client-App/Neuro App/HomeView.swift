@@ -100,6 +100,7 @@ struct HomeView: View {
 
 struct OnlineUserItemView: View {
     let uuid: String
+    @EnvironmentObject var signalingClient: SignalingClient
     
     var body: some View{
         HStack {
@@ -109,7 +110,7 @@ struct OnlineUserItemView: View {
             Spacer()
             
             Button(action: {
-                //action for call button
+                signalingClient.callUser(id: uuid)
             }) {
                 Text("Call")
                     .foregroundColor(.black)

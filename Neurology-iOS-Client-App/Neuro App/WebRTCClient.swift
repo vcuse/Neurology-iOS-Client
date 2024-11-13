@@ -90,10 +90,10 @@ final class WebRTCClient: NSObject, ObservableObject {
                 return
             }
             debugPrint("we are in the offer of webrtc ", sdp as Any)
-            //self.peerConnection.setLocalDescription(sdp, completionHandler: { (error) in
+            self.peerConnection.setLocalDescription(sdp, completionHandler: { (error) in
             
-            //completion(sdp)
-            //})
+            completion(sdp)
+            })
         }
     }
     

@@ -94,6 +94,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
     private var candidatesToHandle = [[String: Any]]()
     private var offerMessage = [String: Any]()
     private var connectionId = ""
+    var peerConnection: RTCPeerConnection?
     private var theirPeerID = " "
     private var fetchTimer: Timer?
     @Published var ourPeerID = " "
@@ -228,9 +229,55 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
     }
     
     func callUser(id: String) {
-        // implement logic to call a user
         print("Calling user with ID: \(id)")
         isRinging = true
+        self.theirPeerID = id // Store the destination peer ID for later use
+
+        // Generate a unique data channel ID for this call
+        let dataChannelId = createDataChannel()?.label
+
+        // Create an SDP offer using the WebRTCClient's offer method
+        webRTCClient.offer { [weak self] sdp in
+            guard let self = self else { return }
+            
+            // Set the local SDP
+            self.webRTCClient.peerConnection.setLocalDescription(sdp) { error in
+                if let error = error {
+                    print("Error setting local SDP: \(error)")
+                    return
+                }
+                
+                // Construct the offer message
+                let message: [String: Any] = [
+                    "dst": id,
+                    "payload": [
+                        "connectionId": dataChannelId,
+                        "sdp": [
+                            "type": sdp.type.rawValue, // Should be "offer"
+                            "sdp": sdp.sdp,
+                            "browser": "firefox",
+                            "label": dataChannelId, // Reuse dataChannelId for label
+                            "reliable": "false",
+                            "serialization": "binary"
+                        ]
+                    ],
+                    "type": "OFFER",
+                    "src": self.ourPeerID
+                ]
+                
+                // Send the offer message as JSON
+                do {
+                    let jsonData = try JSONSerialization.data(withJSONObject: message)
+                    self.webSocket.send(data: jsonData)
+                    print("Offer sent to \(id)")
+                    print(message)
+                    let jsonString = String(data: jsonData, encoding: .utf8)
+                    print("JSON data: \(jsonString)")
+                } catch {
+                    print("Error serializing offer message to JSON: \(error)")
+                }
+            }
+        }
     }
     
     func cancelCall() {
@@ -304,7 +351,19 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
         self.webSocket.connect()
     }
     
+    private func createDataChannel() -> RTCDataChannel? {
+        let config = RTCDataChannelConfiguration()
+        guard let dataChannel = self.webRTCClient.peerConnection.dataChannel(forLabel: "WebRTCData", configuration: config) else {
+            debugPrint("Warning: Couldn't create data channel.")
+            return nil
+        }
+        return dataChannel
+    }
     
+    func setLocalSDP(_ sdp: RTCSessionDescription, completion: @escaping (Error?) -> Void) {
+           peerConnection?.setLocalDescription(sdp, completionHandler: completion)
+       }
+
     
 }
 
