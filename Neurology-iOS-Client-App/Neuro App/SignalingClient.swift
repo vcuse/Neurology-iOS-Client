@@ -79,6 +79,8 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
     
     
     
+    
+    
     private let config = Config.default
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
@@ -89,11 +91,11 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
     weak var webRTCDelegate: WebRTCClientDelegate?
     private var theirSDP = " "
     private var theirSrc = " "
-    private var mediaID = " "
+    private var mediaID = "5435435"
     private var candidateResponses: [Data] = []
     private var candidatesToHandle = [[String: Any]]()
     private var offerMessage = [String: Any]()
-    private var connectionId = ""
+    private var connectionId = "5435435"
     var peerConnection: RTCPeerConnection?
     private var theirPeerID = " "
     private var fetchTimer: Timer?
@@ -251,7 +253,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
                 let message: [String: Any] = [
                     "dst": id,
                     "payload": [
-                        "connectionId": dataChannelId,
+                        "connectionId": self.connectionId,
                         "sdp": [
                             "type": "offer",
                             "sdp": sdp.sdp,
@@ -389,22 +391,24 @@ extension SignalingClient: WebSocketProviderDelegate {
             // Use messageType, payload, and src as needed
             print("Processed message type:", messageType)
             //candidates come second
-//            if(messageType == "CANDIDATE"){
-//                handleCandidateMessage(payload: payload, src: src)
-//                
-//                let candidatePayload = payload
-//                let iceCandidate = RTCIceCandidate(sdp: self.theirSDP, sdpMLineIndex: candidatePayload["sdpMLineIndex"] as! Int32, sdpMid: candidatePayload["sdpMid"] as? String)
-//                self.webRTCClient.set(remoteCandidate: iceCandidate){error in
-//                    if let error = error {
-//                        debugPrint("Error adding remote ICE candidate: \(error.localizedDescription)")
-//                    } else {
-//                        debugPrint("Successfully added remote ICE candidate")
-//                    }
-//                }
-//            }
+            if(messageType == "CANDIDATE"){
+                isInCall = true
+                    //handleCandidateMessage(payload: payload, src: src)
+                
+                let candidatePayload = payload
+                let iceCandidate = RTCIceCandidate(sdp: self.theirSDP, sdpMLineIndex: candidatePayload["sdpMLineIndex"] as! Int32, sdpMid: candidatePayload["sdpMid"] as? String)
+               self.webRTCClient.set(remoteCandidate: iceCandidate){error in
+                    if let error = error {
+                        debugPrint("Error adding remote ICE candidate: \(error.localizedDescription)")
+                    } else {
+                        debugPrint("Successfully added remote ICE candidate")
+                    }
+                }
+            }
             
             // Handle ANSWER message (grab the SDP from payload)
             if messageType == "ANSWER" {
+                
                 if let sdpDict = payload["sdp"] as? [String: Any],
                    let sdp = sdpDict["sdp"] as? String {
                     print("Received SDP in ANSWER:", sdp)
@@ -446,7 +450,7 @@ extension SignalingClient: WebSocketProviderDelegate {
         let candidateReponse: [String: Any] = ["type": "CANDIDATE", "payload": payload, "dst":src]
         do{
             let jsonData = try JSONSerialization.data( withJSONObject: candidateReponse)
-            
+            isInCall = true
             // candidateResponses.append(jsonData)
            // candidatesToHandle.append(payload)
 

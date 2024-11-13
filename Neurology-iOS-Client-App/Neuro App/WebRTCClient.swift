@@ -184,9 +184,7 @@ final class WebRTCClient: NSObject, ObservableObject {
         
     }
     
-    func set(remoteSdp: RTCSessionDescription, completion: @escaping (Error?) -> ()) {
-        //self.peerConnection.setRemoteDescription(remoteSdp, completionHandler: completion)
-    }
+
     
     func set(remoteCandidate: RTCIceCandidate, completion: @escaping (Error?) -> ()) {
         self.peerConnection.add(remoteCandidate, completionHandler: completion)
