@@ -234,7 +234,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
         self.theirPeerID = id // Store the destination peer ID for later use
 
         // Generate a unique data channel ID for this call
-        let dataChannelId = createDataChannel()?.label
+        let dataChannelId = createDataChannel()
 
         // Create an SDP offer using the WebRTCClient's offer method
         webRTCClient.offer { [weak self] sdp in
@@ -253,13 +253,10 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
                     "payload": [
                         "connectionId": dataChannelId,
                         "sdp": [
-                            "type": sdp.type.rawValue, // Should be "offer"
+                            "type": "offer",
                             "sdp": sdp.sdp,
-                            "browser": "firefox",
-                            "label": dataChannelId, // Reuse dataChannelId for label
-                            "reliable": "false",
-                            "serialization": "binary"
-                        ]
+                        ],
+                        "type": "media"
                     ],
                     "type": "OFFER",
                     "src": self.ourPeerID
@@ -351,19 +348,10 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
         self.webSocket.connect()
     }
     
-    private func createDataChannel() -> RTCDataChannel? {
-        let config = RTCDataChannelConfiguration()
-        guard let dataChannel = self.webRTCClient.peerConnection.dataChannel(forLabel: "WebRTCData", configuration: config) else {
-            debugPrint("Warning: Couldn't create data channel.")
-            return nil
-        }
-        return dataChannel
+    private func createDataChannel() -> String {
+        let uuid = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+        return String(uuid.prefix(14))
     }
-    
-    func setLocalSDP(_ sdp: RTCSessionDescription, completion: @escaping (Error?) -> Void) {
-           peerConnection?.setLocalDescription(sdp, completionHandler: completion)
-       }
-
     
 }
 
@@ -401,18 +389,42 @@ extension SignalingClient: WebSocketProviderDelegate {
             // Use messageType, payload, and src as needed
             print("Processed message type:", messageType)
             //candidates come second
-            if(messageType == "CANDIDATE"){
-                handleCandidateMessage(payload: payload, src: src)
-            }
+//            if(messageType == "CANDIDATE"){
+//                handleCandidateMessage(payload: payload, src: src)
+//                
+//                let candidatePayload = payload
+//                let iceCandidate = RTCIceCandidate(sdp: self.theirSDP, sdpMLineIndex: candidatePayload["sdpMLineIndex"] as! Int32, sdpMid: candidatePayload["sdpMid"] as? String)
+//                self.webRTCClient.set(remoteCandidate: iceCandidate){error in
+//                    if let error = error {
+//                        debugPrint("Error adding remote ICE candidate: \(error.localizedDescription)")
+//                    } else {
+//                        debugPrint("Successfully added remote ICE candidate")
+//                    }
+//                }
+//            }
             
-            // the offer message contains information about the client calling us (it has their sdp, and we will use it to create our answer)
-            if(messageType == "OFFER"){
-                storeOfferMessage(payload: payload, src: src)
-                //handleOfferMessage(payload: payload, src: src)
+            // Handle ANSWER message (grab the SDP from payload)
+            if messageType == "ANSWER" {
+                if let sdpDict = payload["sdp"] as? [String: Any],
+                   let sdp = sdpDict["sdp"] as? String {
+                    print("Received SDP in ANSWER:", sdp)
+                    
+                    // Create an RTCSessionDescription for the answer SDP
+                    let sessionDescription = RTCSessionDescription(type: .answer, sdp: sdp)
+                    
+                    // Set the remote SDP on the peer connection
+                    self.webRTCClient.peerConnection.setRemoteDescription(sessionDescription) { error in
+                        if let error = error {
+                            print("Error setting remote SDP: \(error)")
+                            return
+                        }
+                        self.theirSDP = sdp
+                        print("Successfully set remote SDP for ANSWER")
+                    }
+                } else {
+                    print("Failed to extract SDP from ANSWER payload")
+                }
             }
-            
-        } else {
-            print("Failed to process received message")
         }
     }
     
@@ -434,8 +446,9 @@ extension SignalingClient: WebSocketProviderDelegate {
         let candidateReponse: [String: Any] = ["type": "CANDIDATE", "payload": payload, "dst":src]
         do{
             let jsonData = try JSONSerialization.data( withJSONObject: candidateReponse)
-            candidateResponses.append(jsonData)
-            candidatesToHandle.append(payload)
+            
+            // candidateResponses.append(jsonData)
+           // candidatesToHandle.append(payload)
 
             //handleIceCandidates(candidate: payload)
         }
