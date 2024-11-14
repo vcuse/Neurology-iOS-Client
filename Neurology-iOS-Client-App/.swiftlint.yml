@@ -1,0 +1,38 @@
+# swiftlint.yml
+
+# Set each rule to warning-only by setting unreachable error thresholds where possible
+line_length:
+  warning: 120
+  error: 9999  # Setting an unreachable error threshold
+
+# Set severity for other rules to warning-only
+cyclomatic_complexity:
+  warning: 10
+  error: 9999
+
+file_length:
+  warning: 400
+  error: 9999
+
+function_body_length:
+  warning: 40
+  error: 9999
+
+type_body_length:
+  warning: 200
+  error: 9999
+
+force_cast:
+  severity: warning
+
+# Disable specific rules that are not essential (optional)
+disabled_rules:
+#  - force_cast
+#  - force_try
+#  - trailing_whitespace
+  - todo
+  - type_name
+
+# Set reporter to "xcode" to ensure output is compatible with Xcode
+reporter: "xcode"
+

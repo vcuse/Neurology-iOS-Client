@@ -205,6 +205,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				083797122CE67BE2005DA012 /* PBXTargetDependency */,
 			);
 			name = "Neuro App";
 			packageProductDependencies = (
@@ -243,6 +244,7 @@
 			mainGroup = 60E860E82C5192DE0097826E;
 			packageReferences = (
 				08FBF1E02C59B83500F4AE9A /* XCRemoteSwiftPackageReference "WebRTC" */,
+				0837970E2CE67B87005DA012 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
 			productRefGroup = 60E860E82C5192DE0097826E;
 			projectDirPath = "";
@@ -293,6 +295,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		083797122CE67BE2005DA012 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 083797112CE67BE2005DA012 /* SwiftLintBuildToolPlugin */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		088B34972C5C03A100094A02 /* Debug */ = {
@@ -512,6 +521,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		0837970E2CE67B87005DA012 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/SwiftLint";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.57.0;
+			};
+		};
 		08FBF1E02C59B83500F4AE9A /* XCRemoteSwiftPackageReference "WebRTC" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/stasel/WebRTC.git";
@@ -523,6 +540,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		083797112CE67BE2005DA012 /* SwiftLintBuildToolPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0837970E2CE67B87005DA012 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
 		088B34992C5C03DA00094A02 /* WebRTC */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 08FBF1E02C59B83500F4AE9A /* XCRemoteSwiftPackageReference "WebRTC" */;
