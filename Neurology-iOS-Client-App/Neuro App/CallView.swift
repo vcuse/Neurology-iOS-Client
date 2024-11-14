@@ -110,28 +110,28 @@ struct CallView: View {
                     HStack {
                         Button(action: {
                             endCall()
-                        }) {
+                        }, label: {
                             Image(systemName: "phone.down.fill")
                                 .foregroundColor(.white)
                                 .font(.system(size: 30))
                                 .padding(22)
                                 .background(Color.red)
                                 .clipShape(Circle())
-                        }
+                        })
                         .frame(width: 60, height: 60)
 
                         Spacer()
 
                         Button(action: {
                             toggleMute()
-                        }) {
+                        }, label: {
                             Image(systemName: self.isMuted ? "mic.slash.fill" : "mic.fill")
                                 .foregroundColor(.white)
                                 .font(.system(size: 26))
                                 .padding(19)
                                 .background(self.isMuted ? Color.gray : Color.blue)
                                 .clipShape(Circle())
-                        }
+                        })
                         .frame(width: 60, height: 60)
 
                         Spacer()
@@ -185,7 +185,7 @@ struct CallView: View {
 
     // Helper functions
     private func setupWebRTC() {
-        var webRTC = signalingClient.getSignalingClient()
+        let webRTC = signalingClient.getSignalingClient()
         webRTC.startCaptureLocalVideo(renderer: localRenderer)
         webRTC.renderRemoteVideo(to: remoteRenderer)
     }

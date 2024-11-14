@@ -20,7 +20,7 @@ class API {
 
     func retrieveId(completion: @escaping (Result<String, Error>) -> Void) async {
 
-        guard let request = buildRequest(method: "id") else {
+        guard buildRequest(method: "id") != nil else {
             completion(.failure(NSError(domain: "com.yourapp.APIError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
             return
         }
