@@ -1,0 +1,46 @@
+# This workflow will Lint a Swift project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
+
+name: SwiftLint Autocorrect
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main  # Change this to the branch you want to lint on pushes, e.g., "dev"
+
+jobs:
+  lint:
+    runs-on: macos-latest  # macOS runner is required for Xcode and SwiftLint
+    
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Swift
+        uses: fwal/setup-swift@v1
+        with:
+          swift-version: '5.5'  # Specify your Swift version
+
+      - name: Install SwiftLint
+        run: |
+          if ! command -v swiftlint &> /dev/null; then
+            echo "Installing SwiftLint..."
+            brew install swiftlint
+          fi
+
+      - name: Run SwiftLint autocorrect
+        run: |
+          echo "Running SwiftLint autocorrect..."
+          swiftlint autocorrect
+      
+      # Optional: Commit and push changes if autocorrect made modifications
+      - name: Commit SwiftLint fixes
+        run: |
+          if [[ `git status --porcelain` ]]; then
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git add .
+            git commit -m "Apply SwiftLint autocorrect fixes"
+            git push
+          fi
