@@ -20,7 +20,7 @@ jobs:
       - name: Set up Swift
         uses: fwal/setup-swift@v1
         with:
-          swift-version: '5.10'  # Specify your Swift version
+          swift-version: '5.50'  # Specify your Swift version
 
       - name: Install SwiftLint
         run: |
