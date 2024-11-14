@@ -26,7 +26,7 @@ jobs:
         run: |
           if ! command -v swiftlint &> /dev/null; then
             echo "Installing SwiftLint..."
-            brew install swiftlint
+            brew install swiftlint --path Neurology-iOS-Client-App/ 
           fi
 
       - name: Run SwiftLint autocorrect
