@@ -24,15 +24,15 @@ jobs:
       - name: Run SwiftLint autocorrect
         run: |
           echo "Running SwiftLint "
-          swiftlint
+          swiftlint --fix
       
-      # # Optional: Commit and push changes if autocorrect made modifications
-      # - name: Commit SwiftLint fixes
-      #   run: |
-      #     if [[ `git status --porcelain` ]]; then
-      #       git config --global user.name "github-actions[bot]"
-      #       git config --global user.email "github-actions[bot]@users.noreply.github.com"
-      #       git add .
-      #       git commit -m "Apply SwiftLint autocorrect fixes"
-      #       git push
-      #     fi
+      # Optional: Commit and push changes if autocorrect made modifications
+      - name: Commit SwiftLint fixes
+        run: |
+          if [[ `git status --porcelain` ]]; then
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git add .
+            git commit -m "Apply SwiftLint autocorrect fixes"
+            git push
+          fi
