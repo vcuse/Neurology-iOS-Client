@@ -46,10 +46,10 @@ struct SignInView: View {
 
                         Button(action: {
                             isPasswordVisible.toggle()
-                        }) {
+                        }, label: {
                             Image(systemName: isPasswordVisible ? "eye.fill" : "eye.slash.fill")
                                 .foregroundColor(.gray)
-                        }
+                        })
                         .padding(.bottom, -13)
                         .padding(.leading, -5)
                     }
@@ -83,14 +83,14 @@ struct SignInView: View {
 
                 Button(action: {
                     // add sign in functionality here
-                }) {
+                }, label: {
                     Text("Sign In")
                         .foregroundColor(.black)
                         .padding()
                         .frame(maxWidth: .infinity)
                         .background(Color.yellow)
                         .cornerRadius(20)
-                }
+                })
                 .padding(20)
             }
 

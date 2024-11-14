@@ -88,11 +88,11 @@ struct CallView: View {
                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                         // Add functionality for sending a message here
                                     }
-                                }) {
+                                }, label: {
                                     Image(systemName: "arrow.up.circle.fill")
                                         .foregroundColor(.blue)
                                         .font(.system(size: 26))
-                                }
+                                })
                                 .padding(.trailing)
                             }
                             .padding(10)
@@ -139,14 +139,14 @@ struct CallView: View {
                         // NIH Stroke Scale Button
                         Button(action: {
                             showStrokeScaleForm.toggle() // Show the NIH Stroke Scale form
-                        }) {
+                        }, label: {
                             Image(systemName: "doc.text.fill")
                                 .foregroundColor(.white)
                                 .font(.system(size: 26))
                                 .padding(16)
                                 .background(Color.purple)
                                 .clipShape(Circle())
-                        }
+                        })
                         .frame(width: 60, height: 60)
                         .sheet(isPresented: $showStrokeScaleForm) {
                             StrokeScaleFormView(
@@ -166,14 +166,14 @@ struct CallView: View {
                                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                 }
                             }
-                        }) {
+                        }, label: {
                             Image(systemName: "message.fill")
                                 .foregroundColor(.white)
                                 .font(.system(size: 26))
                                 .padding(16)
                                 .background(Color.green)
                                 .clipShape(Circle())
-                        }
+                        })
                         .frame(width: 60, height: 60)
                     }
                     .padding(.horizontal, 40)

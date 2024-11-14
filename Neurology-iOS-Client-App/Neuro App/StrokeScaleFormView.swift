@@ -18,11 +18,11 @@ struct StrokeScaleFormView: View {
 
                 Button(action: {
                     isPresented = false
-                }) {
+                }, label: {
                     Image(systemName: "xmark.circle.fill")
                         .font(.system(size: 24))
                         .foregroundColor(.gray)
-                }
+                })
                 .padding()
             }
 
@@ -49,7 +49,7 @@ struct StrokeScaleFormView: View {
                 Button(action: {
                     saveForm()
                     isPresented = false // Close form after saving
-                }) {
+                }, label: {
                     Text("Save")
                         .font(.headline)
                         .foregroundColor(.black)
@@ -57,11 +57,11 @@ struct StrokeScaleFormView: View {
                         .frame(maxWidth: .infinity)
                         .background(Color.white)
                         .cornerRadius(10)
-                }
+                })
 
                 Button(action: {
                     // sendForm()
-                }) {
+                }, label: {
                     Text("Send")
                         .font(.headline)
                         .foregroundColor(.black)
@@ -69,7 +69,7 @@ struct StrokeScaleFormView: View {
                         .frame(maxWidth: .infinity)
                         .background(Color.white)
                         .cornerRadius(10)
-                }
+                })
             }
             .padding(.horizontal)
             .padding(.bottom)

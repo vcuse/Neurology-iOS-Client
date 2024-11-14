@@ -103,13 +103,13 @@ struct OnlineUserItemView: View {
 
             Button(action: {
                 // action for call button
-            }) {
+            }, label: {
                 Text("Call")
                     .foregroundColor(.black)
                     .padding(10)
                     .background(Color.white)
                     .cornerRadius(10)
-            }
+            })
             .padding(.trailing)
         }
         .padding(5)
@@ -129,13 +129,13 @@ struct RingingPopopView: View {
                 .foregroundColor(.white)
             Button(action: {
                 signalingClient.cancelCall()
-            }) {
+            }, label: {
                 Text("Cancel")
                     .foregroundColor(.red)
                     .padding(5)
                     .background(Color.white)
                     .cornerRadius(10)
-            }
+            })
             .padding(.bottom, 10)
         }
         .frame(width: 200, height: 100)

@@ -7,11 +7,10 @@ struct SavedFormDetailView: View {
 
     var totalScore: Int {
         var score = 0
-        for (index, selectedOption) in selectedOptions.enumerated() {
-            if selectedOption != -1 {
-                score += viewModel.questions[index].options[selectedOption].score
-            }
+        for (index, selectedOption) in selectedOptions.enumerated() where selectedOption != -1 {
+            score += viewModel.questions[index].options[selectedOption].score
         }
+
         return score
     }
 
@@ -19,7 +18,7 @@ struct SavedFormDetailView: View {
         self.savedForm = savedForm
 
         // Decode the selectedOptions from Core Data (if they exist)
-        if let optionsData = savedForm.selectedOptions as? Data {
+        if let optionsData = savedForm.selectedOptions {
             do {
                 let decodedOptions = try JSONDecoder().decode([Int].self, from: optionsData)
                 self._selectedOptions = State(initialValue: decodedOptions)
