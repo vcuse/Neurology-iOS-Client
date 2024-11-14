@@ -26,13 +26,13 @@ jobs:
         run: |
           if ! command -v swiftlint &> /dev/null; then
             echo "Installing SwiftLint..."
-            brew install swiftlint --path Neurology-iOS-Client-App/ 
+            brew install swiftlint 
           fi
 
       - name: Run SwiftLint autocorrect
         run: |
           echo "Running SwiftLint autocorrect..."
-          swiftlint autocorrect
+          swiftlint autocorrect --path Neurology-iOS-Client-App/ 
       
       # Optional: Commit and push changes if autocorrect made modifications
       - name: Commit SwiftLint fixes
