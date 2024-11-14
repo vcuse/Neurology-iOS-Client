@@ -1,5 +1,21 @@
-  - name: GitHub Action for SwiftLint
-  # You may pin to the exact commit or the version.
-  # uses: norio-nomura/action-swiftlint@9f4dcd7fd46b4e75d7935cf2f4df406d5cae3684
-  uses: norio-nomura/action-swiftlint@3.2.1
-          
+name: SwiftLint Autocorrect
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main  # Adjust this to target the branch you want to lint
+
+jobs:
+  lint:
+    runs-on: macos-latest  # macOS is required for SwiftLint
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: GitHub Action for SwiftLint
+        # Uses the SwiftLint GitHub Action by norio-nomura
+        uses: norio-nomura/action-swiftlint@3.2.1
+        with:
+          args: autocorrect  # Runs SwiftLint autocorrect
