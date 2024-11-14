@@ -32,7 +32,7 @@ jobs:
       - name: Run SwiftLint autocorrect
         run: |
           echo "Running SwiftLint autocorrect..."
-          swiftlint autocorrect --path Neurology-iOS-Client-App/ 
+          swiftlint autocorrect 
       
       # Optional: Commit and push changes if autocorrect made modifications
       - name: Commit SwiftLint fixes
