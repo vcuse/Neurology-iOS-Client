@@ -10,24 +10,22 @@ import Foundation
 
 @available(iOS 13.0, *)
 class NativeWebSocket: NSObject, WebSocketProvider {
-    
+
     var delegate: WebSocketProviderDelegate?
     private let url: URL
     private var socket: URLSessionWebSocketTask?
     private lazy var urlSession: URLSession = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
 
     init(url: URL ) {
-        //debugPrint("url is ", url)
-        
-        
+        // debugPrint("url is ", url)
+
         self.url = url
         super.init()
     }
 
     func connect() {
-        
-        
-        //debugPrint("WE ARE CONNECTING WITH URL", url)
+
+        // debugPrint("WE ARE CONNECTING WITH URL", url)
         let socket = urlSession.webSocketTask(with: url)
         socket.resume()
         self.socket = socket
@@ -38,37 +36,35 @@ class NativeWebSocket: NSObject, WebSocketProvider {
         self.socket?.send(.data(data)) { _ in }
         debugPrint("We sent data")
     }
-    
 
-    
-    private func readMessage()  {
+    private func readMessage() {
         self.socket?.receive { [weak self] message in
             guard let self = self else { return }
-            
+
             switch message {
             case .success(.data(let data)):
                 self.delegate?.webSocket(self, didReceiveData: data)
-                //debugPrint("message from server", message)
+                // debugPrint("message from server", message)
                 self.readMessage()
             case .failure:
                 self.disconnect()
             case .success(let message):
                         if case let .string(messageString) = message {
                             self.delegate?.handleMessage(message: messageString)
-                            
-                            //make a way to handle the messages
+
+                            // make a way to handle the messages
                             // Now you can parse the messageString as needed
                             // For example, you can parse it as JSON to extract the type, payload, etc.
                         } else {
                             print("Unexpected message type:", message)
                         }
-                        
+
                         // Continue reading messages
                         self.readMessage()
             }
         }
     }
-    
+
     private func disconnect() {
         self.socket?.cancel()
         self.socket = nil
@@ -76,16 +72,12 @@ class NativeWebSocket: NSObject, WebSocketProvider {
     }
 }
 
-
-
-
-
 @available(iOS 13.0, *)
-extension NativeWebSocket: URLSessionWebSocketDelegate, URLSessionDelegate  {
+extension NativeWebSocket: URLSessionWebSocketDelegate, URLSessionDelegate {
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
         self.delegate?.webSocketDidConnect(self)
     }
-    
+
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
         self.disconnect()
     }

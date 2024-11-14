@@ -7,7 +7,7 @@ struct CallView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @ObservedObject var formViewModel = StrokeScaleFormViewModel() // ObservedObject for StrokeScaleFormViewModel
-    
+
     @State private var callUUID = UUID()
     @State private var localRenderer = RTCVideoWrapper(frame: .zero)
     @State private var remoteRenderer = RTCVideoWrapper(frame: .zero)
@@ -18,11 +18,11 @@ struct CallView: View {
     @State private var messageLog: [String] = []
     @State private var showStrokeScaleForm: Bool = false
     @State private var savedForms: [SavedForm] = [] // List to hold saved forms
-    
+
     var body: some View {
         ZStack {
             Color.black.edgesIgnoringSafeArea(.all) // Background
-            
+
             ZStack {
                 RTCVideoView(renderer: localRenderer)
                     .edgesIgnoringSafeArea(.all)
@@ -35,10 +35,10 @@ struct CallView: View {
                     .onAppear {
                         setupWebRTC()
                     }
-                
+
                 VStack {
                     Spacer()
-                    
+
                     if showChat {
                         VStack {
                             ScrollViewReader { proxy in
@@ -70,7 +70,7 @@ struct CallView: View {
                                     }
                                 }
                             }
-                            
+
                             HStack {
                                 TextField("", text: $messageText, onEditingChanged: { isEditing in
                                     self.isEditing = isEditing
@@ -79,7 +79,7 @@ struct CallView: View {
                                 .background(Color.white)
                                 .cornerRadius(10)
                                 .foregroundColor(.black)
-                                
+
                                 Button(action: {
                                     if !self.messageText.isEmpty {
                                         self.messageLog.append(self.messageText)
@@ -106,22 +106,22 @@ struct CallView: View {
                         .padding(.horizontal, 10)
                         .padding(.bottom, 30)
                     }
-                    
+
                     HStack {
                         Button(action: {
                             endCall()
                         }) {
                             Image(systemName: "phone.down.fill")
                                 .foregroundColor(.white)
-                                .font(.system(size:30))
+                                .font(.system(size: 30))
                                 .padding(22)
                                 .background(Color.red)
                                 .clipShape(Circle())
                         }
                         .frame(width: 60, height: 60)
-                        
+
                         Spacer()
-                        
+
                         Button(action: {
                             toggleMute()
                         }) {
@@ -133,9 +133,9 @@ struct CallView: View {
                                 .clipShape(Circle())
                         }
                         .frame(width: 60, height: 60)
-                        
+
                         Spacer()
-                        
+
                         // NIH Stroke Scale Button
                         Button(action: {
                             showStrokeScaleForm.toggle() // Show the NIH Stroke Scale form
@@ -155,9 +155,9 @@ struct CallView: View {
                                 saveForm: saveForm
                             )
                         }
-                        
+
                         Spacer()
-                        
+
                         Button(action: {
                             withAnimation {
                                 self.showChat.toggle()
@@ -182,7 +182,7 @@ struct CallView: View {
             }
         }
     }
-    
+
     // Helper functions
     private func setupWebRTC() {
         var webRTC = signalingClient.getSignalingClient()
@@ -209,7 +209,7 @@ struct CallView: View {
             // Ensure the save operation happens on the main thread
             DispatchQueue.main.async {
                 do {
-                    try context.save() 
+                    try context.save()
                     print("Form saved successfully.")
                 } catch {
                     print("Failed to save form: \(error)")
@@ -219,8 +219,6 @@ struct CallView: View {
             print("Failed to encode selected options: \(error)")
         }
     }
-
-
 
     private func endCall() {
         signalingClient.endCall()

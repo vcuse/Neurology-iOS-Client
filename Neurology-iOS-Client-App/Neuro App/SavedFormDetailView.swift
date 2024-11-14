@@ -4,7 +4,7 @@ struct SavedFormDetailView: View {
     var savedForm: NIHFormEntity
     @ObservedObject var viewModel = StrokeScaleFormViewModel() // Assuming this contains your questions
     @State var selectedOptions: [Int]
-    
+
     var totalScore: Int {
         var score = 0
         for (index, selectedOption) in selectedOptions.enumerated() {
@@ -17,7 +17,7 @@ struct SavedFormDetailView: View {
 
     init(savedForm: NIHFormEntity) {
         self.savedForm = savedForm
-        
+
         // Decode the selectedOptions from Core Data (if they exist)
         if let optionsData = savedForm.selectedOptions as? Data {
             do {
@@ -39,23 +39,23 @@ struct SavedFormDetailView: View {
                 .font(.title)
 
             Text("Date: \(savedForm.date ?? Date(), style: .date)")
-            
+
             // Display the total score below the date
             Text("Total Score: \(totalScore)")
                 .padding(.bottom)
-            
+
             ScrollView {
                 VStack(alignment: .leading) {
                     ForEach(viewModel.questions.indices, id: \.self) { index in
                         let question = viewModel.questions[index]
                         let selectedOptionIndex = selectedOptions[index]
-                        
+
                         Section {
                             // Question header
                             Text(question.questionHeader)
                                 .font(.headline)
                                 .padding(.top, 5)
-                            
+
                             // Subheader if it exists
                             if let subHeader = question.subHeader {
                                 Text(subHeader)

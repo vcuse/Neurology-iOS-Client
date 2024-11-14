@@ -13,7 +13,7 @@ struct RTCVideoView: UIViewRepresentable {
     func makeUIView(context: Context) -> RTCVideoWrapper {
         return renderer
     }
-    
+
     func updateUIView(_ uiView: RTCVideoWrapper, context: Context) {
         // Handle any updates if needed
     }

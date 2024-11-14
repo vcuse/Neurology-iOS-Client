@@ -21,5 +21,5 @@ protocol WebSocketProviderDelegate: AnyObject {
     func handleMessage(message: String)
     func createCandidateRTC(_ webSocket: WebSocketProvider, sdp: String)
     func processReceivedMessage(message: String) -> (String, [String: Any], String)?
-    
+
 }

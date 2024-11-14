@@ -9,11 +9,11 @@ import Foundation
 import SwiftUI
 import WebRTC
 
-struct RTCVideoView: UIViewRepresentable  {
+struct RTCVideoView: UIViewRepresentable {
     typealias UIViewType = RTCMTLVideoView
-    
+
     private var videoView = RTCMTLVideoView()
-    
+
         init(frame: CGRect) {
             self.videoView = RTCMTLVideoView(frame: frame)
             self.videoView.videoContentMode = .scaleAspectFill

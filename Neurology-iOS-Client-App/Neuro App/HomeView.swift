@@ -8,41 +8,36 @@
 import SwiftUI
 import UserNotifications
 
-
-
-
 struct HomeView: View {
-    
+
     private let config = Config.default
-    
+
     @EnvironmentObject var signalingClient: SignalingClient
     @StateObject private var formViewModel = StrokeScaleFormViewModel()
-    
-    
+
     var body: some View {
-        if(signalingClient.isInCall){
+        if signalingClient.isInCall {
             CallView(formViewModel: formViewModel)
-        }
-        else {
-            
+        } else {
+
             NavigationView {
                 VStack {
                     Text("Hello, user!")
                         .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                         .bold()
                         .padding(10)
-                    
+
                     Text("Your Peer ID: \(signalingClient.ourPeerID)")
                         .bold()
                         .multilineTextAlignment(.center)
                         .padding(.bottom, 25)
                     Text("Online Now:")
                         .font(.headline)
-                    
+
                     VStack(alignment: .leading) {
                         // filter out our own id
                         let filteredOnlineUsers = signalingClient.onlineUsers.filter { $0 != signalingClient.ourPeerID }
-                        
+
                         if filteredOnlineUsers.isEmpty {
                             Text("Hmm, nobody's here right now!")
                                 .padding()
@@ -61,9 +56,9 @@ struct HomeView: View {
                         }
                     }
                     .padding(10)
-                    
+
                     Spacer()
-                    
+
                     NavigationLink(destination: SavedFormsView()) {
                         Text("View Saved Forms")
                             .font(.headline)
@@ -75,9 +70,9 @@ struct HomeView: View {
                     }
                     .padding(.horizontal)
                     .padding(.bottom, 20)
-                    
+
                 }
-                
+
                 .overlay(
                     Group {
                         if signalingClient.isRinging {
@@ -87,12 +82,10 @@ struct HomeView: View {
                 )
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .padding()
-                .onAppear() {
+                .onAppear {
                     signalingClient.fetchOnlineUsers()
                 }
-                
-                
-                
+
             }
         }
     }
@@ -100,16 +93,16 @@ struct HomeView: View {
 
 struct OnlineUserItemView: View {
     let uuid: String
-    
-    var body: some View{
+
+    var body: some View {
         HStack {
             Text(uuid)
                 .padding(10)
-            
+
             Spacer()
-            
+
             Button(action: {
-                //action for call button
+                // action for call button
             }) {
                 Text("Call")
                     .foregroundColor(.black)
@@ -127,7 +120,7 @@ struct OnlineUserItemView: View {
 
 struct RingingPopopView: View {
     @ObservedObject var signalingClient: SignalingClient
-    
+
     var body: some View {
         VStack {
             Text("Ringing...")
