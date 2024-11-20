@@ -33,7 +33,7 @@ jobs:
         env:
           platform: iOS Simulator
         run: |
-          cd Neurology-iOS-Client/
+          cd Neurology-iOS-Client-App/
           # Detect file type (project or workspace)
           if [ -e *.xcworkspace ]; then 
             filetype_parameter="workspace"
@@ -55,7 +55,7 @@ jobs:
         env:
           platform: iOS Simulator
         run: |
-          cd Neurology-iOS-Client/
+          cd Neurology-iOS-Client-App/
           # Detect file type (project or workspace)
           if [ -e *.xcworkspace ]; then 
             filetype_parameter="workspace"
