@@ -15,6 +15,7 @@ struct SavedFormsView: View {
     private var savedForms: FetchedResults<NIHFormEntity>
     
     var body: some View {
+        // Ensure the view is inside a single NavigationView at the top level
         NavigationView {
             VStack {
                 List {
@@ -48,5 +49,7 @@ struct SavedFormsView: View {
                 viewContext.refreshAllObjects() // Refresh to ensure the latest data
             }
         }
+        // Force single-column navigation style
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
