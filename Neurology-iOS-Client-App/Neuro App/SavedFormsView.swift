@@ -1,19 +1,16 @@
 import SwiftUI
 import CoreData
 
-import SwiftUI
-import CoreData
-
 struct SavedFormsView: View {
-    
+
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(
         entity: NIHFormEntity.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \NIHFormEntity.date, ascending: false)]
     )
-    
+
     private var savedForms: FetchedResults<NIHFormEntity>
-    
+
     var body: some View {
         // Ensure the view is inside a single NavigationView at the top level
         NavigationView {

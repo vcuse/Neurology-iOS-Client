@@ -16,7 +16,6 @@ struct HomeView: View {
     @StateObject private var formViewModel = StrokeScaleFormViewModel()
     @State private var isSavedFormsPresented: Bool = false // State to control the modal presentation
 
-
     var body: some View {
         if signalingClient.isInCall {
             CallView(formViewModel: formViewModel)
@@ -47,7 +46,6 @@ struct HomeView: View {
                                 .background(Color.white)
                                 .cornerRadius(10)
                                 .shadow(radius: 2)
-                            
 
                                 Text("Online Now:")
                                     .font(.headline)
@@ -78,7 +76,6 @@ struct HomeView: View {
                                 .padding(.top, 10)
 
                                 Spacer()
-
 
                     NavigationLink(destination: SavedFormsView()) {
                         Text("NIH Forms")

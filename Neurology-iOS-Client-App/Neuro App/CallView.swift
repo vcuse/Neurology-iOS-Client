@@ -19,7 +19,7 @@ struct CallView: View {
     @State private var showStrokeScaleForm: Bool = false
     @State private var savedForms: [SavedForm] = [] // List to hold saved forms
     @State private var patientName: String = ""
-    
+
     var body: some View {
         ZStack {
             Color.black.edgesIgnoringSafeArea(.all) // Background
@@ -200,7 +200,7 @@ struct CallView: View {
         let newForm = NIHFormEntity(context: context)
         newForm.date = Date()
         newForm.patientName = patientName
-        
+
         // Collect selected options from each question
         let selectedOptions = formViewModel.questions.map { $0.selectedOption ?? -1 }
 
