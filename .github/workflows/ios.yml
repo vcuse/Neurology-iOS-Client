@@ -23,7 +23,7 @@ jobs:
       - name: Detect Default Scheme
         id: scheme-detection
         run: |
-          cd Neurology-iOS-Client-App/Neurology-iOS-Client-App.xcodeproj/
+          cd Neurology-iOS-Client-App/
           scheme_list=$(xcodebuild -list -json)
           default=$(echo $scheme_list | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['schemes'][0]")
           echo "scheme=$default" >> $GITHUB_ENV
