@@ -46,6 +46,7 @@ jobs:
           file_to_build=$(echo $file_to_build | xargs) # Clean whitespace
           # Detect simulator device
           device=$(xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | sed 's/ Simulator$//')
+          cd project.xcworkspace
           pwd
           xcodebuild build-for-testing \
             -"$filetype_parameter" "$file_to_build" \
