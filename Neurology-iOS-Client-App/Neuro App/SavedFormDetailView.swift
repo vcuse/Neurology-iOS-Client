@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct SavedFormDetailView: View {
+    
     var savedForm: NIHFormEntity
     @ObservedObject var viewModel = StrokeScaleFormViewModel() // Assuming this contains your questions
     @State var selectedOptions: [Int]

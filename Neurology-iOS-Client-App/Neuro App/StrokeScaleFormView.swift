@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct StrokeScaleFormView: View {
+    @Environment(\.managedObjectContext) private var viewContext
     @Binding var isPresented: Bool
     @ObservedObject var viewModel: StrokeScaleFormViewModel
     let saveForm: () -> Void
