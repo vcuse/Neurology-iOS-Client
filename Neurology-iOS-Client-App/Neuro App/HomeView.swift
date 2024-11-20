@@ -14,6 +14,8 @@ struct HomeView: View {
 
     @EnvironmentObject var signalingClient: SignalingClient
     @StateObject private var formViewModel = StrokeScaleFormViewModel()
+    @State private var isSavedFormsPresented: Bool = false // State to control the modal presentation
+
 
     var body: some View {
         if signalingClient.isInCall {
@@ -26,41 +28,60 @@ struct HomeView: View {
                         .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                         .bold()
                         .padding(10)
+                        .foregroundColor(Color.black)
 
-                    Text("Your Peer ID: \(signalingClient.ourPeerID)")
-                        .bold()
-                        .multilineTextAlignment(.center)
-                        .padding(.bottom, 25)
-                    Text("Online Now:")
-                        .font(.headline)
+                    VStack(spacing: 10) {
+                                    Text("Your Peer ID:")
+                                        .font(.headline)
+                                        .bold()
+                                        .multilineTextAlignment(.center)
+                                        .foregroundColor(Color.black)
 
-                    VStack(alignment: .leading) {
-                        // filter out our own id
-                        let filteredOnlineUsers = signalingClient.onlineUsers.filter { $0 != signalingClient.ourPeerID }
-
-                        if filteredOnlineUsers.isEmpty {
-                            Text("Hmm, nobody's here right now!")
-                                .padding()
-                                .background(Color.yellow)
-                                .cornerRadius(10)
-                                .shadow(radius: 5)
-                        } else {
-                            VStack(alignment: .leading) {
-                                ForEach(filteredOnlineUsers, id: \.self) { user in
-                                    OnlineUserItemView(uuid: user)
+                                    Text(signalingClient.ourPeerID)
+                                        .font(.subheadline)
+                                        .multilineTextAlignment(.center)
+                                        .foregroundColor(.black)
                                 }
-                            }
-                            .background(Color.yellow)
-                            .cornerRadius(10)
-                            .shadow(radius: 5)
-                        }
-                    }
-                    .padding(10)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color.white)
+                                .cornerRadius(10)
+                                .shadow(radius: 2)
+                            
 
-                    Spacer()
+                                Text("Online Now:")
+                                    .font(.headline)
+                                    .padding(.top, 20)
+                                    .foregroundColor(Color.black)
+
+                                // Online Users List
+                                ScrollView {
+                                    let filteredOnlineUsers = signalingClient.onlineUsers.filter { $0 != signalingClient.ourPeerID }
+
+                                    if filteredOnlineUsers.isEmpty {
+                                        Text("Hmm, nobody's here right now!")
+                                            .padding()
+                                            .frame(maxWidth: .infinity)
+                                            .background(Color.white)
+                                            .cornerRadius(10)
+                                            .shadow(radius: 2)
+                                            .padding(.horizontal)
+                                            .foregroundColor(Color.black)
+                                    } else {
+                                        VStack(spacing: 10) {
+                                            ForEach(filteredOnlineUsers, id: \.self) { user in
+                                                OnlineUserCardView(uuid: user)
+                                            }
+                                        }
+                                    }
+                                }
+                                .padding(.top, 10)
+
+                                Spacer()
+
 
                     NavigationLink(destination: SavedFormsView()) {
-                        Text("View Saved Forms")
+                        Text("NIH Forms")
                             .font(.headline)
                             .foregroundColor(.black)
                             .padding()
@@ -85,36 +106,45 @@ struct HomeView: View {
                 .onAppear {
                     signalingClient.fetchOnlineUsers()
                 }
-
+                .background(Color(.lightGray))
             }
         }
     }
 }
 
-struct OnlineUserItemView: View {
+struct OnlineUserCardView: View {
     let uuid: String
 
     var body: some View {
         HStack {
             Text(uuid)
-                .padding(10)
+                .font(.subheadline)
+                .padding(.vertical, 10)
+                .padding(.leading, 15)
+                .foregroundColor(Color.black)
 
             Spacer()
 
             Button(action: {
-                // action for call button
+                // Action for call button
             }, label: {
-                Text("Call")
-                    .foregroundColor(.black)
-                    .padding(10)
-                    .background(Color.white)
-                    .cornerRadius(10)
+                HStack {
+                    Image(systemName: "phone.fill")
+                        .foregroundColor(.white)
+                    Text("Call")
+                        .foregroundColor(.white)
+                }
+                .padding(10)
+                .background(Color.black)
+                .cornerRadius(8)
             })
-            .padding(.trailing)
+            .padding(.trailing, 15)
         }
-        .padding(5)
-        .background(Color.yellow)
+        .frame(maxWidth: .infinity)
+        .background(Color.white)
         .cornerRadius(10)
+        .shadow(radius: 2)
+        .padding(.horizontal)
     }
 }
 
