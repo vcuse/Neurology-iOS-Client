@@ -20,6 +20,7 @@
 		088B34922C5C03A100094A02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 088B34912C5C03A100094A02 /* Assets.xcassets */; };
 		088B34952C5C03A100094A02 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 088B34942C5C03A100094A02 /* Preview Assets.xcassets */; };
 		088B349A2C5C03DA00094A02 /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 088B34992C5C03DA00094A02 /* WebRTC */; };
+		0894AAB22CEFD14500387B0C /* Neuro_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0894AAB12CEFD14500387B0C /* Neuro_AppTests.swift */; };
 		08A99ED52C6297E20046D4A7 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A99ED42C6297E20046D4A7 /* SignInView.swift */; };
 		08A99ED82C6297FA0046D4A7 /* NativeWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A99ED62C6297FA0046D4A7 /* NativeWebSocket.swift */; };
 		08A99ED92C6297FA0046D4A7 /* WebSocketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A99ED72C6297FA0046D4A7 /* WebSocketProvider.swift */; };
@@ -31,6 +32,16 @@
 		60B7690B2C9B818C00CC8343 /* StrokeScaleFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B7690A2C9B818100CC8343 /* StrokeScaleFormView.swift */; };
 		60B7690F2CA32CE000CC8343 /* SavedFormsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B7690E2CA32CD500CC8343 /* SavedFormsView.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0894AAB32CEFD14500387B0C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 60E860E92C5192DE0097826E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 088B348A2C5C03A000094A02;
+			remoteInfo = "Neuro App";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		080411D72C6A88EB0019364A /* Neuro App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Neuro App.entitlements"; sourceTree = "<group>"; };
@@ -48,6 +59,8 @@
 		088B348D2C5C03A000094A02 /* Neuro_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neuro_AppApp.swift; sourceTree = "<group>"; };
 		088B34912C5C03A100094A02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		088B34942C5C03A100094A02 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		0894AAAF2CEFD14500387B0C /* Neuro AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Neuro AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0894AAB12CEFD14500387B0C /* Neuro_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neuro_AppTests.swift; sourceTree = "<group>"; };
 		08A99ED42C6297E20046D4A7 /* SignInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		08A99ED62C6297FA0046D4A7 /* NativeWebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeWebSocket.swift; sourceTree = "<group>"; };
 		08A99ED72C6297FA0046D4A7 /* WebSocketProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketProvider.swift; sourceTree = "<group>"; };
@@ -78,6 +91,13 @@
 			files = (
 				088B349A2C5C03DA00094A02 /* WebRTC in Frameworks */,
 				60140A512CAAFB4800E61908 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0894AAAC2CEFD14500387B0C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +172,14 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		0894AAB02CEFD14500387B0C /* Neuro AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				0894AAB12CEFD14500387B0C /* Neuro_AppTests.swift */,
+			);
+			path = "Neuro AppTests";
+			sourceTree = "<group>";
+		};
 		08FBF1D12C59B78600F4AE9A /* WebSocketProvider */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,8 +206,10 @@
 				088B345C2C5C023F00094A02 /* Neuro App */,
 				088B346D2C5C024000094A02 /* Neuro AppTests */,
 				088B34772C5C024000094A02 /* Neuro AppUITests */,
+				0894AAB02CEFD14500387B0C /* Neuro AppTests */,
 				60E861222C5A84E00097826E /* Frameworks */,
 				088B348B2C5C03A000094A02 /* Neuro App.app */,
+				0894AAAF2CEFD14500387B0C /* Neuro AppTests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -214,6 +244,24 @@
 			productReference = 088B348B2C5C03A000094A02 /* Neuro App.app */;
 			productType = "com.apple.product-type.application";
 		};
+		0894AAAE2CEFD14500387B0C /* Neuro AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0894AAB72CEFD14500387B0C /* Build configuration list for PBXNativeTarget "Neuro AppTests" */;
+			buildPhases = (
+				0894AAAB2CEFD14500387B0C /* Sources */,
+				0894AAAC2CEFD14500387B0C /* Frameworks */,
+				0894AAAD2CEFD14500387B0C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0894AAB42CEFD14500387B0C /* PBXTargetDependency */,
+			);
+			name = "Neuro AppTests";
+			productName = "Neuro AppTests";
+			productReference = 0894AAAF2CEFD14500387B0C /* Neuro AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -229,6 +277,10 @@
 				TargetAttributes = {
 					088B348A2C5C03A000094A02 = {
 						CreatedOnToolsVersion = 15.3;
+					};
+					0894AAAE2CEFD14500387B0C = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = 088B348A2C5C03A000094A02;
 					};
 				};
 			};
@@ -250,6 +302,7 @@
 			projectRoot = "";
 			targets = (
 				088B348A2C5C03A000094A02 /* Neuro App */,
+				0894AAAE2CEFD14500387B0C /* Neuro AppTests */,
 			);
 		};
 /* End PBXProject section */
@@ -261,6 +314,13 @@
 			files = (
 				088B34952C5C03A100094A02 /* Preview Assets.xcassets in Resources */,
 				088B34922C5C03A100094A02 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0894AAAD2CEFD14500387B0C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,7 +353,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0894AAAB2CEFD14500387B0C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0894AAB22CEFD14500387B0C /* Neuro_AppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0894AAB42CEFD14500387B0C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 088B348A2C5C03A000094A02 /* Neuro App */;
+			targetProxy = 0894AAB32CEFD14500387B0C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		088B34972C5C03A100094A02 /* Debug */ = {
@@ -365,6 +441,42 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		0894AAB52CEFD14500387B0C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VL7R24L9ZQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "vcuse.Neuro-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Neuro App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Neuro App";
+			};
+			name = Debug;
+		};
+		0894AAB62CEFD14500387B0C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VL7R24L9ZQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "vcuse.Neuro-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Neuro App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Neuro App";
 			};
 			name = Release;
 		};
@@ -497,6 +609,15 @@
 			buildConfigurations = (
 				088B34972C5C03A100094A02 /* Debug */,
 				088B34982C5C03A100094A02 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		0894AAB72CEFD14500387B0C /* Build configuration list for PBXNativeTarget "Neuro AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0894AAB52CEFD14500387B0C /* Debug */,
+				0894AAB62CEFD14500387B0C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

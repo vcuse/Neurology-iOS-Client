@@ -2,11 +2,10 @@
 //  Neuro_AppTests.swift
 //  Neuro AppTests
 //
-//  Created by David Ferrufino on 8/1/24.
+//  Created by David Ferrufino on 11/21/24.
 //
 
 import XCTest
-@testable import Neuro_App
 
 final class Neuro_AppTests: XCTestCase {
 
@@ -19,6 +18,7 @@ final class Neuro_AppTests: XCTestCase {
     }
 
     func testExample() throws {
+        XCTAssertTrue(true, "This test always passes.")
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         // Any test you write for XCTest can be annotated as throws and async.
@@ -28,7 +28,7 @@ final class Neuro_AppTests: XCTestCase {
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
-        self.measure {
+        measure {
             // Put the code you want to measure the time of here.
         }
     }
