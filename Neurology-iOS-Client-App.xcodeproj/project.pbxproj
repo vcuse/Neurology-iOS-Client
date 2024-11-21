@@ -205,7 +205,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				083797122CE67BE2005DA012 /* PBXTargetDependency */,
 			);
 			name = "Neuro App";
 			packageProductDependencies = (
@@ -295,13 +294,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		083797122CE67BE2005DA012 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 083797112CE67BE2005DA012 /* SwiftLintBuildToolPlugin */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		088B34972C5C03A100094A02 /* Debug */ = {
@@ -540,11 +532,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		083797112CE67BE2005DA012 /* SwiftLintBuildToolPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0837970E2CE67B87005DA012 /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = "plugin:SwiftLintBuildToolPlugin";
-		};
 		088B34992C5C03DA00094A02 /* WebRTC */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 08FBF1E02C59B83500F4AE9A /* XCRemoteSwiftPackageReference "WebRTC" */;
