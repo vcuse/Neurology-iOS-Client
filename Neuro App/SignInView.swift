@@ -11,6 +11,7 @@ struct SignInView: View {
     @State private var username: String = ""
     @State private var password: String = ""
     @State private var isPasswordVisible: Bool = false
+    @EnvironmentObject var signalingClient: SignalingClient
 
     var body: some View {
         GeometryReader { _ in
@@ -83,6 +84,8 @@ struct SignInView: View {
 
                 Button(action: {
                     // add sign in functionality here
+                    login()
+                    //print("Login failed")
                 }, label: {
                     Text("Sign In")
                         .foregroundColor(.black)
@@ -97,6 +100,20 @@ struct SignInView: View {
         }
 
     }
+    
+    func login() {
+            // Call your REST API for login
+            signalingClient.login(username: username, password: password) { success in
+                if success {
+                    // Navigate to HomeView (handled in parent view)
+                    print("Login succeeded")
+                } else {
+                    // Show error message
+                    print("Login failed")
+                }
+            }
+    }
+    
 
 }
 

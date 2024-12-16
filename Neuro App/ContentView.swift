@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var signalingClient: SignalingClient
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        Group {
+            if signalingClient.isAuthenticated {
+                HomeView()
+            } else {
+                SignInView()
+            }
         }
-        .padding()
+        
     }
 }
 
-#Preview {
-    ContentView()
-}

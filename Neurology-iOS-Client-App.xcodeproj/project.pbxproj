@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		080411D92C6BB1C60019364A /* PushNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080411D82C6BB1C60019364A /* PushNotificationManager.swift */; };
+		080653A42D1022E6006CA9F6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088B345F2C5C023F00094A02 /* ContentView.swift */; };
 		0813C0AF2C61538700CF5C70 /* CallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F68C252C5ABB3D00933EE3 /* CallView.swift */; };
 		0813C0B02C61539200CF5C70 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E860F62C5192DE0097826E /* HomeView.swift */; };
 		0813C0B22C6155B200CF5C70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0813C0B12C6155B200CF5C70 /* AppDelegate.swift */; };
@@ -117,6 +118,7 @@
 				0813C0B32C6159A200CF5C70 /* PeerJSOption.swift */,
 				08FBF1D72C59B78600F4AE9A /* Services */,
 				088B348D2C5C03A000094A02 /* Neuro_AppApp.swift */,
+				088B345F2C5C023F00094A02 /* ContentView.swift */,
 				60B7690A2C9B818100CC8343 /* StrokeScaleFormView.swift */,
 				60E860F62C5192DE0097826E /* HomeView.swift */,
 				60140A702CAEE2F400E61908 /* SavedFormDetailView.swift */,
@@ -132,7 +134,6 @@
 				080411D82C6BB1C60019364A /* PushNotificationManager.swift */,
 				08A99ED42C6297E20046D4A7 /* SignInView.swift */,
 				088B345D2C5C023F00094A02 /* Neuro_AppApp.swift */,
-				088B345F2C5C023F00094A02 /* ContentView.swift */,
 				088B34612C5C024000094A02 /* Assets.xcassets */,
 				088B34632C5C024000094A02 /* Preview Content */,
 			);
@@ -338,6 +339,7 @@
 				60B7690B2C9B818C00CC8343 /* StrokeScaleFormView.swift in Sources */,
 				0813C0B02C61539200CF5C70 /* HomeView.swift in Sources */,
 				0813C0B62C6159A200CF5C70 /* SignalingClient.swift in Sources */,
+				080653A42D1022E6006CA9F6 /* ContentView.swift in Sources */,
 				08A99ED92C6297FA0046D4A7 /* WebSocketProvider.swift in Sources */,
 				0813C0B72C6159A200CF5C70 /* PeerJSOption.swift in Sources */,
 				08E4E3B92C7E529B0043D541 /* RTCVideoView.swift in Sources */,
