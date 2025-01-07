@@ -22,7 +22,7 @@ struct SignInView: View {
                     .onAppear {
                         withAnimation(
                             .easeInOut(duration: 2)
-                            .repeatForever(autoreverses: true)){}
+                            .repeatForever(autoreverses: true)) {}
                 }
 
                 // Centered Black Box
@@ -37,7 +37,7 @@ struct SignInView: View {
                                     return traitCollection.userInterfaceStyle == .dark ? .white : .black
                                 })
                             )
-                        
+
                         Text("Enter your credentials to access your account")
                             .font(.subheadline)
                             .foregroundColor(.gray)
@@ -108,7 +108,7 @@ struct SignInView: View {
                     }
                     .padding(.horizontal)
                     .padding(.bottom)
-                    
+
                     // Sign In Button with Outline
                     Button(action: {
                         // Add sign-in functionality here

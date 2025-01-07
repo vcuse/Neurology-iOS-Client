@@ -162,7 +162,7 @@ struct SavedFormDetailView: View {
             rootViewController.popViewController(animated: true)
         }
     }
-    
+
     private func exportFormAsPDF() {
         let pdfRenderer = UIGraphicsPDFRenderer(bounds: CGRect(x: 0, y: 0, width: 595, height: 842)) // A4 size PDF
 

@@ -151,11 +151,11 @@ struct HomeView: View {
                                 .onAppear {
                                     withAnimation(
                                         .easeInOut(duration: 2)
-                                        .repeatForever(autoreverses: true)){}
+                                        .repeatForever(autoreverses: true)) {}
                                 }
                         }
             }
-        
+
         }
     }
 }

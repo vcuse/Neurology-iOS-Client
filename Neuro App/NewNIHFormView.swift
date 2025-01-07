@@ -15,7 +15,7 @@ struct NewNIHFormView: View {
                 .padding(.top)
                 .padding(.bottom, 5)
                 .bold()
-            
+
             TextField("Enter Patient Name", text: $patientName)
                 .padding(.leading)
                 .padding(.trailing)
@@ -33,7 +33,6 @@ struct NewNIHFormView: View {
                     }
                 }
             }
-
 
             // Save and Cancel buttons
             HStack {
