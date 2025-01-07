@@ -31,6 +31,7 @@
 		60140A712CAEE2F400E61908 /* SavedFormDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60140A702CAEE2F400E61908 /* SavedFormDetailView.swift */; };
 		60B7690B2C9B818C00CC8343 /* StrokeScaleFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B7690A2C9B818100CC8343 /* StrokeScaleFormView.swift */; };
 		60B7690F2CA32CE000CC8343 /* SavedFormsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B7690E2CA32CD500CC8343 /* SavedFormsView.swift */; };
+		D4F7ECA02D03989400C356C8 /* NewNIHFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F7EC9F2D03988B00C356C8 /* NewNIHFormView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,7 @@
 		60B7690E2CA32CD500CC8343 /* SavedFormsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedFormsView.swift; sourceTree = "<group>"; };
 		60E860F62C5192DE0097826E /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		60F68C252C5ABB3D00933EE3 /* CallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallView.swift; sourceTree = "<group>"; };
+		D4F7EC9F2D03988B00C356C8 /* NewNIHFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNIHFormView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 				60B7690A2C9B818100CC8343 /* StrokeScaleFormView.swift */,
 				60E860F62C5192DE0097826E /* HomeView.swift */,
 				60140A702CAEE2F400E61908 /* SavedFormDetailView.swift */,
+				D4F7EC9F2D03988B00C356C8 /* NewNIHFormView.swift */,
 				08EEC3232C5BF9E70086C228 /* Config.swift */,
 				60F68C252C5ABB3D00933EE3 /* CallView.swift */,
 				60B7690E2CA32CD500CC8343 /* SavedFormsView.swift */,
@@ -335,6 +338,7 @@
 				08E4E3B72C7E50DC0043D541 /* RTCVideoWrapper.swift in Sources */,
 				080411D92C6BB1C60019364A /* PushNotificationManager.swift in Sources */,
 				0813C0AF2C61538700CF5C70 /* CallView.swift in Sources */,
+				D4F7ECA02D03989400C356C8 /* NewNIHFormView.swift in Sources */,
 				60B7690B2C9B818C00CC8343 /* StrokeScaleFormView.swift in Sources */,
 				0813C0B02C61539200CF5C70 /* HomeView.swift in Sources */,
 				0813C0B62C6159A200CF5C70 /* SignalingClient.swift in Sources */,

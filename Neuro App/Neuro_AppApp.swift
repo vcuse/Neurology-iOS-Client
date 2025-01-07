@@ -15,8 +15,7 @@ struct Neuro_App: App {
 
     var body: some Scene {
         WindowGroup {
-
-           HomeView()
+            HomeView()
              .environment(\.managedObjectContext, appDelegate.persistentContainer.viewContext) // Inject Core Data context
              .environmentObject(appDelegate.signalingClient)
         }

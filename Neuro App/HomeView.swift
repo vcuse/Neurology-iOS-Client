@@ -14,7 +14,7 @@ struct HomeView: View {
 
     @EnvironmentObject var signalingClient: SignalingClient
     @StateObject private var formViewModel = StrokeScaleFormViewModel()
-    @State private var isSavedFormsPresented: Bool = false // State to control the modal presentation
+    @State private var isNavigatingToSavedForms = false // State variable to control navigation
 
     var body: some View {
         if signalingClient.isInCall {
@@ -23,27 +23,41 @@ struct HomeView: View {
 
             NavigationView {
                 VStack {
+                    /* Can use when we implement login and replace 'user' with username
                     Text("Hello, user!")
                         .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                         .bold()
                         .padding(10)
                         .foregroundColor(Color.black)
-
+                     */
+                    Spacer()
                     VStack(spacing: 10) {
                                     Text("Your Peer ID:")
                                         .font(.headline)
                                         .bold()
                                         .multilineTextAlignment(.center)
-                                        .foregroundColor(Color.black)
+                                        .foregroundColor(
+                                            Color(UIColor { traitCollection in
+                                                return traitCollection.userInterfaceStyle == .dark ? .white : .black
+                                            })
+                                        )
 
                                     Text(signalingClient.ourPeerID)
                                         .font(.subheadline)
                                         .multilineTextAlignment(.center)
-                                        .foregroundColor(.black)
+                                        .foregroundColor(
+                                            Color(UIColor { traitCollection in
+                                                return traitCollection.userInterfaceStyle == .dark ? .white : .black
+                                            })
+                                        )
                                 }
                                 .padding()
                                 .frame(maxWidth: .infinity)
-                                .background(Color.white)
+                                .background(
+                                    Color(UIColor { traitCollection in
+                                        return traitCollection.userInterfaceStyle == .dark ? .black : .white
+                                    })
+                                )
                                 .cornerRadius(10)
                                 .shadow(radius: 2)
 
@@ -60,11 +74,19 @@ struct HomeView: View {
                                         Text("Hmm, nobody's here right now!")
                                             .padding()
                                             .frame(maxWidth: .infinity)
-                                            .background(Color.white)
+                                            .background(
+                                                Color(UIColor { traitCollection in
+                                                    return traitCollection.userInterfaceStyle == .dark ? .black : .white
+                                                })
+                                            )
                                             .cornerRadius(10)
                                             .shadow(radius: 2)
                                             .padding(.horizontal)
-                                            .foregroundColor(Color.black)
+                                            .foregroundColor(
+                                                Color(UIColor { traitCollection in
+                                                    return traitCollection.userInterfaceStyle == .dark ? .white : .black
+                                                })
+                                            )
                                     } else {
                                         VStack(spacing: 10) {
                                             ForEach(filteredOnlineUsers, id: \.self) { user in
@@ -77,17 +99,36 @@ struct HomeView: View {
 
                                 Spacer()
 
-                    NavigationLink(destination: SavedFormsView()) {
-                        Text("NIH Forms")
-                            .font(.headline)
-                            .foregroundColor(.black)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.white)
-                            .cornerRadius(10)
-                    }
-                    .padding(.horizontal)
-                    .padding(.bottom, 20)
+                    VStack {
+                            Button(action: {
+                                isNavigatingToSavedForms = true // Trigger navigation
+                            }) {
+                                Text("NIH Forms")
+                                    .font(.headline)
+                                    .foregroundColor(
+                                        Color(UIColor { traitCollection in
+                                            return traitCollection.userInterfaceStyle == .dark ? .white : .black
+                                        })
+                                    )
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(
+                                        Color(UIColor { traitCollection in
+                                            return traitCollection.userInterfaceStyle == .dark ? .black : .white
+                                        })
+                                    )
+                                    .cornerRadius(10)
+                            }
+                            .padding(.horizontal)
+                            .padding(.bottom, 20)
+                            .background(
+                                NavigationLink(
+                                    destination: SavedFormsView(isNavigatingBack: $isNavigatingToSavedForms),
+                                    isActive: $isNavigatingToSavedForms,
+                                    label: { EmptyView() }
+                                )
+                            )
+                        }
 
                 }
 
@@ -103,8 +144,18 @@ struct HomeView: View {
                 .onAppear {
                     signalingClient.fetchOnlineUsers()
                 }
-                .background(Color(.lightGray))
+                .background {
+                    LinearGradient(colors: [.gray, .white, .gray], startPoint: .topLeading, endPoint: .bottomTrailing)
+                                .edgesIgnoringSafeArea(.all)
+                                .hueRotation(.degrees(45))
+                                .onAppear {
+                                    withAnimation(
+                                        .easeInOut(duration: 2)
+                                        .repeatForever(autoreverses: true)){}
+                                }
+                        }
             }
+        
         }
     }
 }
@@ -118,7 +169,11 @@ struct OnlineUserCardView: View {
                 .font(.subheadline)
                 .padding(.vertical, 10)
                 .padding(.leading, 15)
-                .foregroundColor(Color.black)
+                .foregroundColor(
+                    Color(UIColor { traitCollection in
+                    return traitCollection.userInterfaceStyle == .dark ? .white : .black
+                })
+                )
 
             Spacer()
 
@@ -127,18 +182,34 @@ struct OnlineUserCardView: View {
             }, label: {
                 HStack {
                     Image(systemName: "phone.fill")
-                        .foregroundColor(.white)
+                        .foregroundColor(
+                            Color(UIColor { traitCollection in
+                                return traitCollection.userInterfaceStyle == .dark ? .black : .white
+                            })
+                        )
                     Text("Call")
-                        .foregroundColor(.white)
+                        .foregroundColor(
+                            Color(UIColor { traitCollection in
+                                return traitCollection.userInterfaceStyle == .dark ? .black : .white
+                            })
+                        )
                 }
                 .padding(10)
-                .background(Color.black)
+                .background(
+                    Color(UIColor { traitCollection in
+                        return traitCollection.userInterfaceStyle == .dark ? .white : .black
+                    })
+                )
                 .cornerRadius(8)
             })
             .padding(.trailing, 15)
         }
         .frame(maxWidth: .infinity)
-        .background(Color.white)
+        .background(
+            Color(UIColor { traitCollection in
+                return traitCollection.userInterfaceStyle == .dark ? .black : .white
+            })
+        )
         .cornerRadius(10)
         .shadow(radius: 2)
         .padding(.horizontal)
