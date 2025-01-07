@@ -127,7 +127,6 @@ struct OptionRowView: View {
                     Text(option.title)
                         .padding(.vertical, 10)
                         .padding(.leading)
-                        .foregroundColor(.white)
 
                     Spacer()
 

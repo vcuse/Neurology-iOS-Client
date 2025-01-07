@@ -7,73 +7,79 @@ struct SavedFormDetailView: View {
     var savedForm: NIHFormEntity
     @ObservedObject var viewModel = StrokeScaleFormViewModel()
     @State var selectedOptions: [Int]
+    @Environment(\.dismiss) private var dismiss // Dismiss environment variable
 
     var totalScore: Int {
         var score = 0
         for (index, selectedOption) in selectedOptions.enumerated() where selectedOption != -1 {
             score += viewModel.questions[index].options[selectedOption].score
         }
-
         return score
     }
 
     init(savedForm: NIHFormEntity) {
         self.savedForm = savedForm
-
-        // Decode the selectedOptions from Core Data (if they exist)
         if let optionsData = savedForm.selectedOptions {
             do {
                 let decodedOptions = try JSONDecoder().decode([Int].self, from: optionsData)
                 self._selectedOptions = State(initialValue: decodedOptions)
             } catch {
-                self._selectedOptions = State(initialValue: Array(repeating: -1, count: 15)) // Default for 15 questions
+                self._selectedOptions = State(initialValue: Array(repeating: -1, count: 15))
                 print("Failed to decode options")
             }
         } else {
-            self._selectedOptions = State(initialValue: Array(repeating: -1, count: 15)) // Default for 15 questions
+            self._selectedOptions = State(initialValue: Array(repeating: -1, count: 15))
         }
     }
 
     var body: some View {
         VStack {
-            Text("NIH Stroke Scale Form")
-                .font(.title)
-
-            if let patientName = savedForm.patientName {
-                Text("Patient Name: \(patientName)")
-                    .font(.headline)
-            } else {
-                Text("Patient Name: Unknown")
-                    .font(.headline)
+            // Header Section
+            HStack {
+                Text("NIH Stroke Scale Form")
+                    .font(.title)
+                    .padding(.leading)
+                    .padding(.trailing)
                     .padding(.top)
+                    .padding(.bottom, 5)
+                    .bold()
             }
 
-            Text("Date: \(savedForm.date ?? Date(), style: .date)")
+            // Patient Info Section
+            VStack {
+                Text("Patient Name: \(savedForm.patientName ?? "Unknown")")
+                    .font(.headline)
+                    .padding(.bottom, 5)
+                    .multilineTextAlignment(.center)
 
-            // Display the total score below the date
-            Text("Total Score: \(totalScore)")
-                .padding(.bottom)
+                Text(savedForm.date != nil
+                     ? "Date: \(savedForm.date!, style: .date)"
+                     : "Date: Unknown")
+                    .font(.subheadline)
+                    .padding(.bottom, 5)
+                    .foregroundColor(.gray)
+                    .multilineTextAlignment(.center)
+            }
+            .padding(.horizontal)
+            .frame(maxWidth: .infinity, alignment: .center)
 
-            ScrollView {
-                VStack(alignment: .leading) {
-                    ForEach(viewModel.questions.indices, id: \.self) { index in
-                        let question = viewModel.questions[index]
-                        let selectedOptionIndex = selectedOptions[index]
+            // Questions and Answers Section
+            Form {
+                ForEach(viewModel.questions.indices, id: \.self) { index in
+                    let question = viewModel.questions[index]
+                    let selectedOptionIndex = selectedOptions[index]
 
-                        Section {
-                            // Question header
+                    Section {
+                        VStack(alignment: .leading, spacing: 10) {
                             Text(question.questionHeader)
                                 .font(.headline)
-                                .padding(.top, 5)
 
-                            // Subheader if it exists
                             if let subHeader = question.subHeader {
                                 Text(subHeader)
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
                             }
 
-                            // Display the options (without editing capabilities)
                             VStack(alignment: .leading) {
                                 ForEach(question.options.indices, id: \.self) { optionIndex in
                                     let option = question.options[optionIndex]
@@ -81,61 +87,82 @@ struct SavedFormDetailView: View {
                                         Text(option.title)
                                             .padding(.vertical, 10)
                                             .padding(.leading)
-                                            .foregroundColor(.white)
 
                                         Spacer()
 
-                                        // Display the score for the selected option
                                         Text(option.score > 0 ? "+\(option.score)" : "\(option.score)")
                                             .foregroundColor(.gray)
                                             .frame(width: 40, alignment: .trailing)
                                             .padding(.trailing)
                                     }
-                                    .background(selectedOptionIndex == optionIndex ? Color.purple.opacity(0.6) : Color.purple.opacity(0.2))
+                                    .background(selectedOptionIndex == optionIndex ? Color.purple.opacity(0.6) : Color.gray.opacity(0.2))
                                     .cornerRadius(6)
                                 }
                             }
                         }
-                        .padding(.bottom, 10)
                     }
                 }
-                .padding(.horizontal)
             }
 
             Spacer()
-            // Hides the navigation bar to prevent empty space and extra back button
-            .navigationBarBackButtonHidden(true)
 
-            // Export & Delete button
+            // Footer Section
             HStack {
                 Button(action: {
-                    exportFormAsPDF() // Call the PDF export function
-                }) {
-                    Text("Export")
+                    dismiss()
+                }, label: {
+                    Text("Done")
                         .font(.headline)
                         .foregroundColor(.black)
                         .padding()
                         .frame(maxWidth: .infinity)
                         .background(Color.white)
                         .cornerRadius(10)
-                }
-                    Button(action: {
-                        deleteForm()
-                    }) {
-                        Text("Delete")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.red)
-                            .cornerRadius(10)
-                }
+                })
+
+                Button(action: {
+                    // Delete action
+                }, label: {
+                    Text("Delete")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.red)
+                        .cornerRadius(10)
+                })
             }
             .padding(.horizontal)
             .padding(.bottom)
         }
+        .background(Color.purple.opacity(0.2))
     }
 
+    private func deleteForm() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            print("Failed to access AppDelegate") // Log if AppDelegate isn't accessible
+            return
+        }
+
+        let managedContext = appDelegate.persistentContainer.viewContext
+
+        // Proceed with deletion
+        managedContext.delete(savedForm)
+
+        do {
+            try managedContext.save()
+            print("Form deleted successfully")
+        } catch {
+            print("Failed to delete the form: \(error.localizedDescription)")
+        }
+
+        // Optionally pop the view after deletion
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let rootViewController = windowScene.windows.first?.rootViewController as? UINavigationController {
+            rootViewController.popViewController(animated: true)
+        }
+    }
+    
     private func exportFormAsPDF() {
         let pdfRenderer = UIGraphicsPDFRenderer(bounds: CGRect(x: 0, y: 0, width: 595, height: 842)) // A4 size PDF
 
@@ -242,31 +269,6 @@ struct SavedFormDetailView: View {
 
         if let rootViewController = UIApplication.shared.windows.first?.rootViewController {
             rootViewController.present(activityViewController, animated: true, completion: nil)
-        }
-    }
-
-    private func deleteForm() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            print("Failed to access AppDelegate") // Log if AppDelegate isn't accessible
-            return
-        }
-
-        let managedContext = appDelegate.persistentContainer.viewContext
-
-        // Proceed with deletion
-        managedContext.delete(savedForm)
-
-        do {
-            try managedContext.save()
-            print("Form deleted successfully")
-        } catch {
-            print("Failed to delete the form: \(error.localizedDescription)")
-        }
-
-        // Optionally pop the view after deletion
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let rootViewController = windowScene.windows.first?.rootViewController as? UINavigationController {
-            rootViewController.popViewController(animated: true)
         }
     }
 
