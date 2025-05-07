@@ -4,18 +4,14 @@ struct StrokeScaleFormView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Binding var isPresented: Bool
     @Binding var patientName: String
+    @Binding var dob: Date
+    @Binding var showDOBPicker: Bool
     @ObservedObject var viewModel: StrokeScaleFormViewModel
     let saveForm: () -> Void
 
     var body: some View {
         VStack {
             HStack {
-                Spacer()
-
-                Text("NIH Stroke Scale Form")
-                    .font(.title)
-                    .padding()
-
                 Spacer()
 
                 Button(action: {
@@ -28,12 +24,96 @@ struct StrokeScaleFormView: View {
                 .padding()
             }
 
-            TextField("Patient Name", text: $patientName)
+            TextField("Enter Patient Name", text: $patientName)
+                .padding(.horizontal)
+                .frame(height: 44)
+                .background(
+                    Color(UIColor { trait in
+                        trait.userInterfaceStyle == .dark ? .black : .white
+                    })
+                )
+                .foregroundColor(
+                    Color(UIColor { trait in
+                        trait.userInterfaceStyle == .dark ? .white : .black
+                    })
+                )
+                .font(.headline)
+                .cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                )
+                .padding([.leading, .trailing])
+                .padding(.bottom, 5)
+
+            
+            Button(action: {
+                showDOBPicker.toggle()
+            }) {
+                HStack {
+                    Text("DOB: \(formattedDate(dob))")
+                        .foregroundColor(.white)
+                        .font(.headline)
+                    Spacer()
+                    Image(systemName: "calendar")
+                        .foregroundColor(.gray)
+                }
                 .padding()
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .background(
+                    Color(UIColor { trait in
+                        trait.userInterfaceStyle == .dark ? .black : .white
+                    })
+                )
+                .cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                )
+            }
+            .padding(.leading)
+            .padding(.trailing)
+            .padding(.bottom, 5)
+
+            // Date Picker Modal
+            .sheet(isPresented: $showDOBPicker) {
+                VStack(spacing: 10) {
+                    Text("Select Date of Birth")
+                        .font(.headline)
+                        .foregroundColor(
+                            Color(UIColor { $0.userInterfaceStyle == .dark ? .white : .black })
+                        )
+                        .padding(.top)
+
+                    DatePicker(
+                        "",
+                        selection: $dob,
+                        in: ...Date(),
+                        displayedComponents: [.date]
+                    )
+                    .datePickerStyle(.wheel)
+                    .labelsHidden()
+                    .padding()
+
+                    Button("Done") {
+                        showDOBPicker = false
+                    }
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.purple.opacity(0.2))
+                    .cornerRadius(10)
+                    .padding([.leading, .trailing])
+                }
+                .background(
+                    Color(UIColor.systemBackground)
+                        .edgesIgnoringSafeArea(.all)
+                )
+            }
 
             Text("Date: \(Date(), style: .date)")
-                .padding(.leading)
+                .padding(.bottom, 5)
+
 
             Form {
                 ForEach(viewModel.questions.indices, id: \.self) { index in
@@ -85,7 +165,12 @@ struct StrokeScaleFormView: View {
         .shadow(radius: 10)
         .padding()
     }
-
+    
+    private func formattedDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return formatter.string(from: date)
+    }
 }
 
 struct Option {
