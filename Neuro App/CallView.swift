@@ -19,6 +19,8 @@ struct CallView: View {
     @State private var showStrokeScaleForm: Bool = false
     @State private var savedForms: [SavedForm] = [] // List to hold saved forms
     @State private var patientName: String = ""
+    @State private var patientDOB: Date = Date()
+    @State private var showDOBPicker: Bool = false
 
     var body: some View {
         ZStack {
@@ -153,8 +155,18 @@ struct CallView: View {
                             StrokeScaleFormView(
                                 isPresented: $showStrokeScaleForm,
                                 patientName: $patientName,
+                                dob: $patientDOB,
+                                showDOBPicker: $showDOBPicker,
                                 viewModel: formViewModel,
-                                saveForm: saveForm
+                                saveForm: {
+                                    let selected = formViewModel.questions.map { $0.selectedOption ?? 9 }
+                                    StrokeScaleFormManager.saveForm(
+                                        context: viewContext,
+                                        patientName: patientName,
+                                        dob: patientDOB,
+                                        selectedOptions: selected
+                                    )
+                                }
                             )
                         }
 
@@ -193,34 +205,8 @@ struct CallView: View {
     }
 
     private func saveForm() {
-        // Get the Core Data context from the environment
-        let context = viewContext
-
-        // Create a new NIHFormEntity
-        let newForm = NIHFormEntity(context: context)
-        newForm.date = Date()
-        newForm.patientName = patientName
-
-        // Collect selected options from each question
-        let selectedOptions = formViewModel.questions.map { $0.selectedOption ?? -1 }
-
-        // Encode the array of selected options into data and save it in Core Data
-        do {
-            let optionsData = try JSONEncoder().encode(selectedOptions)
-            newForm.selectedOptions = optionsData as Data
-
-            // Ensure the save operation happens on the main thread
-            DispatchQueue.main.async {
-                do {
-                    try context.save()
-                    print("Form saved successfully.")
-                } catch {
-                    print("Failed to save form: \(error)")
-                }
-            }
-        } catch {
-            print("Failed to encode selected options: \(error)")
-        }
+        let selected = formViewModel.questions.map { $0.selectedOption ?? 9 }
+        StrokeScaleFormManager.saveForm(context: viewContext, patientName: patientName, dob: patientDOB, selectedOptions: selected)
     }
 
     private func endCall() {

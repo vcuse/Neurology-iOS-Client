@@ -32,6 +32,9 @@
 		60B7690B2C9B818C00CC8343 /* StrokeScaleFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B7690A2C9B818100CC8343 /* StrokeScaleFormView.swift */; };
 		60B7690F2CA32CE000CC8343 /* SavedFormsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B7690E2CA32CD500CC8343 /* SavedFormsView.swift */; };
 		D4F7ECA02D03989400C356C8 /* NewNIHFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F7EC9F2D03988B00C356C8 /* NewNIHFormView.swift */; };
+		D4F9BEE92DCA6EF800C6BC4D /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F9BEE82DCA6EED00C6BC4D /* AuthViewModel.swift */; };
+		D4F9BEEB2DCA723400C6BC4D /* KeyChainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F9BEEA2DCA722F00C6BC4D /* KeyChainHelper.swift */; };
+		D4F9BEED2DCA9BD500C6BC4D /* StrokeScaleFormManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F9BEEC2DCA9BCD00C6BC4D /* StrokeScaleFormManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +87,9 @@
 		60E860F62C5192DE0097826E /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		60F68C252C5ABB3D00933EE3 /* CallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallView.swift; sourceTree = "<group>"; };
 		D4F7EC9F2D03988B00C356C8 /* NewNIHFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNIHFormView.swift; sourceTree = "<group>"; };
+		D4F9BEE82DCA6EED00C6BC4D /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		D4F9BEEA2DCA722F00C6BC4D /* KeyChainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainHelper.swift; sourceTree = "<group>"; };
+		D4F9BEEC2DCA9BCD00C6BC4D /* StrokeScaleFormManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokeScaleFormManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +115,9 @@
 		088B345C2C5C023F00094A02 /* Neuro App */ = {
 			isa = PBXGroup;
 			children = (
+				D4F9BEEC2DCA9BCD00C6BC4D /* StrokeScaleFormManager.swift */,
+				D4F9BEEA2DCA722F00C6BC4D /* KeyChainHelper.swift */,
+				D4F9BEE82DCA6EED00C6BC4D /* AuthViewModel.swift */,
 				08F4A02B2C6D3C9000234934 /* Neuro-App-Info.plist */,
 				080411D72C6A88EB0019364A /* Neuro App.entitlements */,
 				08A99ED72C6297FA0046D4A7 /* WebSocketProvider.swift */,
@@ -340,6 +349,7 @@
 				0813C0AF2C61538700CF5C70 /* CallView.swift in Sources */,
 				D4F7ECA02D03989400C356C8 /* NewNIHFormView.swift in Sources */,
 				60B7690B2C9B818C00CC8343 /* StrokeScaleFormView.swift in Sources */,
+				D4F9BEEB2DCA723400C6BC4D /* KeyChainHelper.swift in Sources */,
 				0813C0B02C61539200CF5C70 /* HomeView.swift in Sources */,
 				0813C0B62C6159A200CF5C70 /* SignalingClient.swift in Sources */,
 				08A99ED92C6297FA0046D4A7 /* WebSocketProvider.swift in Sources */,
@@ -352,6 +362,8 @@
 				0813C0B42C6159A200CF5C70 /* WebRTCClient.swift in Sources */,
 				60140A712CAEE2F400E61908 /* SavedFormDetailView.swift in Sources */,
 				0813C0B52C6159A200CF5C70 /* API.swift in Sources */,
+				D4F9BEED2DCA9BD500C6BC4D /* StrokeScaleFormManager.swift in Sources */,
+				D4F9BEE92DCA6EF800C6BC4D /* AuthViewModel.swift in Sources */,
 				60140A6B2CAED8BB00E61908 /* NeuroDataModel.xcdatamodeld in Sources */,
 				60B7690F2CA32CE000CC8343 /* SavedFormsView.swift in Sources */,
 				08A99ED52C6297E20046D4A7 /* SignInView.swift in Sources */,

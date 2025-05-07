@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SignInView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
     @State private var username: String = ""
     @State private var password: String = ""
     @State private var isPasswordVisible: Bool = false
@@ -111,7 +112,7 @@ struct SignInView: View {
 
                     // Sign In Button with Outline
                     Button(action: {
-                        // Add sign-in functionality here
+                        authViewModel.login(username: username, password: password)
                     }, label: {
                         Text("Sign In")
                             .bold()

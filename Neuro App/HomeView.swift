@@ -13,6 +13,7 @@ struct HomeView: View {
     private let config = Config.default
 
     @EnvironmentObject var signalingClient: SignalingClient
+    @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject private var formViewModel = StrokeScaleFormViewModel()
     @State private var isNavigatingToSavedForms = false // State variable to control navigation
 
@@ -30,7 +31,26 @@ struct HomeView: View {
                         .padding(10)
                         .foregroundColor(Color.black)
                      */
-                    Spacer()
+                    
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            authViewModel.logout()
+                        }) {
+                            Text("Sign out →")
+                                .font(.headline)
+                                .foregroundColor(Color.black)
+                                .bold()
+                                .padding(10)
+                                .cornerRadius(8)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color.gray, lineWidth: 1)
+                                )
+                        }
+                        .padding(.bottom, 5)
+                    }
+
                     VStack(spacing: 10) {
                                     Text("Your Peer ID:")
                                         .font(.headline)
@@ -155,7 +175,7 @@ struct HomeView: View {
                                 }
                         }
             }
-
+            .navigationBarBackButtonHidden(true)
         }
     }
 }
