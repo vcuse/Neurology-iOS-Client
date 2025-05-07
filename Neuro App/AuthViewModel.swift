@@ -5,7 +5,6 @@
 //  Created by Lauren Viado on 5/6/25.
 //  ViewModel to manage authentication state and logic
 
-
 import Foundation
 import Security
 
@@ -20,7 +19,7 @@ class AuthViewModel: ObservableObject {
             }
         }
     }
-    
+
     // On init, try to load token from Keychain to keep user signed in
     init() {
         if let savedToken = KeychainHelper.getToken() {
@@ -78,11 +77,11 @@ class AuthViewModel: ObservableObject {
             }
         }.resume() // Start the request
     }
-    
+
     // Log out and clear saved token
     func logout() {
         self.token = nil
         self.isLoggedIn = false
     }
-    
+
 }

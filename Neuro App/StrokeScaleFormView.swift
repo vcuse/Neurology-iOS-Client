@@ -46,7 +46,6 @@ struct StrokeScaleFormView: View {
                 .padding([.leading, .trailing])
                 .padding(.bottom, 5)
 
-            
             Button(action: {
                 showDOBPicker.toggle()
             }) {
@@ -114,7 +113,6 @@ struct StrokeScaleFormView: View {
             Text("Date: \(Date(), style: .date)")
                 .padding(.bottom, 5)
 
-
             Form {
                 ForEach(viewModel.questions.indices, id: \.self) { index in
                     let question = viewModel.questions[index]
@@ -165,7 +163,7 @@ struct StrokeScaleFormView: View {
         .shadow(radius: 10)
         .padding()
     }
-    
+
     private func formattedDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium

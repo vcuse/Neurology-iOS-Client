@@ -51,7 +51,7 @@ struct SavedFormDetailView: View {
                     .font(.headline)
                     .padding(.bottom, 5)
                     .multilineTextAlignment(.center)
-                
+
                 Text(savedForm.dob != nil
                      ? "Patient DOB: \(savedForm.dob!, style: .date)"
                      : "Patient DOB: Unknown")
