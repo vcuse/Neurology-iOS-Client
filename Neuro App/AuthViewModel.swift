@@ -64,12 +64,21 @@ class AuthViewModel: ObservableObject {
 
             // Handle response, assuming a token string is returned in plain text
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                print("response", httpResponse.allHeaderFields)
+                var tokenToParse = httpResponse.value(forHTTPHeaderField: "Set-Cookie")
+                print("cookie value", httpResponse.value(forHTTPHeaderField: "Set-Cookie"))
+
+                // getting the JWT token and formatting it (it comes w extra strings from the server so we need to remove them)
                 if let tokenString = String(data: data, encoding: .utf8) {
                     DispatchQueue.main.async {
                         // Save token and update login status
-                        self.token = tokenString
+                        // Token begins at 14th char in the msg 
+                        let lowerBound = tokenToParse!.index(tokenToParse!.startIndex, offsetBy: 14)
+                        let upperLimit = tokenToParse!.firstIndex(of: ";")
+                        self.token = String(tokenToParse![lowerBound..<upperLimit!])
                         self.isLoggedIn = true
                         // Optional: Save token to Keychain for persistence
+                        print("login token = ",  self.token )
                     }
                 }
             } else {
