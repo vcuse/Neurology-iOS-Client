@@ -78,7 +78,7 @@ class AuthViewModel: ObservableObject {
                         self.token = String(tokenToParse![lowerBound..<upperLimit!])
                         self.isLoggedIn = true
                         // Optional: Save token to Keychain for persistence
-                        print("login token = ",  self.token )
+                        print("login token = ", self.token )
                     }
                 }
             } else {
