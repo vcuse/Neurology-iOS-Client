@@ -15,10 +15,11 @@ class NativeWebSocket: NSObject, WebSocketProvider {
     private let url: URL
     private var socket: URLSessionWebSocketTask?
     private lazy var urlSession: URLSession = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
-
+    private lazy var keychainHelper: KeyChainHelper
+    
     init(url: URL ) {
         // debugPrint("url is ", url)
-
+       keychainHelper = KeychainHelper()
         self.url = url
         super.init()
     }
@@ -26,7 +27,11 @@ class NativeWebSocket: NSObject, WebSocketProvider {
     func connect() {
 
         // debugPrint("WE ARE CONNECTING WITH URL", url)
+        var request = URLRequest(url, url)
+        request.addValue(keychainHelper.getToken(), forHTTPHeaderField: "Authorization")
+        print("token is ", keychainHelper.getToken())
         let socket = urlSession.webSocketTask(with: url)
+        
         socket.resume()
         self.socket = socket
         self.readMessage()
