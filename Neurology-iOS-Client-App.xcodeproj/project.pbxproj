@@ -780,7 +780,7 @@
 				088B34982C5C03A100094A02 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		0894AAB72CEFD14500387B0C /* Build configuration list for PBXNativeTarget "Neuro AppTests" */ = {
 			isa = XCConfigurationList;
@@ -790,7 +790,7 @@
 				0894AAB62CEFD14500387B0C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		60E860EC2C5192DE0097826E /* Build configuration list for PBXProject "Neurology-iOS-Client-App" */ = {
 			isa = XCConfigurationList;
@@ -800,7 +800,7 @@
 				60E861142C5192DF0097826E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
