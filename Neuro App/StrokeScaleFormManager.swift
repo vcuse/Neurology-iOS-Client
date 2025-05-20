@@ -48,7 +48,6 @@ struct StrokeScaleFormManager {
         ]
 
         let url = AppURLs.strokeScalePostUrl
-            
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"

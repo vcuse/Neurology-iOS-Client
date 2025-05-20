@@ -16,7 +16,7 @@ class NativeWebSocket: NSObject, WebSocketProvider {
     private var socket: URLSessionWebSocketTask?
     private lazy var urlSession: URLSession = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
     private lazy var keychainHelper: KeyChainHelper
-    
+
     init(url: URL ) {
         // debugPrint("url is ", url)
        keychainHelper = KeychainHelper()
@@ -31,7 +31,7 @@ class NativeWebSocket: NSObject, WebSocketProvider {
         request.addValue(keychainHelper.getToken(), forHTTPHeaderField: "Authorization")
         print("token is ", keychainHelper.getToken())
         let socket = urlSession.webSocketTask(with: url)
-        
+
         socket.resume()
         self.socket = socket
         self.readMessage()
