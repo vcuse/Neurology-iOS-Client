@@ -26,9 +26,7 @@
 		08A99ED92C6297FA0046D4A7 /* WebSocketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A99ED72C6297FA0046D4A7 /* WebSocketProvider.swift */; };
 		08E4E3B72C7E50DC0043D541 /* RTCVideoWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E4E3B62C7E50DC0043D541 /* RTCVideoWrapper.swift */; };
 		08E4E3B92C7E529B0043D541 /* RTCVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E4E3B82C7E529B0043D541 /* RTCVideoView.swift */; };
-		08FE5DC82DDCFD9100361EBF /* localDevelopment.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 08FE5DC72DDCFD9100361EBF /* localDevelopment.xcconfig */; };
 		08FE5DCA2DDCFFB100361EBF /* AppURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FE5DC92DDCFFB100361EBF /* AppURLs.swift */; };
-		08FE5DCC2DDD041E00361EBF /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 08FE5DCB2DDD041E00361EBF /* Release.xcconfig */; };
 		60140A512CAAFB4800E61908 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60140A502CAAFB4800E61908 /* CoreData.framework */; };
 		60140A6B2CAED8BB00E61908 /* NeuroDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 60140A692CAED8BB00E61908 /* NeuroDataModel.xcdatamodeld */; };
 		60140A712CAEE2F400E61908 /* SavedFormDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60140A702CAEE2F400E61908 /* SavedFormDetailView.swift */; };
@@ -295,7 +293,7 @@
 					New,
 				);
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					088B348A2C5C03A000094A02 = {
 						CreatedOnToolsVersion = 15.3;
@@ -335,8 +333,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				088B34952C5C03A100094A02 /* Preview Assets.xcassets in Resources */,
-				08FE5DC82DDCFD9100361EBF /* localDevelopment.xcconfig in Resources */,
-				08FE5DCC2DDD041E00361EBF /* Release.xcconfig in Resources */,
 				088B34922C5C03A100094A02 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
