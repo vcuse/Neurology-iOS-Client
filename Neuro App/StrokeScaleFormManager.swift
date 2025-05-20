@@ -47,10 +47,8 @@ struct StrokeScaleFormManager {
             "results": selectedOptions.map { String($0) }.joined()
         ]
 
-        guard let url = URL(string: "https://videochat-signaling-app.ue.r.appspot.com/key=peerjs/post") else {
-            print("Invalid URL")
-            return
-        }
+        let url = AppURLs.strokeScalePostUrl
+            
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"

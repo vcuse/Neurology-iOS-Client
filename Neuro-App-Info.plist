@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>API_BASE_URL</key>
+	<string>$(API_BASE_URL)</string>
+	<key>API_FETCH_ONLINE_USERS</key>
+	<string>$(API_FETCH_ONLINE_USERS)</string>
+	<key>API_STROKE_POST_URL</key>
+	<string>$(API_STROKE_POST_URL)</string>
+	<key>API_WS_URL</key>
+	<string>$(API_WS_URL)</string>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>heartbeat</string>

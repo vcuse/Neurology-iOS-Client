@@ -186,7 +186,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
     }
 
     func fetchOnlineUsers() {
-        guard let url = URL(string: "https://videochat-signaling-app.ue.r.appspot.com/key=peerjs/peers") else { return }
+        let url = AppURLs.fetchUsersURL
 
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
