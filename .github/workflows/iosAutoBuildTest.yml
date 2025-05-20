@@ -30,23 +30,23 @@ jobs:
         env:
           scheme: ${{ 'default' }}
           platform: ${{ 'iOS Simulator' }}
-          run: |
-            # Explicitly specify the device and OS version
-            device="iPhone 14"
-            os_version="16.4" # Replace this with a valid version available in your runner
-            if [ $scheme = default ]; then scheme=$(cat default); fi
-            if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
-            file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
-            xcodebuild -skipPackagePluginValidation -skipMacroValidation build-for-testing -scheme "$scheme" -"$filetype_parameter" "$file_to_build" -destination "platform=$platform,name=$device,OS=$os_version" ENABLE_TESTABILITY=YES
+        run: |
+          # Explicitly specify the device and OS version
+          device="iPhone 14"
+          os_version="16.4" # Replace this with a valid version available in your runner
+          if [ $scheme = default ]; then scheme=$(cat default); fi
+          if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
+          file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
+          xcodebuild -skipPackagePluginValidation -skipMacroValidation build-for-testing -scheme "$scheme" -"$filetype_parameter" "$file_to_build" -destination "platform=$platform,name=$device,OS=$os_version" ENABLE_TESTABILITY=YES
       - name: Test
         env:
           scheme: ${{ 'default' }}
           platform: ${{ 'iOS Simulator' }}
-          run: |
-            # Explicitly specify the device and OS version
-            device="iPhone 14"
-            os_version="16.4" # Replace this with a valid version available in your runner
-            if [ $scheme = default ]; then scheme=$(cat default); fi
-            if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
-            file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
-            xcodebuild -skipPackagePluginValidation -skipMacroValidation test-without-building -scheme "$scheme" -"$filetype_parameter" "$file_to_build" -destination "platform=$platform,name=$device,OS=$os_version"
+        run: |
+          # Explicitly specify the device and OS version
+          device="iPhone 14"
+          os_version="16.4" # Replace this with a valid version available in your runner
+          if [ $scheme = default ]; then scheme=$(cat default); fi
+          if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
+          file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
+          xcodebuild -skipPackagePluginValidation -skipMacroValidation test-without-building -scheme "$scheme" -"$filetype_parameter" "$file_to_build" -destination "platform=$platform,name=$device,OS=$os_version"
