@@ -26,6 +26,9 @@
 		08A99ED92C6297FA0046D4A7 /* WebSocketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A99ED72C6297FA0046D4A7 /* WebSocketProvider.swift */; };
 		08E4E3B72C7E50DC0043D541 /* RTCVideoWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E4E3B62C7E50DC0043D541 /* RTCVideoWrapper.swift */; };
 		08E4E3B92C7E529B0043D541 /* RTCVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E4E3B82C7E529B0043D541 /* RTCVideoView.swift */; };
+		08FE5DC82DDCFD9100361EBF /* localDevelopment.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 08FE5DC72DDCFD9100361EBF /* localDevelopment.xcconfig */; };
+		08FE5DCA2DDCFFB100361EBF /* AppURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FE5DC92DDCFFB100361EBF /* AppURLs.swift */; };
+		08FE5DCC2DDD041E00361EBF /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 08FE5DCB2DDD041E00361EBF /* Release.xcconfig */; };
 		60140A512CAAFB4800E61908 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60140A502CAAFB4800E61908 /* CoreData.framework */; };
 		60140A6B2CAED8BB00E61908 /* NeuroDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 60140A692CAED8BB00E61908 /* NeuroDataModel.xcdatamodeld */; };
 		60140A712CAEE2F400E61908 /* SavedFormDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60140A702CAEE2F400E61908 /* SavedFormDetailView.swift */; };
@@ -79,6 +82,9 @@
 		08FBF1D22C59B78600F4AE9A /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		08FBF1D52C59B78600F4AE9A /* SignalingClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignalingClient.swift; sourceTree = "<group>"; };
 		08FBF1D62C59B78600F4AE9A /* WebRTCClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebRTCClient.swift; sourceTree = "<group>"; };
+		08FE5DC72DDCFD9100361EBF /* localDevelopment.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = localDevelopment.xcconfig; sourceTree = "<group>"; };
+		08FE5DC92DDCFFB100361EBF /* AppURLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppURLs.swift; sourceTree = "<group>"; };
+		08FE5DCB2DDD041E00361EBF /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		60140A502CAAFB4800E61908 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		60140A6A2CAED8BB00E61908 /* NeuroDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NeuroDataModel.xcdatamodel; sourceTree = "<group>"; };
 		60140A702CAEE2F400E61908 /* SavedFormDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedFormDetailView.swift; sourceTree = "<group>"; };
@@ -116,6 +122,8 @@
 			isa = PBXGroup;
 			children = (
 				D4F9BEEC2DCA9BCD00C6BC4D /* StrokeScaleFormManager.swift */,
+				08FE5DC72DDCFD9100361EBF /* localDevelopment.xcconfig */,
+				08FE5DCB2DDD041E00361EBF /* Release.xcconfig */,
 				D4F9BEEA2DCA722F00C6BC4D /* KeyChainHelper.swift */,
 				D4F9BEE82DCA6EED00C6BC4D /* AuthViewModel.swift */,
 				08F4A02B2C6D3C9000234934 /* Neuro-App-Info.plist */,
@@ -147,6 +155,7 @@
 				088B345F2C5C023F00094A02 /* ContentView.swift */,
 				088B34612C5C024000094A02 /* Assets.xcassets */,
 				088B34632C5C024000094A02 /* Preview Content */,
+				08FE5DC92DDCFFB100361EBF /* AppURLs.swift */,
 			);
 			path = "Neuro App";
 			sourceTree = "<group>";
@@ -326,6 +335,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				088B34952C5C03A100094A02 /* Preview Assets.xcassets in Resources */,
+				08FE5DC82DDCFD9100361EBF /* localDevelopment.xcconfig in Resources */,
+				08FE5DCC2DDD041E00361EBF /* Release.xcconfig in Resources */,
 				088B34922C5C03A100094A02 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -359,6 +370,7 @@
 				08A99ED82C6297FA0046D4A7 /* NativeWebSocket.swift in Sources */,
 				088B348E2C5C03A000094A02 /* Neuro_AppApp.swift in Sources */,
 				0813C0B82C6159A200CF5C70 /* Config.swift in Sources */,
+				08FE5DCA2DDCFFB100361EBF /* AppURLs.swift in Sources */,
 				0813C0B42C6159A200CF5C70 /* WebRTCClient.swift in Sources */,
 				60140A712CAEE2F400E61908 /* SavedFormDetailView.swift in Sources */,
 				0813C0B52C6159A200CF5C70 /* API.swift in Sources */,
@@ -395,7 +407,10 @@
 /* Begin XCBuildConfiguration section */
 		088B34972C5C03A100094A02 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08FE5DCB2DDD041E00361EBF /* Release.xcconfig */;
 			buildSettings = {
+				"API_BASE_URL[arch=*]" = "https:/$(EMPTY)/videochat-signaling-app.ue.r.appspot.com";
+				API_WS_URL = "wss:/$(EMPTY)/videochat-signaling-app.ue.r.appspot.com:443";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Neuro App/Neuro App.entitlements";
@@ -409,6 +424,7 @@
 				INFOPLIST_FILE = "Neuro-App-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Usage to video chat with selected users ";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Usage to video chat with selected users";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -420,6 +436,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "vcuse.Neuro-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -431,6 +448,7 @@
 		};
 		088B34982C5C03A100094A02 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08FE5DCB2DDD041E00361EBF /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -445,6 +463,7 @@
 				INFOPLIST_FILE = "Neuro-App-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Usage to video chat with selected users ";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Usage to video chat with selected users";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -456,6 +475,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "vcuse.Neuro-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -467,6 +487,7 @@
 		};
 		0894AAB52CEFD14500387B0C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08FE5DCB2DDD041E00361EBF /* Release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -485,6 +506,7 @@
 		};
 		0894AAB62CEFD14500387B0C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08FE5DCB2DDD041E00361EBF /* Release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -501,8 +523,132 @@
 			};
 			name = Release;
 		};
+		08FE5DC42DDCFD1100361EBF /* Local Server Debugging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08FE5DC72DDCFD9100361EBF /* localDevelopment.xcconfig */;
+			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = "Local Server Debugging";
+		};
+		08FE5DC52DDCFD1100361EBF /* Local Server Debugging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08FE5DC72DDCFD9100361EBF /* localDevelopment.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Neuro App/Neuro App.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Neuro App/Preview Content\"";
+				DEVELOPMENT_TEAM = VL7R24L9ZQ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Neuro-App-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Usage to video chat with selected users ";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Usage to video chat with selected users";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				NEW_SETTING = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "vcuse.Neuro-App";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Local Server Debugging";
+		};
+		08FE5DC62DDCFD1100361EBF /* Local Server Debugging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08FE5DC72DDCFD9100361EBF /* localDevelopment.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VL7R24L9ZQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "vcuse.Neuro-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Neuro App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Neuro App";
+			};
+			name = "Local Server Debugging";
+		};
 		60E861132C5192DF0097826E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08FE5DCB2DDD041E00361EBF /* Release.xcconfig */;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -567,6 +713,7 @@
 		};
 		60E861142C5192DF0097826E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08FE5DCB2DDD041E00361EBF /* Release.xcconfig */;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -629,6 +776,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				088B34972C5C03A100094A02 /* Debug */,
+				08FE5DC52DDCFD1100361EBF /* Local Server Debugging */,
 				088B34982C5C03A100094A02 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -638,6 +786,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0894AAB52CEFD14500387B0C /* Debug */,
+				08FE5DC62DDCFD1100361EBF /* Local Server Debugging */,
 				0894AAB62CEFD14500387B0C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -647,6 +796,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				60E861132C5192DF0097826E /* Debug */,
+				08FE5DC42DDCFD1100361EBF /* Local Server Debugging */,
 				60E861142C5192DF0097826E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

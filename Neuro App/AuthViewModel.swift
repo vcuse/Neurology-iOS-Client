@@ -31,10 +31,7 @@ class AuthViewModel: ObservableObject {
     // Function to perform login via POST request
     func login(username: String, password: String) {
         // API endpoint for authentication
-        guard let url = URL(string: "https://devbranch-server-dot-videochat-signaling-app.ue.r.appspot.com/key=peerjs/post") else {
-            print("Invalid URL")
-            return
-        }
+        let url = AppURLs.loginUrl
 
         // Prepare the URLRequest with headers and JSON body
         var request = URLRequest(url: url)

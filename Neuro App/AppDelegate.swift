@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     var voipRegistry: PKPushRegistry!
 
-    var signalingClient = SignalingClient(url: URL(string: "wss://videochat-signaling-app.ue.r.appspot.com:443")!)
+    var signalingClient = SignalingClient(url: AppURLs.webSocketURL)
     var provider: CXProvider!
 
     func checkforUUID() -> String {
