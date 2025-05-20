@@ -27,20 +27,18 @@ class NativeWebSocket: NSObject, WebSocketProvider {
         self.url = url
 
         super.init()
-        
+
         print("token is ", KeychainHelper.getToken())
         var request = URLRequest(url: url)
         request.addValue(KeychainHelper.getToken()!, forHTTPHeaderField: "Authorization")
-        
+
         let socket = urlSession.webSocketTask(with: request)
-        
-        
+
         self.socket = socket
     }
 
     func connect() {
-        
-        
+
         debugPrint("WE ARE CONNECTING WITH URL", url)
 
         self.socket?.resume()
