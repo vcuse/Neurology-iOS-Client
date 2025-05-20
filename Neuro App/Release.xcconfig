@@ -12,3 +12,6 @@ API_STROKE_POST_URL = https:/$(EMPTY)/videochat-signaling-app.ue.r.appspot.com/k
 API_LOGIN_URL = https:/$(EMPTY)/videochat-signaling-app.ue.r.appspot.com/key=peerjs/post
 API_FETCH_ONLINE_USERS = https:/$(EMPTY)/videochat-signaling-app.ue.r.appspot.com/key=peerjs/peers
 API_WS_URL = wss:/$(EMPTY)/videochat-signaling-app.ue.r.appspot.com:443
+API_HOST = videochat-signaling-app.ue.r.appspot.com
+API_PORT = 443
+API_SECURE = true

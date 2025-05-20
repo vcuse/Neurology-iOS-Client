@@ -128,11 +128,11 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
     func getAddress(url: URL) {
 
         // var uniqueID = ""
-        let options = PeerJSOption(host: "videochat-signaling-app.ue.r.appspot.com",
-                                   port: 443,
+        let options = PeerJSOption(host: AppURLs.hostURL,
+                                   port: AppURLs.portNumber,
                                    path: "/",
                                    key: "your_key_here",
-                                   secure: true)
+                                   secure: AppURLs.secure)
 
         let api = API(options: options, url: url)
         print(api.self)
