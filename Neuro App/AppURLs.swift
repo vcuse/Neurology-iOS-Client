@@ -58,43 +58,37 @@ struct AppURLs {
         return URL(string: scheme)!
     }()
 
-    
-    static let hostURL : String = {
+    static let hostURL: String = {
         guard let scheme = getConfigurationValue(forKey: "API_HOST") as? String
         else {
             fatalError("API_HOST url not found")
         }
-        
-    
-        
-        
+
         return scheme
     }()
-    
-    static let portNumber : Int = {
+
+    static let portNumber: Int = {
         guard let scheme = getConfigurationValue(forKey: "API_PORT")
         else {
             fatalError("API_HOST url not found")
         }
-     
+
         let number = Int(scheme)
-        
-        
+
         return number!
     }()
-    
-    static let secure : Bool = {
+
+    static let secure: Bool = {
         guard let scheme = getConfigurationValue(forKey: "API_SECURE")
         else {
             fatalError("API_HOST url not found")
         }
-        
-        if(scheme == "true"){
+
+        if scheme == "true" {
             return true
         }
         return false
     }()
-    
 
     static func getConfigurationValue(forKey key: String) -> String? {
         guard let infoDictionary = Bundle.main.infoDictionary,
@@ -103,6 +97,5 @@ struct AppURLs {
         }
         return value
     }
-    
-    
+
 }

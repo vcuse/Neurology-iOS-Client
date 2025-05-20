@@ -11,7 +11,6 @@ import Foundation
 
 private let defaultSignalingServerUrl = AppURLs.webSocketURL
 
-
 // We use Google's public stun servers. For production apps you should deploy your own stun/turn servers.
 private let defaultIceServers = ["stun:stun.l.google.com:19302"]
 
