@@ -42,8 +42,7 @@ struct StrokeScaleFormManager {
         formatter.dateFormat = "MM/dd/yyyy"
         var username = "null"
         do {
-            username = try KeychainHelper.retreiveTokenAndUsername().username }
-        catch { print("username failed") }
+            username = try KeychainHelper.retreiveTokenAndUsername().username } catch { print("username failed") }
         let payload: [String: Any] = [
             "patientName": patientName,
             "DOB": formatter.string(from: dob),

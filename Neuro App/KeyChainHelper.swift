@@ -17,35 +17,34 @@ enum KeychainError: Error {
 // Utility for securely saving/retrieving authentication token using Keychain
 struct KeychainHelper {
     static let service = "com.neuroapp.auth" // customize this identifier
-    
-    
-    static func saveTokenAndUsername(_ credentials: Credentials) throws{
+
+    static func saveTokenAndUsername(_ credentials: Credentials) throws {
         print("saving credentials!!!")
         let account = credentials.username
         let password = credentials.password.data(using: String.Encoding.utf8)!
         var query: [String: Any] = [kSecClass as String: kSecClassInternetPassword,
                                     kSecAttrAccount as String: account,
                                     kSecValueData as String: password]
-        
+
         let status = SecItemAdd(query as CFDictionary, nil)
         guard status == errSecSuccess else {
             print("error saving \(status)")
             throw KeychainError.unhandledError(status: status) }
     }
-    
+
     static func retreiveTokenAndUsername()throws -> Credentials {
-        
+
         let query: [String: Any] = [kSecClass as String: kSecClassInternetPassword,
                                     kSecMatchLimit as String: kSecMatchLimitOne,
                                     kSecReturnAttributes as String: true,
                                     kSecReturnData as String: true]
-        
+
         var item: CFTypeRef?
         let status = SecItemCopyMatching(query as CFDictionary, &item)
         guard status != errSecItemNotFound else { throw KeychainError.noPassword }
         guard status == errSecSuccess else { throw KeychainError.unhandledError(status: status) }
-        
-        guard let existingItem = item as? [String : Any],
+
+        guard let existingItem = item as? [String: Any],
             let passwordData = existingItem[kSecValueData as String] as? Data,
             let password = String(data: passwordData, encoding: String.Encoding.utf8),
             let account = existingItem[kSecAttrAccount as String] as? String
@@ -103,15 +102,14 @@ struct KeychainHelper {
 
         SecItemDelete(query as CFDictionary)
     }
-    
+
     static func deleteTokenAndUsername() {
-        
+
         let query: [String: Any] = [kSecClass as String: kSecClassInternetPassword,
                                     kSecMatchLimit as String: kSecMatchLimitOne,
                                     kSecReturnAttributes as String: true,
                                     kSecReturnData as String: true]
-        
-        
+
         SecItemDelete(query as CFDictionary)
     }
 

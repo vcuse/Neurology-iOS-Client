@@ -18,24 +18,21 @@ class AuthViewModel: ObservableObject {
 
     // On init, try to load token from Keychain to keep user signed in
     init() {
-        
+
         do {
             var savedToken = try KeychainHelper.retreiveTokenAndUsername()
             self.token = savedToken.password
             self.appDelegate.createSignalingClient()
             self.isLoggedIn = true
             self.username = savedToken.username
-        }
-        catch {
+        } catch {
             print("dang it broke")
         }
-            
-            
-        
+
     }
 
     // Function to perform login via POST request
-    func login(username: String, password: String)  {
+    func login(username: String, password: String) {
         // API endpoint for authentication
         let url = AppURLs.loginUrl
 
@@ -80,17 +77,15 @@ class AuthViewModel: ObservableObject {
                         let upperLimit = tokenToParse!.firstIndex(of: ";")
                         self.username = username
                         self.token = String(tokenToParse![lowerBound..<upperLimit!])
-                        
-                        do  { try KeychainHelper.saveTokenAndUsername(Credentials(username: username, password: String(tokenToParse![lowerBound..<upperLimit!])))
+
+                        do { try KeychainHelper.saveTokenAndUsername(Credentials(username: username, password: String(tokenToParse![lowerBound..<upperLimit!])))
                             self.appDelegate.createSignalingClient()
                             self.isLoggedIn = true
-                        }
-                        catch {
+                        } catch {
                             print("keychain helper did not work")
                         }
-                        
-                        
-                        //print("saved pw to keychain successfully")
+
+                        // print("saved pw to keychain successfully")
                         // Optional: Save token to Keychain for persistence
                         print("login token = ", self.token!)
 
