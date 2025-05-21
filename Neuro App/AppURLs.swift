@@ -8,7 +8,7 @@
 import Foundation
 struct AppURLs {
     static let baseURL: URL = {
-        guard let scheme = getConfigurationValue(forKey: "API_BASE_URL") as? String
+        guard let scheme = getConfigurationValue(forKey: "API_BASE_URL")
         else {
             fatalError("websocket url not found")
         }
@@ -19,7 +19,7 @@ struct AppURLs {
     }()
 
     static let strokeScalePostUrl: URL = {
-        guard let scheme = getConfigurationValue(forKey: "API_STROKE_POST_URL") as? String
+        guard let scheme = getConfigurationValue(forKey: "API_STROKE_POST_URL")
         else {
             fatalError("websocket url not found")
         }
@@ -30,7 +30,7 @@ struct AppURLs {
     }()
 
     static let loginUrl: URL = {
-        guard let scheme = getConfigurationValue(forKey: "API_LOGIN_URL") as? String
+        guard let scheme = getConfigurationValue(forKey: "API_LOGIN_URL")
         else {
             fatalError("websocket url not found")
         }
@@ -41,7 +41,7 @@ struct AppURLs {
     }()
 
     static let fetchUsersURL: URL = {
-        guard let scheme = getConfigurationValue(forKey: "API_FETCH_ONLINE_USERS") as? String
+        guard let scheme = getConfigurationValue(forKey: "API_FETCH_ONLINE_USERS")
         else {
             fatalError("websocket url not found")
         }
@@ -50,7 +50,7 @@ struct AppURLs {
     }()
 
     static let webSocketURL: URL = {
-        guard let scheme = getConfigurationValue(forKey: "API_WS_URL") as? String
+        guard let scheme = getConfigurationValue(forKey: "API_WS_URL")
         else {
             fatalError("websocket url not found")
         }

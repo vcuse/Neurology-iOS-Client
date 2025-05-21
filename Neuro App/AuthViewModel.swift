@@ -62,7 +62,7 @@ class AuthViewModel: ObservableObject {
             // Handle response, assuming a token string is returned in plain text
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
                 print("response", httpResponse.allHeaderFields)
-                var tokenToParse = httpResponse.value(forHTTPHeaderField: "Set-Cookie")
+                let tokenToParse = httpResponse.value(forHTTPHeaderField: "Set-Cookie")
                 print("cookie value", httpResponse.value(forHTTPHeaderField: "Set-Cookie"))
 
                 // getting the JWT token and formatting it (it comes w extra strings from the server so we need to remove them)
@@ -75,7 +75,7 @@ class AuthViewModel: ObservableObject {
                         self.token = String(tokenToParse![lowerBound..<upperLimit!])
                         self.isLoggedIn = true
                         // Optional: Save token to Keychain for persistence
-                        print("login token = ", self.token )
+                        print("login token = ", self.token!)
                     }
                 }
             } else {

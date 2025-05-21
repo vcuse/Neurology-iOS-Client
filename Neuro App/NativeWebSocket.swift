@@ -28,7 +28,7 @@ class NativeWebSocket: NSObject, WebSocketProvider {
 
         super.init()
 
-        print("token is ", KeychainHelper.getToken())
+        print("token is ", KeychainHelper.getToken()!)
         var request = URLRequest(url: url)
         request.addValue(KeychainHelper.getToken()!, forHTTPHeaderField: "Authorization")
 
