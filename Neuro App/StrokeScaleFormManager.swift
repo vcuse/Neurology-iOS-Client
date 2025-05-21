@@ -40,13 +40,16 @@ struct StrokeScaleFormManager {
         
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy"
-
+        var username = "null"
+        do {
+            username = try KeychainHelper.retreiveTokenAndUsername().username }
+        catch { print("username failed") }
         let payload: [String: Any] = [
             "patientName": patientName,
             "DOB": formatter.string(from: dob),
             "formDate": formatter.string(from: Date()),
             "results": selectedOptions.map { String($0) }.joined(),
-            "username": KeychainHelper.getUsername()!
+            "username": username
         ]
 
         let url = AppURLs.strokeScalePostUrl

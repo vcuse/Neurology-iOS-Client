@@ -28,9 +28,11 @@ class NativeWebSocket: NSObject, WebSocketProvider {
 
         super.init()
 
-        print("token is ", KeychainHelper.getToken()!)
+        //print("token is ", KeychainHelper.getToken()!)
         var request = URLRequest(url: url)
-        request.addValue(KeychainHelper.getToken()!, forHTTPHeaderField: "Authorization")
+        do { try request.addValue(KeychainHelper.retreiveTokenAndUsername().password, forHTTPHeaderField: "Authorization") }
+        catch { print("no values in keychainhelper")}
+        
 
         let socket = urlSession.webSocketTask(with: request)
 

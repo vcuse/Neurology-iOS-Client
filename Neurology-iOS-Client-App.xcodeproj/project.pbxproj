@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0801DA8C2DDE4CD600E10835 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0801DA8B2DDE4CD600E10835 /* Credentials.swift */; };
 		080411D92C6BB1C60019364A /* PushNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080411D82C6BB1C60019364A /* PushNotificationManager.swift */; };
 		0813C0AF2C61538700CF5C70 /* CallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F68C252C5ABB3D00933EE3 /* CallView.swift */; };
 		0813C0B02C61539200CF5C70 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E860F62C5192DE0097826E /* HomeView.swift */; };
@@ -49,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0801DA8B2DDE4CD600E10835 /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		080411D72C6A88EB0019364A /* Neuro App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Neuro App.entitlements"; sourceTree = "<group>"; };
 		080411D82C6BB1C60019364A /* PushNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationManager.swift; sourceTree = "<group>"; };
 		0813C0B12C6155B200CF5C70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				088B34612C5C024000094A02 /* Assets.xcassets */,
 				088B34632C5C024000094A02 /* Preview Content */,
 				08FE5DC92DDCFFB100361EBF /* AppURLs.swift */,
+				0801DA8B2DDE4CD600E10835 /* Credentials.swift */,
 			);
 			path = "Neuro App";
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 			files = (
 				08E4E3B72C7E50DC0043D541 /* RTCVideoWrapper.swift in Sources */,
 				080411D92C6BB1C60019364A /* PushNotificationManager.swift in Sources */,
+				0801DA8C2DDE4CD600E10835 /* Credentials.swift in Sources */,
 				0813C0AF2C61538700CF5C70 /* CallView.swift in Sources */,
 				D4F7ECA02D03989400C356C8 /* NewNIHFormView.swift in Sources */,
 				60B7690B2C9B818C00CC8343 /* StrokeScaleFormView.swift in Sources */,
