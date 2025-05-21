@@ -16,13 +16,15 @@ let globalUUID = "com.Neuro-APP.uuid"
 var uuid: UUID?
 
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, PKPushRegistryDelegate, CXProviderDelegate {
+    var signalingClient: SignalingClient?
+    
     func providerDidReset(_ provider: CXProvider) {
         print("reset")
     }
 
     var voipRegistry: PKPushRegistry!
 
-    var signalingClient = SignalingClient(url: AppURLs.webSocketURL)
+    
     var provider: CXProvider!
 
     func checkforUUID() -> String {
@@ -37,6 +39,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             UserDefaults.standard.set(newUUID, forKey: globalUUID)
             return newUUID
         }
+    }
+    
+    func createSignalingClient(){
+        self.signalingClient = SignalingClient(url: AppURLs.webSocketURL)
     }
 
     func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
@@ -166,9 +172,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
-        signalingClient.handleOfferMessage()
-        signalingClient.handleIceCandidates()
-        signalingClient.setCallConnected()
+        signalingClient!.handleOfferMessage()
+        signalingClient!.handleIceCandidates()
+        signalingClient!.setCallConnected()
         print("ANSWERING A CALL")
         action.fulfill()
         return
@@ -250,7 +256,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             return
         }
 
-        signalingClient.declineCall()
+        signalingClient!.declineCall()
 
         uuid = nil
 

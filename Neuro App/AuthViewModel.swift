@@ -7,8 +7,20 @@
 
 import Foundation
 import Security
+import SwiftUI
 
 class AuthViewModel: ObservableObject {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+   var username : String?{
+        didSet {
+            if let token = token {
+                KeychainHelper.saveUsername(token)
+            } else {
+                KeychainHelper.deleteUsername()
+            }
+        }
+    }
+    
     @Published var isLoggedIn = false
     @Published var token: String? {
         didSet {
@@ -24,7 +36,9 @@ class AuthViewModel: ObservableObject {
     init() {
         if let savedToken = KeychainHelper.getToken() {
             self.token = savedToken
+            self.appDelegate.createSignalingClient()
             self.isLoggedIn = true
+            
         }
     }
 
@@ -41,7 +55,8 @@ class AuthViewModel: ObservableObject {
 
         // Body with credentials
         let credentials = ["username": username, "password": password]
-
+        
+        
         do {
             // Convert the dictionary to JSON data
             request.httpBody = try JSONSerialization.data(withJSONObject: credentials, options: [])
@@ -63,7 +78,7 @@ class AuthViewModel: ObservableObject {
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
                 print("response", httpResponse.allHeaderFields)
                 let tokenToParse = httpResponse.value(forHTTPHeaderField: "Set-Cookie")
-                print("cookie value", httpResponse.value(forHTTPHeaderField: "Set-Cookie"))
+                print("cookie value", httpResponse.value(forHTTPHeaderField: "Set-Cookie")!)
 
                 // getting the JWT token and formatting it (it comes w extra strings from the server so we need to remove them)
                 if let tokenString = String(data: data, encoding: .utf8) {
@@ -72,11 +87,15 @@ class AuthViewModel: ObservableObject {
                         // Token begins at 14th char in the msg 
                         let lowerBound = tokenToParse!.index(tokenToParse!.startIndex, offsetBy: 14)
                         let upperLimit = tokenToParse!.firstIndex(of: ";")
+                        self.username = username
                         self.token = String(tokenToParse![lowerBound..<upperLimit!])
                         self.isLoggedIn = true
+                        
                         // Optional: Save token to Keychain for persistence
                         print("login token = ", self.token!)
+                        
                     }
+                    
                 }
             } else {
                 print("Login failed or bad response: \(response.debugDescription)")

@@ -8,6 +8,8 @@
 	<string>$(API_FETCH_ONLINE_USERS)</string>
 	<key>API_HOST</key>
 	<string>$(API_HOST)</string>
+	<key>API_LOGIN_URL</key>
+	<string>$(API_LOGIN_URL)</string>
 	<key>API_PORT</key>
 	<string>$(API_PORT)</string>
 	<key>API_SECURE</key>

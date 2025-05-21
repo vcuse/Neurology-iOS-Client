@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import Security
 
 struct StrokeScaleFormManager {
     static func saveForm(
@@ -44,7 +45,8 @@ struct StrokeScaleFormManager {
             "patientName": patientName,
             "DOB": formatter.string(from: dob),
             "formDate": formatter.string(from: Date()),
-            "results": selectedOptions.map { String($0) }.joined()
+            "results": selectedOptions.map { String($0) }.joined(),
+            "username": KeychainHelper.getUsername()!
         ]
 
         let url = AppURLs.strokeScalePostUrl
