@@ -37,7 +37,7 @@ struct StrokeScaleFormManager {
         } catch {
             print("Failed to encode options: \(error)")
         }
-        
+
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy"
 
