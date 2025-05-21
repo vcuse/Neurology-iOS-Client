@@ -20,7 +20,7 @@ struct Neuro_App: App {
         WindowGroup {
             if authViewModel.isLoggedIn {
                 // ✅ User is logged in → go to HomeView
-                
+
                 HomeView()
                     .environment(\.managedObjectContext, appDelegate.persistentContainer.viewContext)
                     .environmentObject(appDelegate.signalingClient!)

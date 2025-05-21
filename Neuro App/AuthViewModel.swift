@@ -11,7 +11,7 @@ import SwiftUI
 
 class AuthViewModel: ObservableObject {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-   var username : String?{
+   var username: String? {
         didSet {
             if let token = token {
                 KeychainHelper.saveUsername(token)
@@ -20,7 +20,7 @@ class AuthViewModel: ObservableObject {
             }
         }
     }
-    
+
     @Published var isLoggedIn = false
     @Published var token: String? {
         didSet {
@@ -38,7 +38,7 @@ class AuthViewModel: ObservableObject {
             self.token = savedToken
             self.appDelegate.createSignalingClient()
             self.isLoggedIn = true
-            
+
         }
     }
 
@@ -55,8 +55,7 @@ class AuthViewModel: ObservableObject {
 
         // Body with credentials
         let credentials = ["username": username, "password": password]
-        
-        
+
         do {
             // Convert the dictionary to JSON data
             request.httpBody = try JSONSerialization.data(withJSONObject: credentials, options: [])
@@ -90,12 +89,12 @@ class AuthViewModel: ObservableObject {
                         self.username = username
                         self.token = String(tokenToParse![lowerBound..<upperLimit!])
                         self.isLoggedIn = true
-                        
+
                         // Optional: Save token to Keychain for persistence
                         print("login token = ", self.token!)
-                        
+
                     }
-                    
+
                 }
             } else {
                 print("Login failed or bad response: \(response.debugDescription)")

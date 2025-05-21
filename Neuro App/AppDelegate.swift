@@ -17,14 +17,13 @@ var uuid: UUID?
 
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, PKPushRegistryDelegate, CXProviderDelegate {
     var signalingClient: SignalingClient?
-    
+
     func providerDidReset(_ provider: CXProvider) {
         print("reset")
     }
 
     var voipRegistry: PKPushRegistry!
 
-    
     var provider: CXProvider!
 
     func checkforUUID() -> String {
@@ -40,8 +39,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             return newUUID
         }
     }
-    
-    func createSignalingClient(){
+
+    func createSignalingClient() {
         self.signalingClient = SignalingClient(url: AppURLs.webSocketURL)
     }
 

@@ -60,7 +60,7 @@ struct KeychainHelper {
 
         SecItemDelete(query as CFDictionary)
     }
-    
+
     // Save token to Keychain
     static func saveUsername(_ token: String) {
         let data = Data(token.utf8)
@@ -76,7 +76,7 @@ struct KeychainHelper {
         SecItemDelete(query as CFDictionary)
         SecItemAdd(query as CFDictionary, nil)
     }
-    
+
     // Load token from Keychain
     static func getUsername() -> String? {
         let query: [String: Any] = [
@@ -98,7 +98,7 @@ struct KeychainHelper {
 
         return token
     }
-    
+
     // Delete token from Keychain
     static func deleteUsername() {
         let query: [String: Any] = [
@@ -109,5 +109,5 @@ struct KeychainHelper {
 
         SecItemDelete(query as CFDictionary)
     }
-    
+
 }
