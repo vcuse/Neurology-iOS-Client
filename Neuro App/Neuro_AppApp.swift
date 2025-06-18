@@ -19,14 +19,14 @@ struct Neuro_App: App {
     var body: some Scene {
         WindowGroup {
             if authViewModel.isLoggedIn {
-                // ✅ User is logged in → go to HomeView
+                // User is logged in → go to HomeView
                 HomeView()
                     .environment(\.managedObjectContext, appDelegate.persistentContainer.viewContext)
                     .environmentObject(appDelegate.signalingClient)
                     .environmentObject(authViewModel)
                     .navigationBarBackButtonHidden(true)
             } else {
-                // ❌ Not logged in → show SignInView
+                // Not logged in → show SignInView
                 SignInView()
                     .environmentObject(authViewModel)
             }

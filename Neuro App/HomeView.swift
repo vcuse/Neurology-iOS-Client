@@ -81,7 +81,7 @@ struct HomeView: View {
                                 .cornerRadius(10)
                                 .shadow(radius: 2)
 
-                                Text("Online Now:")
+                                Text("Active Consultations:")
                                     .font(.headline)
                                     .padding(.top, 20)
                                     .foregroundColor(Color.black)
@@ -225,6 +225,7 @@ struct OnlineUserCardView: View {
             .padding(.trailing, 15)
         }
         .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, minHeight: 60)
         .background(
             Color(UIColor { traitCollection in
                 return traitCollection.userInterfaceStyle == .dark ? .black : .white

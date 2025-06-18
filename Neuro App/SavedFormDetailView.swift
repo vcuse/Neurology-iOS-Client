@@ -3,33 +3,24 @@ import UIKit
 import PDFKit
 
 struct SavedFormDetailView: View {
-
-    var savedForm: NIHFormEntity
+    var remoteForm: RemoteStrokeForm
+    
     @ObservedObject var viewModel = StrokeScaleFormViewModel()
     @State var selectedOptions: [Int]
-    @Environment(\.dismiss) private var dismiss // Dismiss environment variable
+    @State private var isPresentingUpdateForm = false
+    @State private var showDeleteConfirmation = false
+    @Environment(\.dismiss) private var dismiss
 
     var totalScore: Int {
-        var score = 0
-        for (index, selectedOption) in selectedOptions.enumerated() where selectedOption != -1 {
-            score += viewModel.questions[index].options[selectedOption].score
+        selectedOptions.enumerated().reduce(0) { acc, item in
+            let (index, selectedOption) = item
+            return selectedOption != -1 ? acc + viewModel.questions[index].options[selectedOption].score : acc
         }
-        return score
     }
-
-    init(savedForm: NIHFormEntity) {
-        self.savedForm = savedForm
-        if let optionsData = savedForm.selectedOptions {
-            do {
-                let decodedOptions = try JSONDecoder().decode([Int].self, from: optionsData)
-                self._selectedOptions = State(initialValue: decodedOptions)
-            } catch {
-                self._selectedOptions = State(initialValue: Array(repeating: -1, count: 15))
-                print("Failed to decode options")
-            }
-        } else {
-            self._selectedOptions = State(initialValue: Array(repeating: -1, count: 15))
-        }
+    
+    init(remoteForm: RemoteStrokeForm, selectedOptions: [Int]) {
+        self.remoteForm = remoteForm
+        self._selectedOptions = State(initialValue: selectedOptions)
     }
 
     var body: some View {
@@ -47,22 +38,18 @@ struct SavedFormDetailView: View {
 
             // Patient Info Section
             VStack {
-                Text("Patient Name: \(savedForm.patientName ?? "Unknown")")
+                Text("Patient Name: \(remoteForm.name)")
                     .font(.headline)
                     .padding(.bottom, 5)
                     .multilineTextAlignment(.center)
-                
-                Text(savedForm.dob != nil
-                     ? "Patient DOB: \(savedForm.dob!, style: .date)"
-                     : "Patient DOB: Unknown")
+                     
+                Text("Patient DOB: \(StrokeScaleFormManager.convertDOB(from: remoteForm.dob), style: .date)")
                     .font(.subheadline)
                     .padding(.bottom, 5)
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)
 
-                Text(savedForm.date != nil
-                     ? "Date: \(savedForm.date!, style: .date)"
-                     : "Date: Unknown")
+                Text("Date: \(StrokeScaleFormManager.convertDOB(from: remoteForm.formDate), style: .date)")
                     .font(.subheadline)
                     .padding(.bottom, 5)
                     .foregroundColor(.gray)
@@ -75,7 +62,7 @@ struct SavedFormDetailView: View {
             Form {
                 ForEach(viewModel.questions.indices, id: \.self) { index in
                     let question = viewModel.questions[index]
-                    let selectedOptionIndex = selectedOptions[index]
+                    let selectedOptionIndex = viewModel.questions[index].selectedOption ?? -1
 
                     Section {
                         VStack(alignment: .leading, spacing: 10) {
@@ -127,9 +114,21 @@ struct SavedFormDetailView: View {
                         .background(Color.white)
                         .cornerRadius(10)
                 })
+                
+                Button(action: {
+                    isPresentingUpdateForm = true
+                }) {
+                    Text("Update")
+                        .font(.headline)
+                        .foregroundColor(.black)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.white)
+                        .cornerRadius(10)
+                }
 
                 Button(action: {
-                    // Delete action
+                    showDeleteConfirmation = true
                 }, label: {
                     Text("Delete")
                         .font(.headline)
@@ -144,140 +143,24 @@ struct SavedFormDetailView: View {
             .padding(.bottom)
         }
         .background(Color.purple.opacity(0.2))
-    }
-
-    private func deleteForm() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            print("Failed to access AppDelegate") // Log if AppDelegate isn't accessible
-            return
+        .fullScreenCover(isPresented: $isPresentingUpdateForm) {
+            NewNIHFormView(
+                remoteForm: remoteForm,
+                initialSelectedOptions: selectedOptions
+            )
         }
-
-        let managedContext = appDelegate.persistentContainer.viewContext
-
-        // Proceed with deletion
-        managedContext.delete(savedForm)
-
-        do {
-            try managedContext.save()
-            print("Form deleted successfully")
-        } catch {
-            print("Failed to delete the form: \(error.localizedDescription)")
+        .alert("Are you sure you want to delete this form?", isPresented: $showDeleteConfirmation) {
+            Button("Delete", role: .destructive) {
+                StrokeScaleFormManager.deleteForm(remoteForm: remoteForm)
+                dismiss()
+            }
+            Button("Cancel", role: .cancel) { }
         }
-
-        // Optionally pop the view after deletion
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let rootViewController = windowScene.windows.first?.rootViewController as? UINavigationController {
-            rootViewController.popViewController(animated: true)
-        }
-    }
-
-    private func exportFormAsPDF() {
-        let pdfRenderer = UIGraphicsPDFRenderer(bounds: CGRect(x: 0, y: 0, width: 595, height: 842)) // A4 size PDF
-
-        let data = pdfRenderer.pdfData { context in
-            context.beginPage()
-            let font = UIFont.systemFont(ofSize: 16)
-            let headerFont = UIFont.boldSystemFont(ofSize: 18)
-            let purpleOutlineAttributes: [NSAttributedString.Key: Any] = [
-                .font: font,
-                .foregroundColor: UIColor.black,
-                .paragraphStyle: NSMutableParagraphStyle()
-            ]
-
-            var yPosition: CGFloat = 20
-            let pageHeight: CGFloat = 842
-            let margin: CGFloat = 20
-
-            // Title
-            let title = "NIH Stroke Scale Form"
-            title.draw(at: CGPoint(x: 20, y: yPosition), withAttributes: [NSAttributedString.Key.font: headerFont])
-            yPosition += 40
-
-            // Patient Name
-            let patientNameText = "Patient Name: \(savedForm.patientName ?? "Unknown")"
-            patientNameText.draw(at: CGPoint(x: 20, y: yPosition), withAttributes: [NSAttributedString.Key.font: font])
-            yPosition += 30
-
-            // Date
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .medium
-            let dateText = "Date: \(dateFormatter.string(from: savedForm.date ?? Date()))"
-            dateText.draw(at: CGPoint(x: 20, y: yPosition), withAttributes: [NSAttributedString.Key.font: font])
-            yPosition += 30
-
-            // Total Score
-            let totalScoreText = "Total Score: \(totalScore)"
-            totalScoreText.draw(at: CGPoint(x: 20, y: yPosition), withAttributes: [NSAttributedString.Key.font: font])
-            yPosition += 40
-
-            // Questions and Options
-            for (index, question) in viewModel.questions.enumerated() {
-                // Estimate the height of the question header and subheader (if present)
-                let questionHeaderHeight = (question.questionHeader as NSString).size(withAttributes: [.font: headerFont]).height
-                let subHeaderHeight = (question.subHeader?.size(withAttributes: [.font: font]) ?? CGSize.zero).height
-                let optionsHeight: CGFloat = question.options.reduce(0) { (result, option) in
-                    let optionTitle = option.title as NSString
-                    let boundingRect = optionTitle.boundingRect(with: CGSize(width: 450, height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
-                    return result + boundingRect.height + 20
-                }
-
-                // Check if the question will fit on the current page
-                let requiredHeight = questionHeaderHeight + subHeaderHeight + optionsHeight + 50 // Add some padding
-                if yPosition + requiredHeight > pageHeight - margin {
-                    context.beginPage()
-                    yPosition = 20
-                }
-
-                // Draw the Question Header
-                question.questionHeader.draw(at: CGPoint(x: 20, y: yPosition), withAttributes: [NSAttributedString.Key.font: headerFont])
-                yPosition += 30
-
-                // Draw the Subheader
-                if let subHeader = question.subHeader {
-                    subHeader.draw(at: CGPoint(x: 20, y: yPosition), withAttributes: [NSAttributedString.Key.font: font, NSAttributedString.Key.foregroundColor: UIColor.gray])
-                    yPosition += 25
-                }
-
-                // Draw the Options
-                for (optionIndex, option) in question.options.enumerated() {
-                    let selectedOptionIndex = selectedOptions[index]
-                    let optionTitle = option.title as NSString
-                    let optionScoreText = option.score > 0 ? "+\(option.score)" : "\(option.score)"
-
-                    // Draw the text in multiline if necessary
-                    let textRect = CGRect(x: 40, y: yPosition, width: 450, height: CGFloat.greatestFiniteMagnitude)
-                    let textAttributes: [NSAttributedString.Key: Any] = [
-                        .font: font,
-                        .foregroundColor: UIColor.black
-                    ]
-
-                    let boundingRect = optionTitle.boundingRect(with: CGSize(width: 450, height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin, attributes: textAttributes, context: nil)
-                    optionTitle.draw(with: textRect, options: .usesLineFragmentOrigin, attributes: textAttributes, context: nil)
-
-                    // Draw the score aligned to the right
-                    optionScoreText.draw(at: CGPoint(x: 500, y: yPosition), withAttributes: [NSAttributedString.Key.font: font])
-
-                    // Add purple outline for selected options
-                    if selectedOptionIndex == optionIndex {
-                        let outlineRect = CGRect(x: 35, y: yPosition - 5, width: boundingRect.width + 10, height: boundingRect.height + 10)
-                        let outlinePath = UIBezierPath(rect: outlineRect)
-                        UIColor.purple.setStroke()
-                        outlinePath.lineWidth = 2
-                        outlinePath.stroke()
-                    }
-
-                    yPosition += boundingRect.height + 20
-                }
-                yPosition += 20
+        .onAppear {
+            for option in 0..<min(selectedOptions.count, viewModel.questions.count) {
+                viewModel.questions[option].selectedOption = selectedOptions[option]
             }
         }
 
-        // Share the PDF
-        let activityViewController = UIActivityViewController(activityItems: [data], applicationActivities: nil)
-
-        if let rootViewController = UIApplication.shared.windows.first?.rootViewController {
-            rootViewController.present(activityViewController, animated: true, completion: nil)
-        }
     }
-
 }

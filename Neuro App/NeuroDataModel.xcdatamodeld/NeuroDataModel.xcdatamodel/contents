@@ -3,7 +3,9 @@
     <entity name="NIHFormEntity" representedClassName="NIHFormEntity" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dob" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="formID" optional="YES" attributeType="String"/>
         <attribute name="patientName" optional="YES" attributeType="String"/>
         <attribute name="selectedOptions" optional="YES" attributeType="Binary"/>
+        <attribute name="username" optional="YES" attributeType="String"/>
     </entity>
 </model>

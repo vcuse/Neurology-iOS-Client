@@ -64,13 +64,31 @@ class AuthViewModel: ObservableObject {
             }
 
             // Handle response, assuming a token string is returned in plain text
-            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let tokenString = String(data: data, encoding: .utf8) {
                 if let tokenString = String(data: data, encoding: .utf8) {
                     DispatchQueue.main.async {
                         // Save token and update login status
                         self.token = tokenString
                         self.isLoggedIn = true
-                        // Optional: Save token to Keychain for persistence
+                        // Save username to UserDefaults
+                        UserDefaults.standard.set(username, forKey: "username")
+                        self.isLoggedIn = true
+                        
+                        if let setCookie = httpResponse.allHeaderFields["Set-Cookie"] as? String {
+                            print("🍪 Received Set-Cookie: \(setCookie)")
+
+                            let cookies = HTTPCookie.cookies(
+                                withResponseHeaderFields: ["Set-Cookie": setCookie],
+                                for: URL(string: "https://videochat-signaling-app.ue.r.appspot.com")!
+                            )
+
+                            for cookie in cookies {
+                                HTTPCookieStorage.shared.setCookie(cookie)
+                                print("Saved cookie: \(cookie.name)=\(cookie.value)")
+                            }
+                        } else {
+                            print("No Set-Cookie header received")
+                        }
                     }
                 }
             } else {
