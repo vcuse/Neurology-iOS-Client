@@ -11,17 +11,17 @@ struct SavedFormsView: View {
     @State private var selectedOptions: [Int] = []
     @State private var shouldReloadForms = false
     @StateObject var formStore = RemoteFormStore()
-    
+
     class RemoteFormStore: ObservableObject {
         @Published var forms: [RemoteStrokeForm] = []
     }
-    
+
     struct SelectedFormBundle: Identifiable {
         let id = UUID()
         let form: RemoteStrokeForm
         let options: [Int]
     }
-    
+
     var body: some View {
         ZStack {
             // Background gradient

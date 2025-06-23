@@ -21,11 +21,11 @@ struct RemoteStrokeForm: Identifiable, Codable {
     var formDate: String
     var results: String
     var username: String
-    
+
     enum CodingKeys: String, CodingKey {
         case id, name, dob, results, username, formDate = "form_date"
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(Int.self, forKey: .id)
@@ -39,7 +39,7 @@ struct RemoteStrokeForm: Identifiable, Codable {
 
 struct StrokeScaleFormManager {
     static var remoteForms: [RemoteStrokeForm] = []
-    
+
     static func fetchFormsFromServer(completion: @escaping ([RemoteStrokeForm]) -> Void) {
         remoteForms.removeAll()
         guard let username = UserDefaults.standard.string(forKey: "username") else {
@@ -86,17 +86,17 @@ struct StrokeScaleFormManager {
                 }
         }.resume()
     }
-    
+
     static func notifyFormsDidUpdate() {
         NotificationCenter.default.post(name: .formsDidUpdate, object: nil)
     }
-    
+
     static func convertDOB(from string: String) -> Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy"
         return formatter.date(from: string) ?? Date()
     }
-    
+
     static func saveForm(
         context: NSManagedObjectContext,
         patientName: String,
@@ -204,7 +204,7 @@ struct StrokeScaleFormManager {
             }
         }.resume()
     }
-    
+
     static func deleteForm(remoteForm: RemoteStrokeForm) {
         let payload: [String: Any] = [
             "id": remoteForm.id,
