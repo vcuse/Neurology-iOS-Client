@@ -1,0 +1,17 @@
+//
+//  Config.xcconfig
+//  Neuro App
+//
+//  Created by David Ferrufino on 5/20/25.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+API_BASE_URL = http:/$(EMPTY)/localhost:9000
+API_STROKE_POST_URL = http:/$(EMPTY)/localhost:9000/key=peerjs/post
+API_LOGIN_URL = http:/$(EMPTY)/localhost:9000/key=peerjs/post
+API_FETCH_ONLINE_USERS = http:/$(EMPTY)/localhost:9000/key=peerjs/peers
+API_WS_URL = http:/$(EMPTY)/localhost:9000/key=peerjs/peers
+API_HOST = localhost
+API_PORT = 9000
+API_SECURE = false

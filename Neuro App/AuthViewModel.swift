@@ -5,37 +5,36 @@
 //  Created by Lauren Viado on 5/6/25.
 //  ViewModel to manage authentication state and logic
 
-
 import Foundation
 import Security
+import SwiftUI
 
 class AuthViewModel: ObservableObject {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+   var username: String?
+
     @Published var isLoggedIn = false
-    @Published var token: String? {
-        didSet {
-            if let token = token {
-                KeychainHelper.saveToken(token)
-            } else {
-                KeychainHelper.deleteToken()
-            }
-        }
-    }
-    
+    @Published var token: String?
+
     // On init, try to load token from Keychain to keep user signed in
     init() {
-        if let savedToken = KeychainHelper.getToken() {
-            self.token = savedToken
+
+        do {
+            var savedToken = try KeychainHelper.retreiveTokenAndUsername()
+            self.token = savedToken.password
+            self.appDelegate.createSignalingClient()
             self.isLoggedIn = true
+            self.username = savedToken.username
+        } catch {
+            print("dang it broke")
         }
+
     }
 
     // Function to perform login via POST request
     func login(username: String, password: String) {
         // API endpoint for authentication
-        guard let url = URL(string: "https://devbranch-server-dot-videochat-signaling-app.ue.r.appspot.com/key=peerjs/post") else {
-            print("Invalid URL")
-            return
-        }
+        let url = AppURLs.loginUrl
 
         // Prepare the URLRequest with headers and JSON body
         var request = URLRequest(url: url)
@@ -64,43 +63,46 @@ class AuthViewModel: ObservableObject {
             }
 
             // Handle response, assuming a token string is returned in plain text
-            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let tokenString = String(data: data, encoding: .utf8) {
+            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                print("response", httpResponse.allHeaderFields)
+                let tokenToParse = httpResponse.value(forHTTPHeaderField: "Set-Cookie")
+                print("cookie value", httpResponse.value(forHTTPHeaderField: "Set-Cookie")!)
+
+                // getting the JWT token and formatting it (it comes w extra strings from the server so we need to remove them)
                 if let tokenString = String(data: data, encoding: .utf8) {
                     DispatchQueue.main.async {
                         // Save token and update login status
-                        self.token = tokenString
-                        self.isLoggedIn = true
-                        // Save username to UserDefaults
-                        UserDefaults.standard.set(username, forKey: "username")
-                        self.isLoggedIn = true
-                        
-                        if let setCookie = httpResponse.allHeaderFields["Set-Cookie"] as? String {
-                            print("🍪 Received Set-Cookie: \(setCookie)")
+                        // Token begins at 14th char in the msg 
+                        let lowerBound = tokenToParse!.index(tokenToParse!.startIndex, offsetBy: 14)
+                        let upperLimit = tokenToParse!.firstIndex(of: ";")
+                        self.username = username
+                        self.token = String(tokenToParse![lowerBound..<upperLimit!])
 
-                            let cookies = HTTPCookie.cookies(
-                                withResponseHeaderFields: ["Set-Cookie": setCookie],
-                                for: URL(string: "https://videochat-signaling-app.ue.r.appspot.com")!
-                            )
-
-                            for cookie in cookies {
-                                HTTPCookieStorage.shared.setCookie(cookie)
-                                print("Saved cookie: \(cookie.name)=\(cookie.value)")
-                            }
-                        } else {
-                            print("No Set-Cookie header received")
+                        do { try KeychainHelper.saveTokenAndUsername(Credentials(username: username, password: String(tokenToParse![lowerBound..<upperLimit!])))
+                            self.appDelegate.createSignalingClient()
+                            self.isLoggedIn = true
+                        } catch {
+                            print("keychain helper did not work")
                         }
+
+                        // print("saved pw to keychain successfully")
+                        // Optional: Save token to Keychain for persistence
+                        print("login token = ", self.token!)
+
                     }
+
                 }
             } else {
                 print("Login failed or bad response: \(response.debugDescription)")
             }
         }.resume() // Start the request
     }
-    
+
     // Log out and clear saved token
     func logout() {
         self.token = nil
         self.isLoggedIn = false
+        KeychainHelper.deleteTokenAndUsername()
     }
-    
+
 }

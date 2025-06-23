@@ -58,7 +58,6 @@ struct NewNIHFormView: View {
                 .padding([.leading, .trailing])
                 .padding(.bottom, 5)
 
-            
             // DOB Selector
             Button(action: {
                 showDOBPicker.toggle()
@@ -197,7 +196,7 @@ struct NewNIHFormView: View {
             ) 
         }
     }
-    
+
     private func formattedDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium

@@ -19,15 +19,21 @@ class NativeWebSocket: NSObject, WebSocketProvider {
     private let pingTimer = 5000
     private var socket: URLSessionWebSocketTask?
     private lazy var urlSession: URLSession = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
+    private var keychainHelper: KeychainHelper
 
     init(url: URL ) {
         // debugPrint("url is ", url)
-
+        keychainHelper = KeychainHelper()
         self.url = url
 
         super.init()
 
-        let socket = urlSession.webSocketTask(with: url)
+        // print("token is ", KeychainHelper.getToken()!)
+        var request = URLRequest(url: url)
+        do { try request.addValue(KeychainHelper.retreiveTokenAndUsername().password, forHTTPHeaderField: "Authorization") } catch { print("no values in keychainhelper")}
+
+        let socket = urlSession.webSocketTask(with: request)
+
         self.socket = socket
     }
 

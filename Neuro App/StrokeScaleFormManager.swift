@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import Security
 
 extension Notification.Name {
     static let formsDidUpdate = Notification.Name("formsDidUpdate")
@@ -106,7 +107,9 @@ struct StrokeScaleFormManager {
 
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy"
-
+        var username = "null"
+        do {
+            username = try KeychainHelper.retreiveTokenAndUsername().username } catch { print("username failed") }
         let payload: [String: Any] = [
             "patientName": patientName,
             "DOB": formatter.string(from: dob),
@@ -115,10 +118,7 @@ struct StrokeScaleFormManager {
             "username": username
         ]
 
-        guard let url = URL(string: "https://videochat-signaling-app.ue.r.appspot.com/key=peerjs/post") else {
-            print("Invalid URL")
-            return
-        }
+        let url = AppURLs.strokeScalePostUrl
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"

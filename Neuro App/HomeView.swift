@@ -31,7 +31,7 @@ struct HomeView: View {
                         .padding(10)
                         .foregroundColor(Color.black)
                      */
-                    
+
                     HStack {
                         Spacer()
                         Button(action: {
