@@ -4,17 +4,24 @@ import CoreData
 struct SavedFormsView: View {
 
     @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(
-        entity: NIHFormEntity.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \NIHFormEntity.date, ascending: false)]
-    )
-    private var savedForms: FetchedResults<NIHFormEntity>
-
     @Binding var isNavigatingBack: Bool
+    @State private var selectedFormBundle: SelectedFormBundle?
     @State private var isShowingNewFormView = false
-    @State private var selectedForm: NIHFormEntity?
     @State private var isShowingDetailView = false
-
+    @State private var selectedOptions: [Int] = []
+    @State private var shouldReloadForms = false
+    @StateObject var formStore = RemoteFormStore()
+    
+    class RemoteFormStore: ObservableObject {
+        @Published var forms: [RemoteStrokeForm] = []
+    }
+    
+    struct SelectedFormBundle: Identifiable {
+        let id = UUID()
+        let form: RemoteStrokeForm
+        let options: [Int]
+    }
+    
     var body: some View {
         ZStack {
             // Background gradient
@@ -61,17 +68,17 @@ struct SavedFormsView: View {
 
                     // List of Forms
                     VStack(spacing: 15) {
-                        ForEach(savedForms, id: \.self) { form in
+                        ForEach(formStore.forms) { form in
                             HStack {
                                 VStack(alignment: .leading, spacing: 5) {
-                                    Text(form.patientName ?? "Unnamed Patient")
+                                    Text(form.name)
                                         .font(.headline)
                                         .foregroundColor(
                                             Color(UIColor { traitCollection in
                                                 return traitCollection.userInterfaceStyle == .dark ? .white : .black
                                             })
                                         )
-                                    Text(form.date ?? Date(), style: .date)
+                                    Text("Date: \(StrokeScaleFormManager.convertDOB(from: form.formDate), style: .date)")
                                         .font(.subheadline)
                                         .foregroundColor(
                                             Color(UIColor { traitCollection in
@@ -83,9 +90,14 @@ struct SavedFormsView: View {
                                 Spacer()
 
                                 Button(action: {
-                                    selectedForm = form
+                                    let options = form.results.prefix(15).map { Int(String($0)) ?? 9 }
+                                    selectedFormBundle = SelectedFormBundle(form: form, options: Array(options))
                                     isShowingDetailView = true
-                                }) {
+
+                                    print("🟣 Opening form with ID \(form.id), selectedOptions: \(selectedOptions)")
+                                    print("🧪 Setting selectedRemoteForm: \(String(describing: form))")
+
+                                 }) {
                                     HStack {
                                         Text("View")
                                     }
@@ -119,13 +131,18 @@ struct SavedFormsView: View {
             .fullScreenCover(isPresented: $isShowingNewFormView) {
                 NewNIHFormView()
             }
-            .fullScreenCover(isPresented: $isShowingDetailView) {
-                if let form = selectedForm {
-                    SavedFormDetailView(savedForm: form)
-                }
+            .fullScreenCover(item: $selectedFormBundle) { bundle in
+                SavedFormDetailView(
+                    remoteForm: bundle.form,
+                    selectedOptions: bundle.options
+                )
             }
             .onAppear {
-                viewContext.refreshAllObjects()
+                StrokeScaleFormManager.fetchFormsFromServer { fetchedForms in
+                    DispatchQueue.main.async {
+                        formStore.forms = fetchedForms
+                    }
+                }
             }
         }
     }
