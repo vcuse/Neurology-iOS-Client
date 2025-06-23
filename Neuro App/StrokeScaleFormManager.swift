@@ -107,7 +107,7 @@ struct StrokeScaleFormManager {
 
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy"
-        //var username = "null"
+        // var username = "null"
         do {
             username = try KeychainHelper.retreiveTokenAndUsername().username } catch { print("username failed") }
         let payload: [String: Any] = [
