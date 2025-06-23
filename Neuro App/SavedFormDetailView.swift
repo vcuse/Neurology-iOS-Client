@@ -4,7 +4,7 @@ import PDFKit
 
 struct SavedFormDetailView: View {
     var remoteForm: RemoteStrokeForm
-    
+
     @ObservedObject var viewModel = StrokeScaleFormViewModel()
     @State var selectedOptions: [Int]
     @State private var isPresentingUpdateForm = false
@@ -17,7 +17,7 @@ struct SavedFormDetailView: View {
             return selectedOption != -1 ? acc + viewModel.questions[index].options[selectedOption].score : acc
         }
     }
-    
+
     init(remoteForm: RemoteStrokeForm, selectedOptions: [Int]) {
         self.remoteForm = remoteForm
         self._selectedOptions = State(initialValue: selectedOptions)
@@ -42,7 +42,7 @@ struct SavedFormDetailView: View {
                     .font(.headline)
                     .padding(.bottom, 5)
                     .multilineTextAlignment(.center)
-                     
+
                 Text("Patient DOB: \(StrokeScaleFormManager.convertDOB(from: remoteForm.dob), style: .date)")
                     .font(.subheadline)
                     .padding(.bottom, 5)
@@ -114,7 +114,7 @@ struct SavedFormDetailView: View {
                         .background(Color.white)
                         .cornerRadius(10)
                 })
-                
+
                 Button(action: {
                     isPresentingUpdateForm = true
                 }) {

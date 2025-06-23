@@ -11,7 +11,7 @@ struct NewNIHFormView: View {
     @State private var patientDOB: Date
     @State private var selectedOptions: [Int]
     @State private var showDOBPicker: Bool = false
-    
+
     init(remoteForm: RemoteStrokeForm? = nil, initialSelectedOptions: [Int] = Array(repeating: -1, count: 15)) {
         self.remoteForm = remoteForm
         self.initialSelectedOptions = initialSelectedOptions
@@ -149,7 +149,7 @@ struct NewNIHFormView: View {
                         .foregroundColor(.white)
                         .padding()
                         .frame(maxWidth: .infinity)
-                    
+
                         .background(Color.green)
                         .cornerRadius(10)
                 }
@@ -193,7 +193,7 @@ struct NewNIHFormView: View {
                 patientName: patientName,
                 dob: patientDOB,
                 selectedOptions: selected
-            ) 
+            )
         }
     }
 
@@ -201,6 +201,6 @@ struct NewNIHFormView: View {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         return formatter.string(from: date)
-    } 
+    }
 
 }
