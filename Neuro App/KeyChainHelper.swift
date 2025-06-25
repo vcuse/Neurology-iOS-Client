@@ -19,17 +19,48 @@ struct KeychainHelper {
     static let service = "com.neuroapp.auth" // customize this identifier
 
     static func saveTokenAndUsername(_ credentials: Credentials) throws {
-        print("saving credentials!!!")
-        let account = credentials.username
-        let password = credentials.password.data(using: String.Encoding.utf8)!
-        var query: [String: Any] = [kSecClass as String: kSecClassInternetPassword,
-                                    kSecAttrAccount as String: account,
-                                    kSecValueData as String: password]
+        print("Attempting to save credentials...")
 
-        let status = SecItemAdd(query as CFDictionary, nil)
-        guard status == errSecSuccess else {
-            print("error saving \(status)")
-            throw KeychainError.unhandledError(status: status) }
+        let account = credentials.username
+        let passwordData = credentials.password.data(using: .utf8)!
+
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassInternetPassword,
+            kSecAttrAccount as String: account
+            // You might want to add kSecAttrService here for better uniqueness,
+            // especially if you have multiple apps or different services within your app
+            // kSecAttrService as String: "com.yourapp.servicename"
+        ]
+
+        let attributesToUpdate: [String: Any] = [
+            kSecValueData as String: passwordData
+            // Add any other attributes you want to update
+            // kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlockedThisDeviceOnly
+        ]
+
+        // Try to update the existing item first
+        let updateStatus = SecItemUpdate(query as CFDictionary, attributesToUpdate as CFDictionary)
+
+        if updateStatus == errSecSuccess {
+            print("Credentials updated successfully!")
+        } else if updateStatus == errSecItemNotFound {
+            // Item not found, so add it
+            var addQuery = query
+            addQuery[kSecValueData as String] = passwordData // Add password data for new item
+            // Consider adding kSecAttrAccessible here as well for new items
+            // addQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenUnlockedThisDeviceOnly
+
+            let addStatus = SecItemAdd(addQuery as CFDictionary, nil)
+            guard addStatus == errSecSuccess else {
+                print("Error adding new credentials: \(addStatus)")
+                throw KeychainError.unhandledError(status: addStatus)
+            }
+            print("New credentials added successfully!")
+        } else {
+            // An unexpected error occurred during update
+            print("Error updating credentials: \(updateStatus)")
+            throw KeychainError.unhandledError(status: updateStatus)
+        }
     }
 
     static func retreiveTokenAndUsername()throws -> Credentials {

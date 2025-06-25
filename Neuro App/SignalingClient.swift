@@ -218,8 +218,42 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
     }
 
     func callUser(id: String) {
+        var sdpString = "placeholderText"
         // implement logic to call a user
         print("Calling user with ID: \(id)")
+        let constraints = RTCMediaConstraints(mandatoryConstraints: ["OfferToReceiveAudio": "true", "OfferToReceiveVideo": "true"], optionalConstraints: nil)
+        
+        self.webRTCClient.offer(completion: { (sdp) in
+                
+
+                
+                // Successfully created the offer SDP
+                
+                print("Generated Offer SDP: \(sdp.sdp)")
+
+                // Proceed to set local description
+                Task {
+                        do {
+                            try await self.webRTCClient.peerConnection.setLocalDescription(sdp)
+                            sdpString = sdp.sdp
+                            debugPrint("Successfully set local description (offer SDP)") // Corrected debug message
+                            //let sdp = RTCSessionDescription()
+                            let innnerSDPmessage: [String: Any] = ["sdp": sdpString, "type":"offer"]
+                            let payloadMessage: [String: Any] = ["connectionId": "133153", "type": "media", "sdp": innnerSDPmessage]
+                            let outerMessage: [String: Any] = ["dst": id, "src": self.ourPeerID, "payload": payloadMessage, "type" : "OFFER"]
+                            let jsonData = try  JSONSerialization.data(withJSONObject: outerMessage)
+                            self.webSocket.send(data: jsonData)
+                        } catch {
+                            debugPrint("Error in setting local description for offer: \(error)") // Corrected debug message
+                        }
+                    }
+               
+                
+            })
+        
+        
+        
+        
         isRinging = true
     }
 
@@ -333,10 +367,31 @@ extension SignalingClient: WebSocketProviderDelegate {
                 storeOfferMessage(payload: payload, src: src)
                 // handleOfferMessage(payload: payload, src: src)
             }
+            
+            if messageType == "ANSWER" {
+                handleAnswerMessage(payload: payload, src: src)
+            }
 
         } else {
             print("Failed to process received message")
         }
+    }
+    
+    func handleAnswerMessage(payload: [String: Any], src: String) {
+        debugPrint("Handle Answer Message called")
+        let payloadValue = payload["sdp"] as! [String: Any]
+        var sdpValue = payloadValue["sdp"]
+        var remoteSDP = RTCSessionDescription(type: RTCSdpType.answer, sdp: sdpValue as! String)
+        Task {
+            do { try await self.webRTCClient.peerConnection.setRemoteDescription(remoteSDP)
+                
+                
+            } catch {
+                debugPrint("Error setting remoteDescriptionToAnswer")
+            }
+        }
+        setCallConnected()
+        
     }
 
     func storeOfferMessage(payload: [String: Any], src: String) {

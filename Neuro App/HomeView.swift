@@ -89,7 +89,7 @@ struct HomeView: View {
                                 // Online Users List
                                 ScrollView {
                                     let filteredOnlineUsers = signalingClient.onlineUsers.filter { $0 != signalingClient.ourPeerID }
-
+                                            
                                     if filteredOnlineUsers.isEmpty {
                                         Text("Hmm, nobody's here right now!")
                                             .padding()
@@ -110,7 +110,7 @@ struct HomeView: View {
                                     } else {
                                         VStack(spacing: 10) {
                                             ForEach(filteredOnlineUsers, id: \.self) { user in
-                                                OnlineUserCardView(uuid: user)
+                                                OnlineUserCardView(uuid: user, signalingClient: signalingClient)
                                             }
                                         }
                                     }
@@ -182,7 +182,7 @@ struct HomeView: View {
 
 struct OnlineUserCardView: View {
     let uuid: String
-
+    @ObservedObject var signalingClient: SignalingClient
     var body: some View {
         HStack {
             Text(uuid)
@@ -198,7 +198,7 @@ struct OnlineUserCardView: View {
             Spacer()
 
             Button(action: {
-                // Action for call button
+                signalingClient.callUser(id: uuid)
             }, label: {
                 HStack {
                     Image(systemName: "phone.fill")

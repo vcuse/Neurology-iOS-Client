@@ -88,7 +88,7 @@ final class WebRTCClient: NSObject, ObservableObject {
             debugPrint("we are in the offer of webrtc ", sdp as Any)
             // self.peerConnection.setLocalDescription(sdp, completionHandler: { (error) in
 
-            // completion(sdp)
+            completion(sdp)
             // })
         }
     }
@@ -167,8 +167,9 @@ final class WebRTCClient: NSObject, ObservableObject {
 
     }
 
-    func set(remoteSdp: RTCSessionDescription, completion: @escaping (Error?) -> Void) {
-        // self.peerConnection.setRemoteDescription(remoteSdp, completionHandler: completion)
+    func setLocalDescription(remoteSdp: RTCSessionDescription, completion: @escaping (Error?) -> Void) {
+        self.peerConnection.setLocalDescription(remoteSdp, completionHandler: completion)
+        //completion(remoteSdp as! Error)
     }
 
     func set(remoteCandidate: RTCIceCandidate, completion: @escaping (Error?) -> Void) {
