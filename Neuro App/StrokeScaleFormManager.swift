@@ -112,7 +112,7 @@ struct StrokeScaleFormManager {
             username = try KeychainHelper.retreiveTokenAndUsername().username } catch { print("username failed") }
         let payload: [String: Any] = [
             "patientName": patientName,
-            "DOB": formatter.string(from: dob),
+            "patientDob": formatter.string(from: dob),
             "formDate": formatter.string(from: Date()),
             "results": selectedOptions.map { $0 == -1 ? "9" : String($0) }.joined(),
             "username": username
@@ -163,7 +163,7 @@ struct StrokeScaleFormManager {
 
         let payload: [String: Any] = [
             "patientName": patientName,
-            "dob": formatter.string(from: dob),
+            "patientDob": formatter.string(from: dob),
             "formDate": formatter.string(from: Date()),
             "results": selectedOptions.map { $0 == -1 ? "9" : String($0) }.joined(),
             "username": username,
