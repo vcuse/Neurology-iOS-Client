@@ -9,7 +9,7 @@ struct SavedFormDetailView: View {
     @State var selectedOptions: [Int]
     @State private var isPresentingUpdateForm = false
     @State private var showDeleteConfirmation = false
-    @Environment(\.dismiss) private var dismiss
+    @Binding var navigationPath: NavigationPath
 
     var totalScore: Int {
         selectedOptions.enumerated().reduce(0) { acc, item in
@@ -18,9 +18,18 @@ struct SavedFormDetailView: View {
         }
     }
 
-    init(remoteForm: RemoteStrokeForm, selectedOptions: [Int]) {
+    init(
+        navigationPath: Binding<NavigationPath>,
+        remoteForm: RemoteStrokeForm,
+        selectedOptions: [Int]
+    ) {
+        self._navigationPath = navigationPath
         self.remoteForm = remoteForm
         self._selectedOptions = State(initialValue: selectedOptions)
+        
+        for indice in 0..<min(selectedOptions.count, viewModel.questions.count) {
+            viewModel.questions[indice].selectedOption = selectedOptions[indice]
+        }
     }
 
     var body: some View {
@@ -104,7 +113,7 @@ struct SavedFormDetailView: View {
             // Footer Section
             HStack {
                 Button(action: {
-                    dismiss()
+                    navigationPath.removeLast(navigationPath.count)
                 }, label: {
                     Text("Done")
                         .font(.headline)
@@ -145,6 +154,7 @@ struct SavedFormDetailView: View {
         .background(Color.purple.opacity(0.2))
         .fullScreenCover(isPresented: $isPresentingUpdateForm) {
             NewNIHFormView(
+                navigationPath: $navigationPath,
                 remoteForm: remoteForm,
                 initialSelectedOptions: selectedOptions
             )
@@ -152,15 +162,9 @@ struct SavedFormDetailView: View {
         .alert("Are you sure you want to delete this form?", isPresented: $showDeleteConfirmation) {
             Button("Delete", role: .destructive) {
                 StrokeScaleFormManager.deleteForm(remoteForm: remoteForm)
-                dismiss()
+                navigationPath.removeLast(navigationPath.count)
             }
             Button("Cancel", role: .cancel) { }
         }
-        .onAppear {
-            for option in 0..<min(selectedOptions.count, viewModel.questions.count) {
-                viewModel.questions[option].selectedOption = selectedOptions[option]
-            }
-        }
-
     }
 }
