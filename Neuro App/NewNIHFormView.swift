@@ -4,7 +4,7 @@ struct NewNIHFormView: View {
     var remoteForm: RemoteStrokeForm?
     var initialSelectedOptions: [Int]
 
-    @Environment(\.presentationMode) var presentationMode
+    @Binding var navigationPath: NavigationPath
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var viewModel = StrokeScaleFormViewModel()
     @State private var patientName: String
@@ -12,7 +12,12 @@ struct NewNIHFormView: View {
     @State private var selectedOptions: [Int]
     @State private var showDOBPicker: Bool = false
 
-    init(remoteForm: RemoteStrokeForm? = nil, initialSelectedOptions: [Int] = Array(repeating: -1, count: 15)) {
+    init(
+        navigationPath: Binding<NavigationPath>,
+        remoteForm: RemoteStrokeForm? = nil,
+        initialSelectedOptions: [Int] = Array(repeating: -1, count: 15)
+    ) {
+        self._navigationPath = navigationPath
         self.remoteForm = remoteForm
         self.initialSelectedOptions = initialSelectedOptions
 
@@ -143,6 +148,7 @@ struct NewNIHFormView: View {
             HStack {
                 Button(action: {
                     saveForm()
+                    navigationPath.removeLast(navigationPath.count)
                 }) {
                     Text("Save")
                         .font(.headline)
@@ -155,7 +161,7 @@ struct NewNIHFormView: View {
                 }
 
                 Button(action: {
-                    presentationMode.wrappedValue.dismiss() // Dismiss without saving
+                    navigationPath.removeLast(navigationPath.count)
                 }) {
                     Text("Cancel")
                         .font(.headline)
