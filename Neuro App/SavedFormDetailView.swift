@@ -26,7 +26,7 @@ struct SavedFormDetailView: View {
         self._navigationPath = navigationPath
         self.remoteForm = remoteForm
         self._selectedOptions = State(initialValue: selectedOptions)
-        
+
         for indice in 0..<min(selectedOptions.count, viewModel.questions.count) {
             viewModel.questions[indice].selectedOption = selectedOptions[indice]
         }

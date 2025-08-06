@@ -68,7 +68,7 @@ struct SavedFormsView: View {
                                     Text(form.name)
                                         .font(.headline)
                                         .foregroundColor(Color(UIColor { $0.userInterfaceStyle == .dark ? .white : .black }))
-                                    
+
                                     Text("Date: \(StrokeScaleFormManager.convertDOB(from: form.formDate), style: .date)")
                                         .font(.subheadline)
                                         .foregroundColor(Color(UIColor { $0.userInterfaceStyle == .dark ? .white : .black }))
@@ -116,7 +116,7 @@ struct SavedFormsView: View {
             switch route {
             case .new:
                 NewNIHFormView(navigationPath: $navigationPath)
-                
+
             case .detail(let form, let options):
                 SavedFormDetailView(
                     navigationPath: $navigationPath,
