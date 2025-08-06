@@ -14,7 +14,7 @@ extension Notification.Name {
     static let formsDidUpdate = Notification.Name("formsDidUpdate")
 }
 
-struct RemoteStrokeForm: Identifiable, Codable {
+struct RemoteStrokeForm: Identifiable, Codable, Hashable {
     var id: Int
     var name: String
     var dob: String

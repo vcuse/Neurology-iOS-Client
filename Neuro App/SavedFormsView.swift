@@ -4,37 +4,31 @@ import CoreData
 struct SavedFormsView: View {
 
     @Environment(\.managedObjectContext) private var viewContext
-    @Binding var isNavigatingBack: Bool
-    @State private var selectedFormBundle: SelectedFormBundle?
-    @State private var isShowingNewFormView = false
-    @State private var isShowingDetailView = false
-    @State private var selectedOptions: [Int] = []
-    @State private var shouldReloadForms = false
+    @Binding var navigationPath: NavigationPath
     @StateObject var formStore = RemoteFormStore()
+
+    enum FormRoute: Hashable {
+        case new
+        case detail(form: RemoteStrokeForm, options: [Int])
+    }
 
     class RemoteFormStore: ObservableObject {
         @Published var forms: [RemoteStrokeForm] = []
     }
 
-    struct SelectedFormBundle: Identifiable {
-        let id = UUID()
-        let form: RemoteStrokeForm
-        let options: [Int]
-    }
-
     var body: some View {
         ZStack {
-            // Background gradient
+            // Background
             LinearGradient(colors: [.gray, .white, .gray], startPoint: .topLeading, endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.all)
 
             ScrollView {
                 VStack(spacing: 20) {
-                    // Header Section (now scrollable)
+                    // Header
                     VStack {
                         HStack {
                             Button(action: {
-                                isNavigatingBack = false
+                                navigationPath.removeLast()
                             }) {
                                 HStack {
                                     Image(systemName: "chevron.left")
@@ -47,7 +41,7 @@ struct SavedFormsView: View {
                             Spacer()
 
                             Button(action: {
-                                isShowingNewFormView = true
+                                navigationPath.append(FormRoute.new)
                             }) {
                                 Text("New Form")
                                     .foregroundColor(.black)
@@ -66,59 +60,41 @@ struct SavedFormsView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
 
-                    // List of Forms
+                    // Form List
                     VStack(spacing: 15) {
                         ForEach(formStore.forms) { form in
                             HStack {
                                 VStack(alignment: .leading, spacing: 5) {
                                     Text(form.name)
                                         .font(.headline)
-                                        .foregroundColor(
-                                            Color(UIColor { traitCollection in
-                                                return traitCollection.userInterfaceStyle == .dark ? .white : .black
-                                            })
-                                        )
+                                        .foregroundColor(Color(UIColor { $0.userInterfaceStyle == .dark ? .white : .black }))
+                                    
                                     Text("Date: \(StrokeScaleFormManager.convertDOB(from: form.formDate), style: .date)")
                                         .font(.subheadline)
-                                        .foregroundColor(
-                                            Color(UIColor { traitCollection in
-                                                return traitCollection.userInterfaceStyle == .dark ? .white : .black
-                                            })
-                                        )
+                                        .foregroundColor(Color(UIColor { $0.userInterfaceStyle == .dark ? .white : .black }))
                                 }
 
                                 Spacer()
 
                                 Button(action: {
                                     let options = form.results.prefix(15).map { Int(String($0)) ?? 9 }
-                                    selectedFormBundle = SelectedFormBundle(form: form, options: Array(options))
-                                    isShowingDetailView = true
-
-                                    print("🟣 Opening form with ID \(form.id), selectedOptions: \(selectedOptions)")
-                                    print("🧪 Setting selectedRemoteForm: \(String(describing: form))")
-
-                                 }) {
-                                    HStack {
-                                        Text("View")
-                                    }
-                                    .font(.subheadline)
-                                    .foregroundColor(.black)
-                                    .padding(.vertical, 6)
-                                    .padding(.horizontal, 10)
-                                    .background(Color.white)
-                                    .cornerRadius(8)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .stroke(Color.gray, lineWidth: 1)
-                                    )
+                                    navigationPath.append(FormRoute.detail(form: form, options: options))
+                                }) {
+                                    Text("View")
+                                        .font(.subheadline)
+                                        .foregroundColor(.black)
+                                        .padding(.vertical, 6)
+                                        .padding(.horizontal, 10)
+                                        .background(Color.white)
+                                        .cornerRadius(8)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 8)
+                                                .stroke(Color.gray, lineWidth: 1)
+                                        )
                                 }
                             }
                             .padding()
-                            .background(
-                                Color(UIColor { traitCollection in
-                                    return traitCollection.userInterfaceStyle == .dark ? .black : .white
-                                })
-                            )
+                            .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .black : .white }))
                             .cornerRadius(10)
                             .shadow(radius: 5)
                         }
@@ -127,22 +103,26 @@ struct SavedFormsView: View {
                     .padding(.bottom, 20)
                 }
             }
-            .navigationBarBackButtonHidden(true) // Hide the default back button
-            .fullScreenCover(isPresented: $isShowingNewFormView) {
-                NewNIHFormView()
-            }
-            .fullScreenCover(item: $selectedFormBundle) { bundle in
-                SavedFormDetailView(
-                    remoteForm: bundle.form,
-                    selectedOptions: bundle.options
-                )
-            }
+            .navigationBarBackButtonHidden(true)
             .onAppear {
                 StrokeScaleFormManager.fetchFormsFromServer { fetchedForms in
                     DispatchQueue.main.async {
                         formStore.forms = fetchedForms
                     }
                 }
+            }
+        }
+        .navigationDestination(for: FormRoute.self) { route in
+            switch route {
+            case .new:
+                NewNIHFormView(navigationPath: $navigationPath)
+                
+            case .detail(let form, let options):
+                SavedFormDetailView(
+                    navigationPath: $navigationPath,
+                    remoteForm: form,
+                    selectedOptions: options
+                )
             }
         }
     }
