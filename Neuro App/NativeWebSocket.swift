@@ -30,13 +30,13 @@ class NativeWebSocket: NSObject, WebSocketProvider {
 
         // print("token is ", KeychainHelper.getToken()!)
         var request = URLRequest(url: url)
-        
+
         do { try
             request.addValue(KeychainHelper.retreiveTokenAndUsername().password, forHTTPHeaderField: "Authorization")
         } catch { print("no values in keychainhelper")}
         do { try
             print("PASSWORD IN KEYCHAIN IS", KeychainHelper.retreiveTokenAndUsername().password)
-        }catch { print("no values in keychainhelper")}
+        } catch { print("no values in keychainhelper")}
         let socket = urlSession.webSocketTask(with: request)
 
         self.socket = socket

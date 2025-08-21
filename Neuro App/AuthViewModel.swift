@@ -15,7 +15,7 @@ class AuthViewModel: ObservableObject {
     var signalingClient: SignalingClient
     @Published var isLoggedIn = false
     @Published var token: String?
-    
+
     // On init, try to load token from Keychain to keep user signed in
     init(signalingClient: SignalingClient) {
 
@@ -74,9 +74,9 @@ class AuthViewModel: ObservableObject {
                         let upperLimit = tokenToParse!.firstIndex(of: ";")
                         self.username = username
                         self.token = String(tokenToParse![lowerBound..<upperLimit!])
-                        
+
                         do { try KeychainHelper.saveTokenAndUsername(Credentials(username: username, password: self.token!))
-                            //self.appDelegate.createSignalingClient()
+                            // self.appDelegate.createSignalingClient()
                             self.isLoggedIn = true
                             self.signalingClient.authAndConnectoToServer(url: AppURLs.webSocketURL)
                             print("login token = ", self.token!)
@@ -85,10 +85,9 @@ class AuthViewModel: ObservableObject {
                             print("login token = ", self.token!)
                         }
                         self.appDelegate.setLoggedIn()
-                        
+
                         // print("saved pw to keychain successfully")
                         // Optional: Save token to Keychain for persistence
-                        
 
                     }
 

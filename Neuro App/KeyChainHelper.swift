@@ -44,7 +44,7 @@ struct KeychainHelper {
             var addQuery = query
             addQuery[kSecValueData as String] = passwordData
             let addStatus = SecItemAdd(addQuery as CFDictionary, nil)
-            
+
             guard addStatus == errSecSuccess else {
                 print("Error adding credentials: \(addStatus)")
                 throw KeychainError.unhandledError(status: addStatus)
@@ -52,7 +52,7 @@ struct KeychainHelper {
             print("Credentials added successfully.")
             return
         }
-        
+
         // Handle other errors
         print("Error updating credentials: \(status)")
         throw KeychainError.unhandledError(status: status)
@@ -95,7 +95,7 @@ struct KeychainHelper {
     static func deleteTokenAndUsername() {
 
         let query: [String: Any] = [kSecClass as String: kSecClassInternetPassword]
-            
+
         SecItemDelete(query as CFDictionary)
     }
 

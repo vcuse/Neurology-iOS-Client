@@ -109,8 +109,8 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
         super.init()
 
         if #available(iOS 13.0, *) {
-            //self.getAddress(url: url)
-            //startFetchingOnlineUsers()
+            // self.getAddress(url: url)
+            // startFetchingOnlineUsers()
         } else {
             // Fallback on earlier versions
         }
@@ -347,7 +347,7 @@ extension SignalingClient: WebSocketProviderDelegate {
                let sdpContent = sdpValueDict["sdp"] as? String {
 
                 // Perform your logic here. For example:
-                if sdpType == "offer" && hasVideoMedia(sdp: sdpContent){
+                if sdpType == "offer" && hasVideoMedia(sdp: sdpContent) {
                     // If you need the full payload, you can save it
                     offerMessage = payload
                     theirSrc = src
