@@ -235,3 +235,7 @@ struct SavedForm: Identifiable {
     let date: Date
     let formData: [StrokeScaleQuestion]
 }
+
+#Preview {
+    CallView()
+}

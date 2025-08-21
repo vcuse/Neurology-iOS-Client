@@ -30,6 +30,7 @@ class PushNotificationManager: NSObject, PKPushRegistryDelegate {
 
     func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType) {
         print("Received incoming push with payload: \(payload.dictionaryPayload)")
+        
         // Handle the incoming push
     }
 

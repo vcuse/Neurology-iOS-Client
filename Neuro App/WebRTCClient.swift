@@ -62,7 +62,7 @@ final class WebRTCClient: NSObject, ObservableObject {
             debugPrint("peerconnection failed")
             fatalError("Could not create new RTCPeerConnection")
         }
-        debugPrint("webrtc made")
+        debugPrint("webrtc made (does not impact signaling client or websocket)")
         self.peerConnection = peerConnection
 
         super.init()

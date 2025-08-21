@@ -103,15 +103,14 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
         self.webRTCClient = WebRTCClient(iceServers: ["stun:stun.l.google.com:19302"])
         if #available(iOS 13.0, *) {
             self.webSocket = NativeWebSocket(url: url)
-
         } else {
             exit(0)
         }
         super.init()
 
         if #available(iOS 13.0, *) {
-            self.getAddress(url: url)
-            startFetchingOnlineUsers()
+            //self.getAddress(url: url)
+            //startFetchingOnlineUsers()
         } else {
             // Fallback on earlier versions
         }
@@ -125,7 +124,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate, ObservableObje
     }
 
     @available(iOS 13.0, *)
-    func getAddress(url: URL) {
+    func authAndConnectoToServer(url: URL) {
 
         // var uniqueID = ""
         let options = PeerJSOption(host: AppURLs.hostURL,
@@ -331,6 +330,7 @@ extension SignalingClient: WebSocketProviderDelegate {
             // the offer message contains information about the client calling us (it has their sdp, and we will use it to create our answer)
             if messageType == "OFFER" {
                 storeOfferMessage(payload: payload, src: src)
+                print("STORED THEIR OFFER MSG")
                 // handleOfferMessage(payload: payload, src: src)
             }
 
@@ -340,8 +340,21 @@ extension SignalingClient: WebSocketProviderDelegate {
     }
 
     func storeOfferMessage(payload: [String: Any], src: String) {
-        offerMessage = payload
-        theirSrc = src
+        // Safely check if the 'value' associated with 'sdp' exists and is a dictionary.
+        if let sdpValueDict = payload["sdp"] as? [String: Any] {
+            // Now you can safely access the values inside the sdpValueDict
+            if let sdpType = sdpValueDict["type"] as? String,
+               let sdpContent = sdpValueDict["sdp"] as? String {
+
+                // Perform your logic here. For example:
+                if sdpType == "offer" && hasVideoMedia(sdp: sdpContent){
+                    // If you need the full payload, you can save it
+                    offerMessage = payload
+                    theirSrc = src
+                    print("SDP Content:", sdpContent)
+                }
+            }
+        }
     }
 
     func handleStoredOfferMessage() {
@@ -370,7 +383,7 @@ extension SignalingClient: WebSocketProviderDelegate {
 
         let msg = offerMessage["sdp"] as? [String: Any]
         let sdp = msg?["sdp"]
-
+        print("IN HANDLE OFFER MESG TRYNA GET THEIR REMOTE SDP", msg)
         let connectionID = offerMessage["connectionId"] as! String
         if hasVideoMedia(sdp: sdp as! String) {
             self.theirSDP = sdp as! String
@@ -380,7 +393,7 @@ extension SignalingClient: WebSocketProviderDelegate {
 
             if #available(iOS 13.0, *) {
                 Task {
-
+                    print("WE ARE GONNA SEND AN ANSWER SOON")
                     // first we set the remote sdp (we received an offer)
                     await self.webRTCClient.setRemoteSDP(sessionDescription)
                     // then we create an answer sdp
@@ -391,7 +404,7 @@ extension SignalingClient: WebSocketProviderDelegate {
                             do {
                                 let jsonData = try JSONSerialization.data( withJSONObject: connectionMessage)
                                 // sending our answer sdp
-                                debugPrint("we sent our answer ", connectionMessage)
+                                print("we sent our answer ", connectionMessage)
                                 self.sentAnswer = true
                                 self.webSocket.send(data: jsonData)
                                 // self.sendStoredCandidates()
@@ -428,6 +441,7 @@ extension SignalingClient: WebSocketProviderDelegate {
     }
     func setCallConnected() {
         self.isInCall = true
+        print("set is in call to true")
     }
     func sendStoredCandidates() {
         for response in candidateResponses {

@@ -19,17 +19,43 @@ struct KeychainHelper {
     static let service = "com.neuroapp.auth" // customize this identifier
 
     static func saveTokenAndUsername(_ credentials: Credentials) throws {
-        print("saving credentials!!!")
         let account = credentials.username
-        let password = credentials.password.data(using: String.Encoding.utf8)!
-        var query: [String: Any] = [kSecClass as String: kSecClassInternetPassword,
-                                    kSecAttrAccount as String: account,
-                                    kSecValueData as String: password]
+        let passwordData = credentials.password.data(using: .utf8)!
 
-        let status = SecItemAdd(query as CFDictionary, nil)
-        guard status == errSecSuccess else {
-            print("error saving \(status)")
-            throw KeychainError.unhandledError(status: status) }
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassInternetPassword,
+            kSecAttrAccount as String: account
+        ]
+
+        let attributesToUpdate: [String: Any] = [
+            kSecValueData as String: passwordData
+        ]
+
+        // Attempt to update the existing item.
+        let status = SecItemUpdate(query as CFDictionary, attributesToUpdate as CFDictionary)
+        print("password is", passwordData.description)
+        if status == errSecSuccess {
+            print("Credentials updated successfully.")
+            return
+        }
+
+        if status == errSecItemNotFound {
+            // If the item doesn't exist, add a new one.
+            var addQuery = query
+            addQuery[kSecValueData as String] = passwordData
+            let addStatus = SecItemAdd(addQuery as CFDictionary, nil)
+            
+            guard addStatus == errSecSuccess else {
+                print("Error adding credentials: \(addStatus)")
+                throw KeychainError.unhandledError(status: addStatus)
+            }
+            print("Credentials added successfully.")
+            return
+        }
+        
+        // Handle other errors
+        print("Error updating credentials: \(status)")
+        throw KeychainError.unhandledError(status: status)
     }
 
     static func retreiveTokenAndUsername()throws -> Credentials {
@@ -54,43 +80,6 @@ struct KeychainHelper {
         let credentials = Credentials(username: account, password: password)
         return credentials
     }
-//    // Save token to Keychain
-//    static func saveToken(_ token: String) {
-//        let data = Data(token.utf8)
-//
-//        let query: [String: Any] = [
-//            kSecClass as String: kSecClassGenericPassword,
-//            kSecAttrService as String: service,
-//            kSecAttrAccount as String: "authToken",
-//            kSecValueData as String: data,
-//        ]
-//
-//        // Remove any existing token, then save
-//        SecItemDelete(query as CFDictionary)
-//        SecItemAdd(query as CFDictionary, nil)
-//    }
-//
-//    // Load token from Keychain
-//    static func getToken() -> String? {
-//        let query: [String: Any] = [
-//            kSecClass as String: kSecClassGenericPassword,
-//            kSecAttrService as String: service,
-//            kSecAttrAccount as String: "authToken",
-//            kSecReturnData as String: true,
-//            kSecMatchLimit as String: kSecMatchLimitOne
-//        ]
-//
-//        var result: AnyObject?
-//        let status = SecItemCopyMatching(query as CFDictionary, &result)
-//
-//        guard status == errSecSuccess,
-//              let data = result as? Data,
-//              let token = String(data: data, encoding: .utf8) else {
-//            return nil
-//        }
-//
-//        return token
-//    }
 
     // Delete token from Keychain
     static func deleteToken() {
@@ -105,11 +94,8 @@ struct KeychainHelper {
 
     static func deleteTokenAndUsername() {
 
-        let query: [String: Any] = [kSecClass as String: kSecClassInternetPassword,
-                                    kSecMatchLimit as String: kSecMatchLimitOne,
-                                    kSecReturnAttributes as String: true,
-                                    kSecReturnData as String: true]
-
+        let query: [String: Any] = [kSecClass as String: kSecClassInternetPassword]
+            
         SecItemDelete(query as CFDictionary)
     }
 

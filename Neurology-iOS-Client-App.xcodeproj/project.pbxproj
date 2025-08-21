@@ -55,7 +55,6 @@
 		080411D82C6BB1C60019364A /* PushNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationManager.swift; sourceTree = "<group>"; };
 		0813C0B12C6155B200CF5C70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0813C0B32C6159A200CF5C70 /* PeerJSOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerJSOption.swift; sourceTree = "<group>"; };
-		088B345D2C5C023F00094A02 /* Neuro_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neuro_AppApp.swift; sourceTree = "<group>"; };
 		088B345F2C5C023F00094A02 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		088B34612C5C024000094A02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		088B34642C5C024000094A02 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -151,7 +150,6 @@
 				0813C0B12C6155B200CF5C70 /* AppDelegate.swift */,
 				080411D82C6BB1C60019364A /* PushNotificationManager.swift */,
 				08A99ED42C6297E20046D4A7 /* SignInView.swift */,
-				088B345D2C5C023F00094A02 /* Neuro_AppApp.swift */,
 				088B345F2C5C023F00094A02 /* ContentView.swift */,
 				088B34612C5C024000094A02 /* Assets.xcassets */,
 				088B34632C5C024000094A02 /* Preview Content */,

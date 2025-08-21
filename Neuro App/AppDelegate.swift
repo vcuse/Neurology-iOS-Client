@@ -15,13 +15,13 @@ import CoreData
 let globalUUID = "com.Neuro-APP.uuid"
 var uuid: UUID?
 
-class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, PKPushRegistryDelegate, CXProviderDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, PKPushRegistryDelegate, CXProviderDelegate, ObservableObject {
     var signalingClient: SignalingClient?
 
     func providerDidReset(_ provider: CXProvider) {
         print("reset")
     }
-
+    
     var voipRegistry: PKPushRegistry!
 
     var provider: CXProvider!
@@ -42,6 +42,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func createSignalingClient() {
         self.signalingClient = SignalingClient(url: AppURLs.webSocketURL)
+        print("signaling client created")
+    }
+    
+    func setLoggedIn() {
+        self.signalingClient?.authAndConnectoToServer(url: AppURLs.webSocketURL)
     }
 
     func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
@@ -62,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
 
-    let pushNotificationManager = PushNotificationManager()
+    //let pushNotificationManager = PushNotificationManager()
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -73,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         configuration.ringtoneSound = "Ringtone.caf" // Provide your custom ringtone sound if needed
         provider = CXProvider(configuration: configuration)
         provider.setDelegate(self, queue: nil)
-
+        //createSignalingClient()
         configuration.supportedHandleTypes = [.generic]
         // Custom initialization logic here
         print("App has launched")
@@ -107,7 +112,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
 
         registerForVoIPPushes()
-
+        
         return true
     }
 
@@ -133,10 +138,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
         print("INCOMING CALL")
 
-        uuid = UUID(uuidString: payload.dictionaryPayload["messageFrom"] as! String)!
+        uuid = UUID()
 
         print("uuid is saved as \(uuid!)")
-
+        
         let update = CXCallUpdate()
         update.remoteHandle = CXHandle(type: .generic, value: "test name")
         update.hasVideo = true
@@ -171,10 +176,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
-        signalingClient!.handleOfferMessage()
-        signalingClient!.handleIceCandidates()
-        signalingClient!.setCallConnected()
         print("ANSWERING A CALL")
+        self.signalingClient!.handleOfferMessage()
+        self.signalingClient!.handleIceCandidates()
+        self.signalingClient!.setCallConnected()
+        
         action.fulfill()
         return
     }

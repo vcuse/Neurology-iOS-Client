@@ -12,19 +12,16 @@ import SwiftUI
 class AuthViewModel: ObservableObject {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
    var username: String?
-
+    var signalingClient: SignalingClient
     @Published var isLoggedIn = false
     @Published var token: String?
-
+    
     // On init, try to load token from Keychain to keep user signed in
-    init() {
+    init(signalingClient: SignalingClient) {
 
         do {
-            var savedToken = try KeychainHelper.retreiveTokenAndUsername()
-            self.token = savedToken.password
-            self.appDelegate.createSignalingClient()
-            self.isLoggedIn = true
-            self.username = savedToken.username
+                    self.signalingClient = signalingClient
+
         } catch {
             print("dang it broke")
         }
@@ -77,17 +74,21 @@ class AuthViewModel: ObservableObject {
                         let upperLimit = tokenToParse!.firstIndex(of: ";")
                         self.username = username
                         self.token = String(tokenToParse![lowerBound..<upperLimit!])
-
-                        do { try KeychainHelper.saveTokenAndUsername(Credentials(username: username, password: String(tokenToParse![lowerBound..<upperLimit!])))
-                            self.appDelegate.createSignalingClient()
+                        
+                        do { try KeychainHelper.saveTokenAndUsername(Credentials(username: username, password: self.token!))
+                            //self.appDelegate.createSignalingClient()
                             self.isLoggedIn = true
+                            self.signalingClient.authAndConnectoToServer(url: AppURLs.webSocketURL)
+                            print("login token = ", self.token!)
                         } catch {
                             print("keychain helper did not work")
+                            print("login token = ", self.token!)
                         }
-
+                        self.appDelegate.setLoggedIn()
+                        
                         // print("saved pw to keychain successfully")
                         // Optional: Save token to Keychain for persistence
-                        print("login token = ", self.token!)
+                        
 
                     }
 
