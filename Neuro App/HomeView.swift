@@ -84,7 +84,7 @@ struct HomeView: View {
                         } else {
                             VStack(spacing: 10) {
                                 ForEach(filteredOnlineUsers, id: \.self) { user in
-                                    OnlineUserCardView(uuid: user)
+                                    OnlineUserCardView(uuid: user, signalingClient: signalingClient)
                                 }
                             }
                         }
@@ -160,7 +160,7 @@ struct HomeView: View {
 
 struct OnlineUserCardView: View {
     let uuid: String
-
+    @ObservedObject var signalingClient: SignalingClient
     var body: some View {
         HStack {
             Text(uuid)
@@ -173,6 +173,7 @@ struct OnlineUserCardView: View {
 
             Button(action: {
                 // Call action
+                signalingClient.startCall(id: uuid)
             }, label: {
                 HStack {
                     Image(systemName: "phone.fill")

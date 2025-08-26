@@ -78,7 +78,7 @@ final class WebRTCClient: NSObject, ObservableObject {
     func offer(completion: @escaping (_ sdp: RTCSessionDescription) -> Void) {
         let constrains = RTCMediaConstraints(mandatoryConstraints: self.mediaConstrains,
                                              optionalConstraints: nil)
-
+        
         debugPrint("constrains are ", constrains as Any)
         self.peerConnection.offer(for: constrains) { (sdp, _) in
             guard let sdp = sdp else {
@@ -86,10 +86,10 @@ final class WebRTCClient: NSObject, ObservableObject {
                 return
             }
             debugPrint("we are in the offer of webrtc ", sdp as Any)
-            // self.peerConnection.setLocalDescription(sdp, completionHandler: { (error) in
-
-            // completion(sdp)
-            // })
+             self.peerConnection.setLocalDescription(sdp, completionHandler: { (error) in
+                 
+             completion(sdp)
+             })
         }
     }
 
@@ -160,8 +160,9 @@ final class WebRTCClient: NSObject, ObservableObject {
             debugPrint("we are in the answer of webrtc", sdp as Any)
             self.peerConnection.setLocalDescription(sdp, completionHandler: { (_) in
                 // debugPrint("we are in the answer of webrtc")
+                
                 completion(sdp)
-
+                
             })
         }
 
@@ -202,7 +203,7 @@ final class WebRTCClient: NSObject, ObservableObject {
                               fps: Int(fps.maxFrameRate))
 
         self.localVideoTrack?.add(renderer)
-
+        
     }
 
     func renderRemoteVideo(to renderer: RTCVideoRenderer) {
@@ -231,7 +232,7 @@ final class WebRTCClient: NSObject, ObservableObject {
         let videoTrack = self.createVideoTrack()
         self.localVideoTrack = videoTrack
         self.peerConnection.add(videoTrack, streamIds: [streamId])
-        self.remoteVideoTrack = self.peerConnection.transceivers.first { $0.mediaType == .video }?.receiver.track as? RTCVideoTrack
+        //self.remoteVideoTrack = self.peerConnection.transceivers.first { $0.mediaType == .video }?.receiver.track as? RTCVideoTrack
 
         // Data
         if let dataChannel = createDataChannel() {
@@ -276,51 +277,6 @@ final class WebRTCClient: NSObject, ObservableObject {
     }
 }
 
-extension WebRTCClient: RTCPeerConnectionDelegate {
-
-    func peerConnection(_ peerConnection: RTCPeerConnection, didChange stateChanged: RTCSignalingState) {
-        debugPrint("peerConnection new signaling state: \(stateChanged)")
-    }
-
-    func peerConnection(_ peerConnection: RTCPeerConnection, didAdd stream: RTCMediaStream) {
-        debugPrint("peerConnection did add stream")
-        self.remoteVideoTrack = stream.videoTracks.first
-
-        // self.peerConnection.add(stream, streamIds: stream.stream)
-
-    }
-
-    func peerConnection(_ peerConnection: RTCPeerConnection, didRemove stream: RTCMediaStream) {
-        debugPrint("peerConnection did remove stream")
-    }
-
-    func peerConnectionShouldNegotiate(_ peerConnection: RTCPeerConnection) {
-        debugPrint("peerConnection should negotiate")
-    }
-
-    func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceConnectionState) {
-        debugPrint("peerConnection new connection state: \(newState)")
-        self.delegate?.webRTCClient(self, didChangeConnectionState: newState)
-    }
-
-    func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceGatheringState) {
-        debugPrint("peerConnection new gathering state: \(newState)")
-    }
-
-    func peerConnection(_ peerConnection: RTCPeerConnection, didGenerate candidate: RTCIceCandidate) {
-        debugPrint("peerConnection found a new candidate: \(candidate)")
-
-    }
-
-    func peerConnection(_ peerConnection: RTCPeerConnection, didRemove candidates: [RTCIceCandidate]) {
-        debugPrint("peerConnection did remove candidate(s)")
-    }
-
-    func peerConnection(_ peerConnection: RTCPeerConnection, didOpen dataChannel: RTCDataChannel) {
-        debugPrint("peerConnection did open data channel")
-        self.remoteDataChannel = dataChannel
-    }
-}
 extension WebRTCClient {
     private func setTrackEnabled<T: RTCMediaStreamTrack>(_ type: T.Type, isEnabled: Bool) {
         peerConnection.transceivers
