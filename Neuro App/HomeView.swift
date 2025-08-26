@@ -132,7 +132,7 @@ struct HomeView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .padding()
                 .onAppear {
-                    signalingClient.fetchOnlineUsers()
+                    
                 }
                 .background(
                     LinearGradient(colors: [.gray, .white, .gray], startPoint: .topLeading, endPoint: .bottomTrailing)
