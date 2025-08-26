@@ -26,10 +26,9 @@ struct KeychainHelper {
             kSecClass as String: kSecClassInternetPassword,
             kSecAttrAccount as String: account
         ]
-        
-        
+
         let attributesToUpdate: [String: Any] = [
-            kSecValueData as String: passwordData,
+            kSecValueData as String: passwordData
         ]
 
         // Attempt to update the existing item.

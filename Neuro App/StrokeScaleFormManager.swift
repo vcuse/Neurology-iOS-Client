@@ -47,7 +47,7 @@ struct StrokeScaleFormManager {
             completion([])
             return
         }
-        
+
         debugPrint("StrokeScaleFormManager Fetching forms from server!")
         guard let url = URL(string: "https://videochat-signaling-app.ue.r.appspot.com/key=peerjs/post") else {
             print("Invalid URL")
