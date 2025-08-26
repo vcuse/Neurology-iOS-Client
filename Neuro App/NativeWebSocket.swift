@@ -15,7 +15,9 @@ class NativeWebSocket: NSObject, WebSocketProvider {
 
     var delegate: WebSocketProviderDelegate?
     private let url: URL
-    private var heartbeatTimer: Timer?
+    private var heartbeatTimer: DispatchSourceTimer?
+    private let heartbeatQueue = DispatchQueue(label: "ws.heartbeat.queue", qos: .utility)
+    private let heartbeatInterval: TimeInterval = 5
     private let pingTimer = 5000
     private var socket: URLSessionWebSocketTask?
     private lazy var urlSession: URLSession = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
@@ -43,82 +45,106 @@ class NativeWebSocket: NSObject, WebSocketProvider {
     }
 
     func connect() {
-
         debugPrint("WE ARE CONNECTING WITH URL", url)
-
         self.socket?.resume()
-
-        self.readMessage()
-        self.startHeartBeat()
     }
 
     private func startHeartBeat() {
-        heartbeatTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
-        Task {
-            guard let self = self else { return }
-            debugPrint("sent heartbeat")
-            await self.sendHeartbeat()
-            }
-        }
-    }
+        stopHeartBeat()
 
+        let timer = DispatchSource.makeTimerSource(queue: heartbeatQueue)
+        timer.schedule(deadline: .now() + heartbeatInterval, repeating: heartbeatInterval)
+        timer.setEventHandler { [weak self] in
+            guard let self = self else { return }
+            Task { await self.sendHeartbeat() }
+        }
+        timer.resume()
+        heartbeatTimer = timer
+        debugPrint("Heartbeat started")
+    }
+    
     private func sendHeartbeat() async {
+        guard let socket = self.socket else {
+            debugPrint("Heartbeat skipped: socket is nil")
+            return
+        }
+
         let payload: [String: Any] = ["type": "HEARTBEAT"]
         do {
-            let jsonData = try JSONSerialization.data( withJSONObject: payload)
-            try await self.socket?.send(.data(jsonData))
-
+            let data = try JSONSerialization.data(withJSONObject: payload)
+            try await socket.send(.data(data))
+            debugPrint("sent heartbeat")
         } catch {
-            debugPrint("Error sending heartbeat")
+            debugPrint("Error sending heartbeat: \(error)")
         }
     }
-    func send(data: Data) {
-        self.socket?.send(.data(data)) { _ in }
-        debugPrint("We sent data")
+
+    private func stopHeartBeat() {
+        heartbeatTimer?.cancel()
+        heartbeatTimer = nil
+        debugPrint("Heartbeat stopped")
     }
 
     private func readMessage() {
-        self.socket?.receive { [weak self] message in
+        self.socket?.receive { [weak self] result in
             guard let self = self else { return }
-
-            switch message {
+            switch result {
             case .success(.data(let data)):
                 self.delegate?.webSocket(self, didReceiveData: data)
-                // debugPrint("message from server", message)
                 self.readMessage()
-            case .failure:
-                self.disconnect()
+
             case .success(let message):
-                        if case let .string(messageString) = message {
-                            self.delegate?.handleMessage(message: messageString)
+                if case let .string(string) = message {
+                    self.delegate?.handleMessage(message: string)
+                } else {
+                    debugPrint("Unexpected message type: \(message)")
+                }
+                self.readMessage()
 
-                            // make a way to handle the messages
-                            // Now you can parse the messageString as needed
-                            // For example, you can parse it as JSON to extract the type, payload, etc.
-                        } else {
-                            print("Unexpected message type:", message)
-                        }
-
-                        // Continue reading messages
-                        self.readMessage()
+            case .failure(let error):
+                debugPrint("WebSocket receive error: \(error)")
+                self.disconnect()
             }
         }
     }
 
     private func disconnect() {
+        stopHeartBeat()
         self.socket?.cancel()
         self.socket = nil
         self.delegate?.webSocketDidDisconnect(self)
+    }
+    
+    func send(data: Data) {
+        socket?.send(.data(data)) { error in
+            if let error = error {
+                debugPrint("Send error: \(error)")
+            } else {
+                debugPrint("We sent data")
+            }
+        }
     }
 }
 
 @available(iOS 13.0, *)
 extension NativeWebSocket: URLSessionWebSocketDelegate, URLSessionDelegate {
-    func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
+    func urlSession(_ session: URLSession,
+                    webSocketTask: URLSessionWebSocketTask,
+                    didOpenWithProtocol `protocol`: String?) {
+        debugPrint("WebSocket did open")
         self.delegate?.webSocketDidConnect(self)
+
+        // Start both once the connection is confirmed
+        self.startHeartBeat()
+        self.readMessage()
     }
 
-    func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
+    func urlSession(_ session: URLSession,
+                    webSocketTask: URLSessionWebSocketTask,
+                    didCloseWith closeCode: URLSessionWebSocketTask.CloseCode,
+                    reason: Data?) {
+        debugPrint("WebSocket did close with code \(closeCode)")
+        // Single point of cleanup
         self.disconnect()
     }
 }
