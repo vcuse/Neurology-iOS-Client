@@ -62,7 +62,7 @@ class NativeWebSocket: NSObject, WebSocketProvider {
         heartbeatTimer = timer
         debugPrint("Heartbeat started")
     }
-    
+
     private func sendHeartbeat() async {
         guard let socket = self.socket else {
             debugPrint("Heartbeat skipped: socket is nil")
@@ -114,7 +114,7 @@ class NativeWebSocket: NSObject, WebSocketProvider {
         self.socket = nil
         self.delegate?.webSocketDidDisconnect(self)
     }
-    
+
     func send(data: Data) {
         socket?.send(.data(data)) { error in
             if let error = error {
