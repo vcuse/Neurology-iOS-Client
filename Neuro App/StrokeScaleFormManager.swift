@@ -42,12 +42,13 @@ struct StrokeScaleFormManager {
 
     static func fetchFormsFromServer(completion: @escaping ([RemoteStrokeForm]) -> Void) {
         remoteForms.removeAll()
-        guard let username = UserDefaults.standard.string(forKey: "username") else {
+        guard let username = KeychainHelper.getUsername() else {
             print("No username found")
             completion([])
             return
         }
-
+        
+        debugPrint("StrokeScaleFormManager Fetching forms from server!")
         guard let url = URL(string: "https://videochat-signaling-app.ue.r.appspot.com/key=peerjs/post") else {
             print("Invalid URL")
             completion([])

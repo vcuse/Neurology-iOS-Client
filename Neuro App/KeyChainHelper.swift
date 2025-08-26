@@ -26,9 +26,10 @@ struct KeychainHelper {
             kSecClass as String: kSecClassInternetPassword,
             kSecAttrAccount as String: account
         ]
-
+        
+        
         let attributesToUpdate: [String: Any] = [
-            kSecValueData as String: passwordData
+            kSecValueData as String: passwordData,
         ]
 
         // Attempt to update the existing item.
@@ -115,26 +116,24 @@ struct KeychainHelper {
         SecItemAdd(query as CFDictionary, nil)
     }
 
-    // Load token from Keychain
+    // Load username from Keychain
     static func getUsername() -> String? {
         let query: [String: Any] = [
-            kSecClass as String: kSecClassIdentity,
-            kSecAttrService as String: service,
-            kSecAttrAccount as String: "username",
-            kSecReturnData as String: true,
-            kSecMatchLimit as String: kSecMatchLimitOne
+            kSecClass as String: kSecClassInternetPassword,
+            kSecMatchLimit as String: kSecMatchLimitOne,
+            kSecReturnAttributes as String: true
         ]
 
         var result: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &result)
 
         guard status == errSecSuccess,
-              let data = result as? Data,
-              let token = String(data: data, encoding: .utf8) else {
+              let item = result as? [String: Any],
+              let account = item[kSecAttrAccount as String] as? String else {
             return nil
         }
 
-        return token
+        return account
     }
 
     // Delete token from Keychain
