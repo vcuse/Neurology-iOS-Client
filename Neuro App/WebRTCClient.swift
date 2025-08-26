@@ -37,7 +37,7 @@ final class WebRTCClient: NSObject, ObservableObject {
     public var remoteVideoTrack: RTCVideoTrack?
     private var localDataChannel: RTCDataChannel?
     public var remoteDataChannel: RTCDataChannel?
-    private var iceServers : [String]
+    private var iceServers: [String]
 
     @available(*, unavailable)
     override init() {
@@ -87,18 +87,18 @@ final class WebRTCClient: NSObject, ObservableObject {
         debugPrint("webrtc made (does not impact signaling client or websocket)")
         self.peerConnection = peerConnection
         super.init()
-        
+
         self.setMediaSettings()
 
     }
-    
-    func setMediaSettings(){
+
+    func setMediaSettings() {
         self.createMediaSenders()
         self.configureAudioSession()
         // self.peerConnection.delegate = self
         self.setVideoEnabled(true)
     }
-    
+
     func createAndAssignPeerConnection() {
         let config = RTCConfiguration()
         config.iceServers = [RTCIceServer(urlStrings: iceServers)]
@@ -120,7 +120,7 @@ final class WebRTCClient: NSObject, ObservableObject {
         }
         debugPrint("webrtc made (does not impact signaling client or websocket)")
         self.peerConnection = peerConnection
-        
+
     }
 
     // MARK: Signaling
@@ -198,8 +198,7 @@ final class WebRTCClient: NSObject, ObservableObject {
     }
 
     func answer(completion: @escaping (_ sdp: RTCSessionDescription) -> Void) {
-        
-        
+
         let constrains = RTCMediaConstraints(mandatoryConstraints: self.mediaConstrains,
                                              optionalConstraints: nil)
         // debugPrint("constrains are ", constrains as Any)
@@ -291,7 +290,7 @@ final class WebRTCClient: NSObject, ObservableObject {
             dataChannel.delegate = self
             self.localDataChannel = dataChannel
         }
-        
+
     }
 
     private func createAudioTrack() -> RTCAudioTrack {
