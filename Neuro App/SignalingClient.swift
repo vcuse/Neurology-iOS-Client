@@ -24,8 +24,7 @@ protocol SignalClientDelegate: AnyObject {
 }
 
 final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
-    ObservableObject
-{
+    ObservableObject {
 
     func peerConnection(
         _ peerConnection: RTCPeerConnection,
@@ -78,14 +77,14 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
         let candidate: [String: Any] = [
             "candidate": candidate.sdp,
             "sdpMLineIndex": candidate.sdpMLineIndex,
-            "sdpMid": candidate.sdpMid as Any,
+            "sdpMid": candidate.sdpMid as Any
         ]
         let payload: [String: Any] = [
             "candidate": candidate, "connectionId": self.mediaID,
-            "type": "media",
+            "type": "media"
         ]
         let message: [String: Any] = [
-            "payload": payload, "type": "CANDIDATE", "dst": self.theirPeerID,
+            "payload": payload, "type": "CANDIDATE", "dst": self.theirPeerID
         ]
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: message)
@@ -195,7 +194,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
 
                     let message: [String: Any] = [
                         "type": "IOSCLIENT", "src": self.ourPeerID,
-                        "dst": "314", "payload": savedToken as Any,
+                        "dst": "314", "payload": savedToken as Any
                     ]
                     do {
                         let jsonData = try JSONSerialization.data(
@@ -215,7 +214,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
     func disconnectFromServer() {
         let payload: [String: Any] = [
             "type": "DISCONNECT", "src": self.ourPeerID,
-            "payload": "disconnect",
+            "payload": "disconnect"
         ]
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: payload)
@@ -227,8 +226,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
     }
 
     func startFetchingOnlineUsers() {
-        fetchTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true)
-        { [weak self] _ in
+        fetchTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             self?.fetchOnlineUsers()
         }
     }
@@ -253,8 +251,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
 
             do {
                 if let onlineUsers = try JSONSerialization.jsonObject(
-                    with: data, options: []) as? [String]
-                {
+                    with: data, options: []) as? [String] {
                     DispatchQueue.main.async {
                         self?.onlineUsers = onlineUsers
                     }
@@ -276,7 +273,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
 
         let constraints = RTCMediaConstraints(
             mandatoryConstraints: [
-                "OfferToReceiveAudio": "true", "OfferToReceiveVideo": "true",
+                "OfferToReceiveAudio": "true", "OfferToReceiveVideo": "true"
             ], optionalConstraints: nil)
         self.mediaID = "133153"
         self.webRTCClient.offer(completion: { (sdp) in
@@ -298,20 +295,20 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
 
                     debugPrint("Successfully set local description (offer SDP)")  // Corrected debug message
 
-                    //let sdp = RTCSessionDescription()
+                    // let sdp = RTCSessionDescription()
 
                     let innnerSDPmessage: [String: Any] = [
-                        "sdp": sdpString, "type": "offer",
+                        "sdp": sdpString, "type": "offer"
                     ]
 
                     let payloadMessage: [String: Any] = [
                         "connectionId": "133153", "type": "media",
-                        "sdp": innnerSDPmessage,
+                        "sdp": innnerSDPmessage
                     ]
 
                     let outerMessage: [String: Any] = [
                         "dst": id, "src": self.ourPeerID,
-                        "payload": payloadMessage, "type": "OFFER",
+                        "payload": payloadMessage, "type": "OFFER"
                     ]
 
                     let jsonData = try JSONSerialization.data(
@@ -348,7 +345,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
             "dst": self.theirPeerID,
             "payload": [
                 "reason": "declined"
-            ],
+            ]
         ]
 
         do {
@@ -364,7 +361,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
         // Notify remote peer that we're disconnecting
         let payload: [String: Any] = [
             "type": "DISCONNECT", "src": self.ourPeerID,
-            "payload": "disconnect",
+            "payload": "disconnect"
         ]
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: payload)
@@ -435,8 +432,7 @@ extension SignalingClient: WebSocketProviderDelegate {
 
         // we are splitting the received message into 3 variables (just to make it easier to deal with)
         if let (messageType, payload, src) = processReceivedMessage(
-            message: message)
-        {
+            message: message) {
             // Use messageType, payload, and src as needed
             print("Processed message type:", messageType)
             // candidates come second
@@ -467,8 +463,7 @@ extension SignalingClient: WebSocketProviderDelegate {
         if let sdpValueDict = payload["sdp"] as? [String: Any] {
             // Now you can safely access the values inside the sdpValueDict
             if let sdpType = sdpValueDict["type"] as? String,
-                let sdpContent = sdpValueDict["sdp"] as? String
-            {
+                let sdpContent = sdpValueDict["sdp"] as? String {
 
                 // Perform your logic here. For example:
                 if sdpType == "offer" && hasVideoMedia(sdp: sdpContent) {
@@ -521,11 +516,11 @@ extension SignalingClient: WebSocketProviderDelegate {
     func handleCandidateMessage(payload: [String: Any], src: String) {
 
         let payload: [String: Any] = [
-            "candidate": payload, "type": "media", "connectionId": self.mediaID,
+            "candidate": payload, "type": "media", "connectionId": self.mediaID
         ]
 
         let candidateReponse: [String: Any] = [
-            "type": "CANDIDATE", "payload": payload, "dst": src,
+            "type": "CANDIDATE", "payload": payload, "dst": src
         ]
         do {
             let jsonData = try JSONSerialization.data(
@@ -657,7 +652,7 @@ extension SignalingClient: WebSocketProviderDelegate {
         String, [String: Any], String
     )? {
         // Print the received message
-        //print("Received message:", message)
+        // print("Received message:", message)
 
         // Initialize variables to hold extracted information
         var messageType = ""
@@ -674,13 +669,11 @@ extension SignalingClient: WebSocketProviderDelegate {
 
             // Deserialize the JSON data into a dictionary
             if let json = try JSONSerialization.jsonObject(
-                with: jsonData, options: []) as? [String: Any]
-            {
+                with: jsonData, options: []) as? [String: Any] {
                 // Access the 'type', 'payload', and 'src' fields from the dictionary
                 if let extractedMessageType = json["type"] as? String,
                     let extractedPayload = json["payload"] as? [String: Any],
-                    let extractedSrc = json["src"] as? String
-                {
+                    let extractedSrc = json["src"] as? String {
                     // Assign extracted values to variables
                     messageType = extractedMessageType
                     payload = extractedPayload

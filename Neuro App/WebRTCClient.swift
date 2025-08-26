@@ -78,7 +78,7 @@ final class WebRTCClient: NSObject, ObservableObject {
     func offer(completion: @escaping (_ sdp: RTCSessionDescription) -> Void) {
         let constrains = RTCMediaConstraints(mandatoryConstraints: self.mediaConstrains,
                                              optionalConstraints: nil)
-        
+
         debugPrint("constrains are ", constrains as Any)
         self.peerConnection.offer(for: constrains) { (sdp, _) in
             guard let sdp = sdp else {
@@ -86,8 +86,8 @@ final class WebRTCClient: NSObject, ObservableObject {
                 return
             }
             debugPrint("we are in the offer of webrtc ", sdp as Any)
-             self.peerConnection.setLocalDescription(sdp, completionHandler: { (error) in
-                 
+             self.peerConnection.setLocalDescription(sdp, completionHandler: { (_) in
+
              completion(sdp)
              })
         }
@@ -160,9 +160,9 @@ final class WebRTCClient: NSObject, ObservableObject {
             debugPrint("we are in the answer of webrtc", sdp as Any)
             self.peerConnection.setLocalDescription(sdp, completionHandler: { (_) in
                 // debugPrint("we are in the answer of webrtc")
-                
+
                 completion(sdp)
-                
+
             })
         }
 
@@ -203,7 +203,7 @@ final class WebRTCClient: NSObject, ObservableObject {
                               fps: Int(fps.maxFrameRate))
 
         self.localVideoTrack?.add(renderer)
-        
+
     }
 
     func renderRemoteVideo(to renderer: RTCVideoRenderer) {
@@ -232,7 +232,7 @@ final class WebRTCClient: NSObject, ObservableObject {
         let videoTrack = self.createVideoTrack()
         self.localVideoTrack = videoTrack
         self.peerConnection.add(videoTrack, streamIds: [streamId])
-        //self.remoteVideoTrack = self.peerConnection.transceivers.first { $0.mediaType == .video }?.receiver.track as? RTCVideoTrack
+        // self.remoteVideoTrack = self.peerConnection.transceivers.first { $0.mediaType == .video }?.receiver.track as? RTCVideoTrack
 
         // Data
         if let dataChannel = createDataChannel() {
