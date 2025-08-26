@@ -27,7 +27,7 @@ final class WebRTCClient: NSObject, ObservableObject {
     }()
 
     weak var delegate: WebRTCClientDelegate?
-    let peerConnection: RTCPeerConnection
+    var peerConnection: RTCPeerConnection
     private let rtcAudioSession =  RTCAudioSession.sharedInstance()
     private let audioQueue = DispatchQueue(label: "audio")
     private let mediaConstrains = [kRTCMediaConstraintsOfferToReceiveAudio: kRTCMediaConstraintsValueTrue,
@@ -37,6 +37,7 @@ final class WebRTCClient: NSObject, ObservableObject {
     public var remoteVideoTrack: RTCVideoTrack?
     private var localDataChannel: RTCDataChannel?
     public var remoteDataChannel: RTCDataChannel?
+    private var iceServers : [String]
 
     @available(*, unavailable)
     override init() {
@@ -44,6 +45,27 @@ final class WebRTCClient: NSObject, ObservableObject {
     }
 
     required init(iceServers: [String]) {
+        self.iceServers = iceServers
+//        let config = RTCConfiguration()
+//        config.iceServers = [RTCIceServer(urlStrings: iceServers)]
+//
+//        // Unified plan is more superior than planB
+//        config.sdpSemantics = .unifiedPlan
+//
+//        // gatherContinually will let WebRTC to listen to any network changes and send any new candidates to the other client
+//        config.continualGatheringPolicy = .gatherOnce
+//        config.iceTransportPolicy = .all
+//
+//        // Define media constraints. DtlsSrtpKeyAgreement is required to be true to be able to connect with web browsers.
+//        let constraints = RTCMediaConstraints(mandatoryConstraints: nil,
+//                                              optionalConstraints: ["DtlsSrtpKeyAgreement": kRTCMediaConstraintsValueTrue, "setup": "actpass"])
+//        // creating a peerConnection
+//        guard let peerConnection = WebRTCClient.factory.peerConnection(with: config, constraints: constraints, delegate: nil) else {
+//            debugPrint("peerconnection failed")
+//            fatalError("Could not create new RTCPeerConnection")
+//        }
+//        debugPrint("webrtc made (does not impact signaling client or websocket)")
+//        self.peerConnection = peerConnection
         let config = RTCConfiguration()
         config.iceServers = [RTCIceServer(urlStrings: iceServers)]
 
@@ -64,18 +86,47 @@ final class WebRTCClient: NSObject, ObservableObject {
         }
         debugPrint("webrtc made (does not impact signaling client or websocket)")
         self.peerConnection = peerConnection
-
         super.init()
+        
+        self.setMediaSettings()
 
+    }
+    
+    func setMediaSettings(){
         self.createMediaSenders()
         self.configureAudioSession()
         // self.peerConnection.delegate = self
         self.setVideoEnabled(true)
+    }
+    
+    func createAndAssignPeerConnection() {
+        let config = RTCConfiguration()
+        config.iceServers = [RTCIceServer(urlStrings: iceServers)]
 
+        // Unified plan is more superior than planB
+        config.sdpSemantics = .unifiedPlan
+
+        // gatherContinually will let WebRTC to listen to any network changes and send any new candidates to the other client
+        config.continualGatheringPolicy = .gatherOnce
+        config.iceTransportPolicy = .all
+
+        // Define media constraints. DtlsSrtpKeyAgreement is required to be true to be able to connect with web browsers.
+        let constraints = RTCMediaConstraints(mandatoryConstraints: nil,
+                                              optionalConstraints: ["DtlsSrtpKeyAgreement": kRTCMediaConstraintsValueTrue, "setup": "actpass"])
+        // creating a peerConnection
+        guard let peerConnection = WebRTCClient.factory.peerConnection(with: config, constraints: constraints, delegate: nil) else {
+            debugPrint("peerconnection failed")
+            fatalError("Could not create new RTCPeerConnection")
+        }
+        debugPrint("webrtc made (does not impact signaling client or websocket)")
+        self.peerConnection = peerConnection
+        
     }
 
     // MARK: Signaling
     func offer(completion: @escaping (_ sdp: RTCSessionDescription) -> Void) {
+        self.createAndAssignPeerConnection()
+        self.createMediaSenders()
         let constrains = RTCMediaConstraints(mandatoryConstraints: self.mediaConstrains,
                                              optionalConstraints: nil)
 
@@ -147,7 +198,8 @@ final class WebRTCClient: NSObject, ObservableObject {
     }
 
     func answer(completion: @escaping (_ sdp: RTCSessionDescription) -> Void) {
-
+        
+        
         let constrains = RTCMediaConstraints(mandatoryConstraints: self.mediaConstrains,
                                              optionalConstraints: nil)
         // debugPrint("constrains are ", constrains as Any)
@@ -239,6 +291,7 @@ final class WebRTCClient: NSObject, ObservableObject {
             dataChannel.delegate = self
             self.localDataChannel = dataChannel
         }
+        
     }
 
     private func createAudioTrack() -> RTCAudioTrack {

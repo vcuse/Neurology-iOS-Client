@@ -207,7 +207,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
                 }
             }
         }
-
+        startFetchingOnlineUsers()
         // print("Unique ID OUTSIDE OF CODE IS ", uniqueID)
 
     }
@@ -268,7 +268,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
         var sdpString = "placeholderText"
         theirPeerID = id
         // implement logic to call a user
-
+        
         print("Calling user with ID: \(id)")
 
         let constraints = RTCMediaConstraints(
@@ -327,7 +327,8 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
             }
 
         })
-        isReadToAddIceCandidate = true
+        self.webRTCClient.peerConnection.delegate = self
+        //isReadToAddIceCandidate = true
         isRinging = true
     }
 
@@ -376,7 +377,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
         // Reset the signaling client state
         isRinging = false
         isInCall = false
-
+        isReadToAddIceCandidate = false
         // Inform delegate about disconnection
         self.delegate?.signalClientDidDisconnect(self)
 
@@ -422,7 +423,7 @@ extension SignalingClient: WebSocketProviderDelegate {
     }
 
     func webSocket(_ webSocket: WebSocketProvider, didReceiveData data: Data) {
-
+        
     }
 
     // handle message is where we determine what to do when the server sends us a message
@@ -496,9 +497,10 @@ extension SignalingClient: WebSocketProviderDelegate {
         Task {
 
             do {
-                try await self.webRTCClient.peerConnection.setRemoteDescription(
+               await self.webRTCClient.setRemoteSDP(
                     remoteSDP)
-
+                self.isReadToAddIceCandidate = true
+                self.handleIceCandidates()
             } catch {
 
                 debugPrint("Error setting remoteDescriptionToAnswer")
@@ -538,7 +540,7 @@ extension SignalingClient: WebSocketProviderDelegate {
 
     // this is the part where we "answer" their message
     func handleOfferMessage() {
-
+        
         let msg = offerMessage["sdp"] as? [String: Any]
         let sdp = msg?["sdp"]
         print("IN HANDLE OFFER MESG TRYNA GET THEIR REMOTE SDP", msg)
@@ -549,12 +551,17 @@ extension SignalingClient: WebSocketProviderDelegate {
             print("Processed sdp:", sdp as Any)
             let sessionDescription = RTCSessionDescription(
                 type: RTCSdpType.offer, sdp: sdp as! String)
-
+            self.webRTCClient.createAndAssignPeerConnection()
+            self.webRTCClient.setMediaSettings()
+            self.webRTCClient.peerConnection.delegate = self
             if #available(iOS 13.0, *) {
                 Task {
                     print("WE ARE GONNA SEND AN ANSWER SOON")
                     // first we set the remote sdp (we received an offer)
+                    
+                    
                     await self.webRTCClient.setRemoteSDP(sessionDescription)
+                    
                     // then we create an answer sdp
                     await self.webRTCClient.setPeerSDP(
                         sessionDescription, theirSrc, connectionID
@@ -579,6 +586,7 @@ extension SignalingClient: WebSocketProviderDelegate {
                         }
 
                     }
+                    
                 }
             } else {
                 // Fallback on earlier versions
