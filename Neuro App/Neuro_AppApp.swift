@@ -15,8 +15,11 @@ struct Neuro_App: App {
     @StateObject var signalingClient: SignalingClient
 
     init() {
+        var webRTCClient = WebRTCClient(iceServers: [
+            "stun:stun.l.google.com:19302"
+        ])  
         // Initialize the signaling client first, as it's a core dependency.
-        let client = SignalingClient(url: AppURLs.webSocketURL)
+        let client = SignalingClient(url: AppURLs.webSocketURL, webRTCClient: webRTCClient)
         _signalingClient = StateObject(wrappedValue: client)
 
         // Pass the client to the AuthViewModel's initializer.

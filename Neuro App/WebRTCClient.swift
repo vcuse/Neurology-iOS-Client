@@ -15,6 +15,46 @@ protocol WebRTCClientDelegate: AnyObject {
     func webRTCClient(_ client: WebRTCClient, didReceiveData data: Data)
 }
 
+protocol WebRTCClientProtocol {
+    var peerConnection: RTCPeerConnection { get }
+    var remoteVideoTrack: RTCVideoTrack? { get set }
+    var remoteDataChannel: RTCDataChannel? { get set }
+
+    func offer(completion: @escaping (RTCSessionDescription) -> Void)
+    func setRemoteSDP(_ sdp: RTCSessionDescription) async
+    func setPeerSDP(_ sdp: RTCSessionDescription, _ theirSrc: String, _ connectionID: String, completion: @escaping ([String: Any]?) -> Void)
+    func set(remoteCandidate: RTCIceCandidate, completion: @escaping (Error?) -> Void)
+    func closePeerConnection()
+    func toggleAudioMute(isMuted: Bool)
+    func getSignalingClient() -> WebRTCClientProtocol
+    func startCaptureLocalVideo(renderer: RTCVideoRenderer)
+    func renderRemoteVideo(to renderer: RTCVideoRenderer)
+    func muteAudio()
+    func unmuteAudio()
+    func createAndAssignPeerConnection()
+    func setMediaSettings()
+}
+
+
+
+// Extend the existing WebRTCClient to conform to the protocol
+extension WebRTCClient: WebRTCClientProtocol {
+    func setPeerSDP(_ sdp: RTCSessionDescription, _ theirSrc: String, _ connectionID: String, completion: @escaping ([String : Any]?) -> Void) {
+        completion(nil)
+    }
+    
+    func toggleAudioMute(isMuted: Bool) {
+        
+    }
+    
+    func getSignalingClient() -> WebRTCClientProtocol {
+        return MockWebRTCClient()
+    }
+    
+    // All methods and properties are already defined in your WebRTCClient class.
+    // The compiler will enforce protocol conformance.
+}
+
 final class WebRTCClient: NSObject, ObservableObject {
 
     // The `RTCPeerConnectionFactory` is in charge of creating new RTCPeerConnection instances.

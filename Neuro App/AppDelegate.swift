@@ -41,8 +41,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     func createSignalingClient() {
-        self.signalingClient = SignalingClient(url: AppURLs.webSocketURL)
+        let webRTCClient = WebRTCClient(iceServers: [
+            "stun:stun.l.google.com:19302"
+        ])
+        self.signalingClient = SignalingClient(url: AppURLs.webSocketURL, webRTCClient: webRTCClient)
         print("signaling client created")
+    }
+    
+    func createWebSocket(){
+        return 
     }
 
     func setLoggedIn() {

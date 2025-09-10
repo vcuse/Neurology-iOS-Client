@@ -22,9 +22,109 @@ protocol SignalClientDelegate: AnyObject {
         _ signalClient: SignalingClient,
         didReceiveCandidate candidate: RTCIceCandidate)
 }
+// Example of a mock WebRTCClient for previews
+class MockWebRTCClient: WebRTCClientProtocol {
+    func getSignalingClient() -> any WebRTCClientProtocol {
+        return self
+    }
+
+    var peerConnection: RTCPeerConnection  // Initializer to set up the class.
+    init() {
+        // Since `peerConnection` has a default value, this initializer can be empty.
+        let factory: RTCPeerConnectionFactory = {
+            RTCInitializeSSL()
+            let videoEncoderFactory = RTCDefaultVideoEncoderFactory()
+            let videoDecoderFactory = RTCDefaultVideoDecoderFactory()
+            return RTCPeerConnectionFactory(
+                encoderFactory: videoEncoderFactory,
+                decoderFactory: videoDecoderFactory)
+        }()
+
+        let config = RTCConfiguration()
+        let delegate: RTCPeerConnectionDelegate? = nil  // Assuming your class conforms to RTCPeerConnectionDelegate
+        let constraints = RTCMediaConstraints(
+            mandatoryConstraints: nil,
+            optionalConstraints: [
+                "DtlsSrtpKeyAgreement": kRTCMediaConstraintsValueTrue,
+                "setup": "actpass",
+            ])
+
+        self.peerConnection = factory.peerConnection(
+            with: config, constraints: constraints, delegate: delegate)!
+    }
+
+    // Stored properties
+    var remoteVideoTrack: RTCVideoTrack? = nil
+    var remoteDataChannel: RTCDataChannel? = nil
+
+    // MARK: - Mock Function Implementations
+
+    func offer(completion: @escaping (RTCSessionDescription) -> Void) {
+        completion(RTCSessionDescription(type: .offer, sdp: "mock-sdp"))
+    }
+
+    func setRemoteSDP(_ sdp: RTCSessionDescription) async {
+        // This is a mock function, it does nothing.
+        // It doesn't need to be `async` in the mock, but the protocol requires it.
+    }
+
+    func setPeerSDP(
+        _ sdp: RTCSessionDescription, _ theirSrc: String,
+        _ connectionID: String, completion: @escaping ([String: Any]?) -> Void
+    ) {
+        // This is a mock function; it calls the completion handler with nil to simulate completion.
+        completion(nil)
+    }
+
+    func set(
+        remoteCandidate: RTCIceCandidate,
+        completion: @escaping ((any Error)?) -> Void
+    ) {
+        // This is a mock function; it calls the completion handler with nil to indicate success.
+        completion(nil)
+    }
+
+    func closePeerConnection() {
+        // This is a mock function; it does nothing.
+    }
+
+    func toggleAudioMute(isMuted: Bool) {
+        // This is a mock function; it does nothing.
+    }
+
+    func getSignalingClient() -> WebRTCClient {
+        // This function is for getting a specific client, but in a mock, we can return a new instance of this mock class.
+        return self as! WebRTCClient
+    }
+
+    func startCaptureLocalVideo(renderer: any RTCVideoRenderer) {
+        // This is a mock function; it does nothing.
+    }
+
+    func renderRemoteVideo(to renderer: any RTCVideoRenderer) {
+        // This is a mock function; it does nothing.
+    }
+
+    func muteAudio() {
+        // This is a mock function; it does nothing.
+    }
+
+    func unmuteAudio() {
+        // This is a mock function; it does nothing.
+    }
+
+    func createAndAssignPeerConnection() {
+        // This is a mock function; it does nothing.
+    }
+
+    func setMediaSettings() {
+        // This is a mock function; it does nothing.
+    }
+}
 
 final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
-    ObservableObject {
+    ObservableObject
+{
 
     func peerConnection(
         _ peerConnection: RTCPeerConnection,
@@ -77,14 +177,14 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
         let candidate: [String: Any] = [
             "candidate": candidate.sdp,
             "sdpMLineIndex": candidate.sdpMLineIndex,
-            "sdpMid": candidate.sdpMid as Any
+            "sdpMid": candidate.sdpMid as Any,
         ]
         let payload: [String: Any] = [
             "candidate": candidate, "connectionId": self.mediaID,
-            "type": "media"
+            "type": "media",
         ]
         let message: [String: Any] = [
-            "payload": payload, "type": "CANDIDATE", "dst": self.theirPeerID
+            "payload": payload, "type": "CANDIDATE", "dst": self.theirPeerID,
         ]
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: message)
@@ -113,7 +213,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
     private var webSocket: WebSocketProvider
-    private var webRTCClient: WebRTCClient
+    private var webRTCClient: WebRTCClientProtocol
     private var sentAnswer: Bool = false
     weak var delegate: SignalClientDelegate?
     weak var webRTCDelegate: WebRTCClientDelegate?
@@ -134,11 +234,9 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
 
     // Creating the websocket (connection to the signaling server)
     // this will almost always be a native web socket
-    init(url: URL) {
+    init(url: URL, webRTCClient: WebRTCClientProtocol) {
 
-        self.webRTCClient = WebRTCClient(iceServers: [
-            "stun:stun.l.google.com:19302"
-        ])
+        self.webRTCClient = webRTCClient
         if #available(iOS 13.0, *) {
             self.webSocket = NativeWebSocket(url: url)
         } else {
@@ -194,7 +292,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
 
                     let message: [String: Any] = [
                         "type": "IOSCLIENT", "src": self.ourPeerID,
-                        "dst": "314", "payload": savedToken as Any
+                        "dst": "314", "payload": savedToken as Any,
                     ]
                     do {
                         let jsonData = try JSONSerialization.data(
@@ -214,7 +312,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
     func disconnectFromServer() {
         let payload: [String: Any] = [
             "type": "DISCONNECT", "src": self.ourPeerID,
-            "payload": "disconnect"
+            "payload": "disconnect",
         ]
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: payload)
@@ -226,7 +324,8 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
     }
 
     func startFetchingOnlineUsers() {
-        fetchTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+        fetchTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true)
+        { [weak self] _ in
             self?.fetchOnlineUsers()
         }
     }
@@ -251,7 +350,8 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
 
             do {
                 if let onlineUsers = try JSONSerialization.jsonObject(
-                    with: data, options: []) as? [String] {
+                    with: data, options: []) as? [String]
+                {
                     DispatchQueue.main.async {
                         self?.onlineUsers = onlineUsers
                     }
@@ -273,7 +373,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
 
         let constraints = RTCMediaConstraints(
             mandatoryConstraints: [
-                "OfferToReceiveAudio": "true", "OfferToReceiveVideo": "true"
+                "OfferToReceiveAudio": "true", "OfferToReceiveVideo": "true",
             ], optionalConstraints: nil)
         self.mediaID = "133153"
         self.webRTCClient.offer(completion: { (sdp) in
@@ -298,17 +398,17 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
                     // let sdp = RTCSessionDescription()
 
                     let innnerSDPmessage: [String: Any] = [
-                        "sdp": sdpString, "type": "offer"
+                        "sdp": sdpString, "type": "offer",
                     ]
 
                     let payloadMessage: [String: Any] = [
                         "connectionId": "133153", "type": "media",
-                        "sdp": innnerSDPmessage
+                        "sdp": innnerSDPmessage,
                     ]
 
                     let outerMessage: [String: Any] = [
                         "dst": id, "src": self.ourPeerID,
-                        "payload": payloadMessage, "type": "OFFER"
+                        "payload": payloadMessage, "type": "OFFER",
                     ]
 
                     let jsonData = try JSONSerialization.data(
@@ -346,7 +446,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
             "dst": self.theirPeerID,
             "payload": [
                 "reason": "declined"
-            ]
+            ],
         ]
 
         do {
@@ -362,7 +462,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
         // Notify remote peer that we're disconnecting
         let payload: [String: Any] = [
             "type": "DISCONNECT", "src": self.ourPeerID,
-            "payload": "disconnect"
+            "payload": "disconnect",
         ]
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: payload)
@@ -392,7 +492,7 @@ final class SignalingClient: NSObject, RTCPeerConnectionDelegate,
         }
     }
 
-    func getSignalingClient() -> WebRTCClient {
+    func getSignalingClient() -> WebRTCClientProtocol {
         return self.webRTCClient
     }
 
@@ -433,7 +533,8 @@ extension SignalingClient: WebSocketProviderDelegate {
 
         // we are splitting the received message into 3 variables (just to make it easier to deal with)
         if let (messageType, payload, src) = processReceivedMessage(
-            message: message) {
+            message: message)
+        {
             // Use messageType, payload, and src as needed
             print("Processed message type:", messageType)
             // candidates come second
@@ -464,7 +565,8 @@ extension SignalingClient: WebSocketProviderDelegate {
         if let sdpValueDict = payload["sdp"] as? [String: Any] {
             // Now you can safely access the values inside the sdpValueDict
             if let sdpType = sdpValueDict["type"] as? String,
-                let sdpContent = sdpValueDict["sdp"] as? String {
+                let sdpContent = sdpValueDict["sdp"] as? String
+            {
 
                 // Perform your logic here. For example:
                 if sdpType == "offer" && hasVideoMedia(sdp: sdpContent) {
@@ -497,7 +599,7 @@ extension SignalingClient: WebSocketProviderDelegate {
         Task {
 
             do {
-               await self.webRTCClient.setRemoteSDP(
+                await self.webRTCClient.setRemoteSDP(
                     remoteSDP)
                 self.isReadToAddIceCandidate = true
                 self.handleIceCandidates()
@@ -518,11 +620,11 @@ extension SignalingClient: WebSocketProviderDelegate {
     func handleCandidateMessage(payload: [String: Any], src: String) {
 
         let payload: [String: Any] = [
-            "candidate": payload, "type": "media", "connectionId": self.mediaID
+            "candidate": payload, "type": "media", "connectionId": self.mediaID,
         ]
 
         let candidateReponse: [String: Any] = [
-            "type": "CANDIDATE", "payload": payload, "dst": src
+            "type": "CANDIDATE", "payload": payload, "dst": src,
         ]
         do {
             let jsonData = try JSONSerialization.data(
@@ -676,11 +778,13 @@ extension SignalingClient: WebSocketProviderDelegate {
 
             // Deserialize the JSON data into a dictionary
             if let json = try JSONSerialization.jsonObject(
-                with: jsonData, options: []) as? [String: Any] {
+                with: jsonData, options: []) as? [String: Any]
+            {
                 // Access the 'type', 'payload', and 'src' fields from the dictionary
                 if let extractedMessageType = json["type"] as? String,
                     let extractedPayload = json["payload"] as? [String: Any],
-                    let extractedSrc = json["src"] as? String {
+                    let extractedSrc = json["src"] as? String
+                {
                     // Assign extracted values to variables
                     messageType = extractedMessageType
                     payload = extractedPayload
