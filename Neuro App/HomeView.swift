@@ -92,21 +92,38 @@ struct HomeView: View {
                     .padding(.top, 10)
 
                     Spacer()
-
-                    // NIH Forms Button
-                    Button(action: {
-                        path.append("savedForms")
-                    }) {
-                        Text("NIH Forms")
-                            .font(.headline)
-                            .foregroundColor(adaptiveColor())
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(adaptiveBackground())
-                            .cornerRadius(10)
+                    
+                    HStack(spacing:0) {
+                        // Sessions Button
+                        Button(action: {
+                            path.append("sessions")
+                        }) {
+                            Text("Sessions")
+                                .font(.headline)
+                                .foregroundColor(adaptiveColor())
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(adaptiveBackground())
+                                .cornerRadius(10)
+                        }
+                        .padding(.horizontal)
+                        .padding(.bottom, 20)
+                        
+                        // NIH Forms Button
+                        Button(action: {
+                            path.append("savedForms")
+                        }) {
+                            Text("NIH Forms")
+                                .font(.headline)
+                                .foregroundColor(adaptiveColor())
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(adaptiveBackground())
+                                .cornerRadius(10)
+                        }
+                        .padding(.horizontal)
+                        .padding(.bottom, 20)
                     }
-                    .padding(.horizontal)
-                    .padding(.bottom, 20)
                 }
 
                 // Navigation destination
@@ -114,6 +131,8 @@ struct HomeView: View {
                     switch route {
                     case "savedForms":
                         SavedFormsView(navigationPath: $path)
+                    case "sessions":
+                        SavedSessionsView(navigationPath: $path)
                     default:
                         EmptyView()
                     }
