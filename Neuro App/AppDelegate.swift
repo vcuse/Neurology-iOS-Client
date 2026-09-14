@@ -84,84 +84,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
         provider.setDelegate(self, queue: nil)
 
-
-
-
-
         // createSignalingClient()
         configuration.supportedHandleTypes = [.generic]
         // Custom initialization logic here
-
-
-
-
-
-
-
-
-        
-
-
-
-
-        
-
-
-
-
-        
-
-
-
-
-        
-
-
-
-
-        
-
-
-
-
-        
-
-
-
-
-        
-
-
-
-
-        
-
-
-
-
-        
-
-
-
-
-        
-
-
-
-
-        
-
-
-
-
-        
-
-
-
-
-        
-
-
 
         print("App has launched")
         checkforUUID()
@@ -179,13 +104,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
             if granted {
                 DispatchQueue.main.async {
-
-
-
-
-
-
-
 
                     UIApplication.shared.registerForRemoteNotifications()
                 }
