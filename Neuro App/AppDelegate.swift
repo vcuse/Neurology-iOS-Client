@@ -91,8 +91,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Configure notification settings
         UNUserNotificationCenter.current().delegate = self
 
-        
-
         AVCaptureDevice.requestAccess(for: .video) { granted in
             if granted {
                 // Access granted
@@ -118,9 +116,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 // Access denied
             }
         }
-
-       
-        
 
         registerForVoIPPushes()
 
