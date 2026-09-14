@@ -31,8 +31,7 @@ struct CallView: View {
                     .edgesIgnoringSafeArea(.all)
                     .background(Color.black)
                     .overlay(
-                        RTCVideoView(renderer: remoteRenderer)
-                            .aspectRatio(contentMode: .fill)
+                        RTCVideoView(renderer: remoteRenderer).scaledToFill()
                             .edgesIgnoringSafeArea(.all)
                     )
                     .onAppear {
