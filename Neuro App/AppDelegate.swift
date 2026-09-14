@@ -90,6 +90,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         checkforUUID()
         // Configure notification settings
         UNUserNotificationCenter.current().delegate = self
+
+        AVCaptureDevice.requestAccess(for: .video) { granted in
+            if granted {
+                // Access granted
+            } else {
+                // Access denied
+            }
+        }
+
+        AVCaptureDevice.requestAccess(for: .audio) { granted in
+            if granted {
+                // Access granted
+            } else {
+                // Access denied
+            }
+        }
+        
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
             if granted {
                 DispatchQueue.main.async {
@@ -102,21 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
        
 
-       AVCaptureDevice.requestAccess(for: .video) { granted in
-            if granted {
-                // Access granted
-            } else {
-                // Access denied
-            }
-        }
-
-         AVCaptureDevice.requestAccess(for: .audio) { granted in
-            if granted {
-                // Access granted
-            } else {
-                // Access denied
-            }
-        }
+       
         
 
         registerForVoIPPushes()
