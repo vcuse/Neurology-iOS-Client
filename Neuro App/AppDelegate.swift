@@ -75,16 +75,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-
-
-
-
         let configuration = CXProviderConfiguration(localizedName: "Neuro App")
         configuration.supportsVideo = true // Enable if your app supports video calls
 
         configuration.ringtoneSound = "Ringtone.caf" // Provide your custom ringtone sound if needed
-
-
 
         provider = CXProvider(configuration: configuration)
 
