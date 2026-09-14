@@ -93,7 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
         
 
-        AVCaptureDevice.requestAccess(for: .audio) { granted in
+        AVCaptureDevice.requestAccess(for: .video) { granted in
             if granted {
                 // Access granted
             } else {
