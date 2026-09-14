@@ -34,8 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             return uuidString
         } else {
 
-
-
             // If no UUID is found, generate a new one
             let newUUID = UUID().uuidString
             UserDefaults.standard.set(newUUID, forKey: globalUUID)
@@ -45,8 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func createSignalingClient() {
         self.signalingClient = SignalingClient(url: AppURLs.webSocketURL)
-
-
 
         print("signaling client created")
     }
@@ -59,17 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if type == .voIP {
             let tokenString = pushCredentials.token.map { String(format: "%02x", $0) }.joined()
             print("VoIP Device Token: \(tokenString)")
-
-
-
-
-
-
-
-
-
-
-
 
             UserDefaults.standard.setValue(tokenString, forKey: "deviceToken")
             // Save or send the VoIP token to your server if needed
@@ -93,14 +78,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let configuration = CXProviderConfiguration(localizedName: "Neuro App")
         configuration.supportsVideo = true // Enable if your app supports video calls
 
-
-        
-
         configuration.ringtoneSound = "Ringtone.caf" // Provide your custom ringtone sound if needed
         provider = CXProvider(configuration: configuration)
-
-
-
 
         provider.setDelegate(self, queue: nil)
         // createSignalingClient()
