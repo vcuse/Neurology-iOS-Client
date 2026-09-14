@@ -15,8 +15,8 @@ private let defaultSignalingServerUrl = AppURLs.webSocketURL
 private let defaultIceServers = ["stun:stun.l.google.com:19302"]
 
 struct Config {
+        let webRTCIceServer: [String]
         let signalingServerUrl: URL
-        let webRTCIceServers: [String]
 
-        static let `default` = Config(signalingServerUrl: defaultSignalingServerUrl, webRTCIceServers: defaultIceServers)
+        static let `default` = Config(signalingServerUrl: defaultSignalingServerUrl, webRTCIceServer: defaultIceServers)
 }
