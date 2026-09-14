@@ -75,10 +75,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
+
+
+
+
         let configuration = CXProviderConfiguration(localizedName: "Neuro App")
         configuration.supportsVideo = true // Enable if your app supports video calls
 
         configuration.ringtoneSound = "Ringtone.caf" // Provide your custom ringtone sound if needed
+
+
+
         provider = CXProvider(configuration: configuration)
 
         provider.setDelegate(self, queue: nil)
@@ -99,7 +106,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
 
-        AVCaptureDevice.requestAccess(for: .video) { granted in
+       
+
+        AVCaptureDevice.requestAccess(for: .audio) { granted in
             if granted {
                 // Access granted
             } else {
@@ -107,7 +116,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
 
-        AVCaptureDevice.requestAccess(for: .audio) { granted in
+            AVCaptureDevice.requestAccess(for: .video) { granted in
             if granted {
                 // Access granted
             } else {
