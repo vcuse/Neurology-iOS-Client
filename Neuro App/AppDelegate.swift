@@ -116,8 +116,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
 
-            
-
         registerForVoIPPushes()
 
         return true
