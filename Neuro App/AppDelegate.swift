@@ -91,13 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Configure notification settings
         UNUserNotificationCenter.current().delegate = self
 
-        AVCaptureDevice.requestAccess(for: .audio) { granted in
-            if granted {
-                // Access granted
-            } else {
-                // Access denied
-            }
-        }
+        
 
         AVCaptureDevice.requestAccess(for: .audio) { granted in
             if granted {
@@ -117,7 +111,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
 
-       
+       AVCaptureDevice.requestAccess(for: .audio) { granted in
+            if granted {
+                // Access granted
+            } else {
+                // Access denied
+            }
+        }
 
        
         
