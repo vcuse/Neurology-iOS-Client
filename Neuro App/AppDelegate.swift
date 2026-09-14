@@ -91,15 +91,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Configure notification settings
         UNUserNotificationCenter.current().delegate = self
 
-        AVCaptureDevice.requestAccess(for: .video) { granted in
-            if granted {
-                // Access granted
-            } else {
-                // Access denied
-            }
-        }
+        
 
-        AVCaptureDevice.requestAccess(for: .audio) { granted in
+        AVCaptureDevice.requestAccess(for: .video) { granted in
             if granted {
                 // Access granted
             } else {
@@ -116,6 +110,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 print("Notification permission denied: \(String(describing: error))")
             }
         }
+
+       AVCaptureDevice.requestAccess(for: .audio) { granted in
+            if granted {
+                // Access granted
+            } else {
+                // Access denied
+            }
+        }
+
+       
+        
 
         registerForVoIPPushes()
 
